@@ -1,0 +1,31 @@
+{
+	"Box_Items": [
+		"Dagger",
+		"Hatchet",
+		"Nightstick",
+		"Spider",
+		"Head",
+		"Empty"
+	],
+	"Gob_Items" : [
+		"Waraxe",
+		"Longbow",
+		"Crossbow",
+		"Mace",
+		"Morningstar",
+		"Shortsword",
+		"Longsword",
+		"Small Shield",
+		"Large Shield",
+		"Dart Straw",
+		"Iron Knuckles"
+	],
+	"Doors": [
+		"Red Door",
+		"Green Door",
+		"Purple Door",
+		"Yellow Door",
+		"Blue Door",
+		"Brown Door"
+	]
+}
