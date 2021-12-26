@@ -1,10 +1,29 @@
 {
 	"name": "start_room",
-	"room_text": "You are a young child caught out in the middle of suburbia, at night, alone.\n You come upon a large house. A REALLY large house, bigger than anything on either side of it, and\n certainly larger than anything you've ever seen before. It's made primarily out of bare plywood, some\n of it looking brand-new, but most looking molded and rotten. Suddenly, a strange force compels\n you to step forward. You attempt to resist it, but the urge is too strong! You slowly open the door and step inside.\n The door slams shut behind you!\n\n What do you do?"
+	"room_text": "You are a young child caught out in the middle of suburbia, at night, alone.\n You come upon a large house. A REALLY large house, bigger than anything on either side of it, and\n certainly larger than anything you've ever seen before. It's made primarily out of bare plywood, some\n of it looking brand-new, but most looking molded and rotten. Suddenly, a strange force compels\n you to step forward. You attempt to resist it, but the urge is too strong! You slowly open the door and step inside.\n The door slams shut behind you!\n\n What do you do?",
 	"options": [
 		{
-			"option_1": "A: "Try to open the door behind me\nB: Examine the room around me\nC: Examine the door behind me\nD: Cry\n\n"
+			"option_text": "Try to open the door behind me",
+			"result": [
+				"set-tried_door"
+			]
+			"req": [
+				"!tried_door"
+			]
 		},
 		{
-			"option_2":
+			"option_text": "Try the door again"
+			"req": [
+				"tried_door"
+			]
+		},
+		{
+			"option_text": "Examine the room around me"
+		}
+	
+
+
+
+
+	]
 }
