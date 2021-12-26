@@ -3,27 +3,34 @@
 	"room_text": "You are a young child caught out in the middle of suburbia, at night, alone.\n You come upon a large house. A REALLY large house, bigger than anything on either side of it, and\n certainly larger than anything you've ever seen before. It's made primarily out of bare plywood, some\n of it looking brand-new, but most looking molded and rotten. Suddenly, a strange force compels\n you to step forward. You attempt to resist it, but the urge is too strong! You slowly open the door and step inside.\n The door slams shut behind you!\n\n What do you do?",
 	"options": [
 		{
-			"option_text": "Try to open the door behind me",
-			"result": [
-				"set-tried_door"
-			]
 			"req": [
 				"!tried_door"
+			],
+			"option_text": "Try to open the door behind me",
+			"result_text": "You try to force the door open, but it won't budge!",
+			"result": [
+				"set-tried_door",
 			]
 		},
 		{
-			"option_text": "Try the door again"
 			"req": [
 				"tried_door"
+			],
+			"option_text": "Try the door again"
+			"result_text": "The door stays sturdy, not giving so much as a rattle."
+			"result": [
 			]
 		},
 		{
-			"option_text": "Examine the room around me"
+			"req": [
+				"!check_room_1",
+				"!check_room_2"
+			],
+			"option_text": "Examine the room around me",
+			"result_text": "The room around you, like the house outside, is made of barren plywood. The only light source is a large frosted-glass window situated in the front door. There are two large boxes in the right and leftmost corners in front of you. A big-brimmed hat and a long trench coat hang on a metal hook against the left wall. There are no other doors or windows."
+			"result": [
+				"set-check_room_1",
+			]
 		}
-	
-
-
-
-
 	]
 }
