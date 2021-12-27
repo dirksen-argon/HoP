@@ -266,5 +266,4 @@ class Room:
                             
                     continue    # continue to the next command
 
-test = Room("test")
-test.run()
+
