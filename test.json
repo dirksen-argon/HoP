@@ -1,0 +1,29 @@
+{
+	"name": "test",
+	"room_text": "You are a young child caught out in the middle of suburbia, at night, alone.\nYou come upon a large house. A REALLY large house, bigger than anything on either side of it, and\ncertainly larger than anything you've ever seen before. It's made primarily out of bare plywood, some\nof it looking brand-new, but most looking molded and rotten. Suddenly, a strange force compels\nyou to step forward. You attempt to resist it, but the urge is too strong! You slowly open the door and step inside.\nThe door slams shut behind you!\n\nWhat do you do?",
+	"options": [
+		{
+			"option_text": "Try to open the door behind me",
+			"result_text": "opt 1",
+			"result": [
+				"set-tried_door"
+			],
+			"req": [
+				"!tried_door"
+			]
+		},
+		{
+			"option_text": "Try the door again",
+			"result_text": "opt 2",
+			"result": [
+				"unset-tried_door"
+			],
+			"req": [
+				"tried_door"
+			]
+		},
+		{
+			"option_text": "Examine the room around me"
+		}
+	]
+}
