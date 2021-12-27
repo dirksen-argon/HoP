@@ -49,7 +49,7 @@ result (OPTIONAL)
 &ensp;COMMANDS  
 &ensp;set  
 &ensp;&ensp;The set command will store the argument as a string to be checked later.  
-&ensp&ensp;set can be used to set flags to be checked by the req list in the JSON structure.  
+&ensp;&ensp;set can be used to set flags to be checked by the req list in the JSON structure.  
     
 &ensp;unset  
 &ensp;&ensp;The unset command will remove any instances of the argument string that are being stored as a flag to be checked later  
