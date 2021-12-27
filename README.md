@@ -12,7 +12,7 @@ EXAMPLE JSON FILE: example.json-------------------------------------------------
 }<br />  
 
 JSON STRUCTURE----------------------------------------------------------------------------  
-|-room_text
+|-room_text  
 |-options  
 &ensp;|-req  
 &ensp;| |  
