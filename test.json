@@ -25,7 +25,26 @@
 			]
 		},
 		{
-			"option_text": "Examine the room around me"
+			"option_text": "Examine the room around me",
+			"result": [
+				"random-test_table"
+			],
+			"test_table": [
+				{
+					"weight": 4,
+					"commands": [
+						"print-res1"
+					]
+				},
+				{
+					"weight": 1,
+					"commands": [
+						"print-res2"
+					]
+				}
+			],
+			"res1": "Test 1",
+			"res2": "Test 2"
 		}
 	]
 }

@@ -1,6 +1,7 @@
 from json import loads              # for converting json to dict
 from os.path import dirname, exists # for finding files
 import sys                          # for sys.exit() for ending the program
+from random import choice           # for running the random command
 
 class Room:
     '''
@@ -235,9 +236,11 @@ class Room:
 
         # if there is a result list in our option, run each command in the list
         if "result" in option:
+
+            results = option["result"][:]
             
             # iterate through each command in the list
-            for result in option["result"]:
+            for result in results:
 
                 if "-" in result:
                     # split the command into a command-argument pair by splitting at the first "-"
@@ -373,6 +376,59 @@ class Room:
 
                     # print out the string
                     print(option[argument], end="\n\n")
+
+                # if the command is "random", choose a random set of commands and run them
+                elif command == "random":
+
+                    # error if no argument for "random" command
+                    assert argument != "", "the \"random\" command requires an argument"
+
+                    # error if no random table matching argument
+                    assert argument in option, "Cannot find random table: \"" + argument + "\""
+
+                    # error if random table is not a list
+                    assert isinstance(option[argument], list), argument + " must be the label of a list, not a " + str(type(option[argument]))
+
+                    # create list for storing each occurence of lists of commands to be chosen randomly
+                    bag = []
+
+                    # add each command list to the random bag taking into accout its weight
+                    for random_group in option[argument]:
+
+                        # if weight is an attribute, use it to set the weight | weight is the relative likelihood of a list being chosen
+                        if "weight" in random_group:
+
+                            # error if weight is not an integer
+                            assert isinstance(random_group["weight"], int), "weight must be an integer, not a " + str(type(random_group["weight"]))
+
+                            # set weight from the JSON
+                            weight = random_group["weight"]
+
+                        # if weight is not specified, set it to 1
+                        else:
+                            # set the weight to 1
+                            weight = 1
+
+                        # error if no commands list
+                        assert "commands" in random_group, "Every object in a random table must have a \"commands\" list"
+
+                        # error if commands list is not a list
+                        assert isinstance(random_group["commands"], list), "\"commands\" must be a list, not a " + str(type(random_group["commands"]))
+
+                        # add 1 occurence of the command list for every weight point
+                        for i in range(weight):
+
+                            # add an occurence of the command list to the random bag
+                            bag.append(random_group["commands"])
+
+                    # error if the bag is empty
+                    assert bag != [], "No choices were found in random table: " + argument
+
+                    # get a random command list from the bag
+                    chosen_command_list = choice(bag)
+
+                    # add the commands from the randomly selected command list to the list of commands running right now
+                    results += chosen_command_list
 
                 # if the command is not a valid command raise an error
                 else:
