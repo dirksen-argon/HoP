@@ -12,6 +12,8 @@ from room import Room
  # "backpack" is the player's inventory.
 backpack = []
 
-start_room = Room("start_room")
+running = True
+while running:
+    start_room = Room("start_room")
 
-start_room.run()
+    start_room.run()

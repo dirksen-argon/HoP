@@ -16,7 +16,8 @@
 			"option_text": "Try the door again",
 			"result_text": "opt 2",
 			"result": [
-				"unset-tried_door"
+				"unset-tried_door",
+				"quit"
 			],
 			"req": [
 				"tried_door"
