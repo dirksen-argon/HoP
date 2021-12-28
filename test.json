@@ -17,7 +17,7 @@
 			"result_text": "opt 2",
 			"result": [
 				"unset-tried_door",
-				"quit"
+				"move-start_room"
 			],
 			"req": [
 				"tried_door"
