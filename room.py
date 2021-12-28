@@ -359,6 +359,21 @@ class Room:
                     # stop running the current room
                     game_running = False
 
+                # if the command is "print", print out a string with the argument as its name
+                elif command == "print":
+
+                    # error if there is no argument
+                    assert argument != "", "the \"print\" command requires an argument"
+
+                    # error if argument doesn't match any element in the option
+                    assert argument in option, "Cannot print " + argument + " as it does not exist"
+
+                    # error if argument is not the label of a string
+                    assert isinstance(option[argument], str), "The argument for \"print\" must be the label of a string, not a " + str(type(option[argument]))
+
+                    # print out the string
+                    print(option[argument], end="\n\n")
+
                 # if the command is not a valid command raise an error
                 else:
 
