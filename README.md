@@ -64,3 +64,11 @@ result (OPTIONAL)
 &ensp;&ensp;The move command takes the name of a room as an argument. Example: "move-room_name"
 &ensp;&ensp;The move command will cause the current room to stop running and start running the new room.
     
+&ensp;print
+&ensp;&ensp;The print command will print out a string (stored in the option object with the label the same as the argument).
+
+&ensp;random
+&ensp;&ensp;The random command will run a randomly selected set of commands. Its argument is the name of a list containing the random choices.
+&ensp;&ensp;The list contains objects. Each object has a "weight" integer(OPTIONAL) and a "commands" list.
+&ensp;&ensp; The weight integer is the weight of the corresponding commands list being randomly selected.
+&ensp;&ensp; The "commands" list is a list of strings containing commands, exactly like the "result" list.
