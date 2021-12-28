@@ -206,6 +206,20 @@
 		},
 		{
 			"req": [
+				"check_room_1_A",
+				"!beater_7",
+				"!trap"
+			],
+			"option_text": "Examine the hat and coat",
+			"result_text": "You examine the hat and coat against the left wall. The hat is made of fine leather, the coat of breathable black silk. Upon closer inspection, they both look incredibly old and tattered. The silk especially looks very, very dirty. Deep slash marks cover the surface of the two objects, as if someone cut into them repeatedly with a knife. You take a closer inspection and- woah. Woah. Woah! Inside the hat, cleverly covered by the angle of the hat, is a human skull, with lidless, bloodshot eyes staring back out at you. You instinctively jump back as it unhooks itself from the sharp metal hook. The ground shakes as it hits the ground. You hear a sharp clicking sound and see a large black hole growing around the front door. The skeleton draws its sword and slashes! What do you do?",
+			"result": [
+				"set-trap",
+				"set-zone_1"
+			]
+			 
+		},
+		{
+			"req": [
 				"!check_door_1",
 				"!check_door_2",
 				"!beater_7",
@@ -248,6 +262,18 @@
 			],
 			"option_text": "Cry",
 			"result_text": "You sit on the floor and cry. Feels good."
+		},
+		{
+			"req": [
+				"trap",
+				"zone_1"
+			],
+			"option_text": "Dodge to the left"
+			"result_text": "You dodge to the left, closer to the growing hole."
+			"result": [
+				"!zone_1",
+				"zone_2"
+			]
 		}
 	]
 }
