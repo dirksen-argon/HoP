@@ -4,7 +4,8 @@
 	"options": [
 		{
 			"req": [
-				"!tried_door"
+				"!tried_door",
+				"!beater_7"
 			],
 			"option_text": "Try to open the door behind me",
 			"result_text": "You try to force the door open, but it won't budge!",
@@ -14,7 +15,8 @@
 		},
 		{
 			"req": [
-				"tried_door"
+				"tried_door",
+				"!beater_7"
 			],
 			"option_text": "Try the door again",
 			"result_text": "The door stays sturdy, not giving so much as a rattle.",
@@ -24,7 +26,8 @@
 		{
 			"req": [
 				"!check_room_1",
-				"!check_room_2"
+				"!check_room_2",
+				"!beater_7"
 			],
 			"option_text": "Examine the room around me",
 			"result_text": "The room around you, like the house outside, is made of barren plywood. The only light source is a large frosted-glass window situated in the front door. There are two large boxes in the right and leftmost corners in front of you. A big-brimmed hat and a long trench coat hang on a metal hook against the left wall. There are no other doors or windows.",
@@ -34,7 +37,8 @@
 		},
 		{
 			"req": [
-				"check_room_1"
+				"check_room_1",
+				"!beater_7"
 			],
 			"option_text": "Examine the room more closely",
 			"result_text": "You examine the room more closely. To your surprise, you find a small wooden trapdoor on the ceiling that you hadn't noticed before.",
@@ -45,7 +49,8 @@
 		},
 		{
 			"req": [
-				"check_room_2"
+				"check_room_2",
+				"!beater_7"
 			],
 			"option_text": "Pull a box over to reach the trapdoor",
 			"result_text": "Area under development!",
@@ -67,6 +72,124 @@
 			"result_text": "You attempt to smash the window with your fist. Great job! Now your hand hurts.",
 			"result": [
 				"set-beater_1"
+			]
+		},
+		{
+			"req": [
+				"check_room_1",
+				"beater_1",
+				"!beater_2",
+				"!beater_3",
+				"!beater_4",
+				"!beater_5",
+				"!beater_6",
+				"!beater_7"
+			],
+			"option_text": "Smash the window",
+			"result_text": "You attempt to smash the window again. The pain in your fist makes you want to cry.",
+			"result": [
+				"set-beater_2"
+			]
+		},
+		{
+			"req": [
+				"check_room_1",
+				"beater_1",
+				"beater_2",
+				"!beater_3",
+				"!beater_4",
+				"!beater_5",
+				"!beater_6",
+				"!beater_7"
+			],
+			"option_text": "Smash the window",
+			"result_text": "The window again dismisses your hit. Your knuckles are cracked and bleeding.",
+			"result": [
+				"set-beater_3"
+			]
+		},
+		{
+			"req": [
+				"check_room_1",
+				"beater_1",
+				"beater_2",
+				"beater_3",
+				"!beater_4",
+				"!beater_5",
+				"!beater_6",
+				"!beater_7"
+			],
+			"option_text": "Smash the window",
+			"result_text": "The window has small red stains on its frosted glass. The cracks on your hand get larger.",
+			"result": [
+				"set-beater_4"
+			]
+		},
+		{
+			"req": [
+				"check_room_1",
+				"beater_1",
+				"beater_2",
+				"beater_3",
+				"beater_4",
+				"!beater_5",
+				"!beater_6",
+				"!beater_7"
+			],
+			"option_text": "Smash the window",
+			"result_text": "The window has small red streaks on its frosted glass. The cracks on your hand get larger.",
+			"result": [
+				"set-beater_5"
+			]
+		},
+		{
+			"req": [
+				"check_room_1",
+				"beater_1",
+				"beater_2",
+				"beater_3",
+				"beater_4",
+				"beater_5",
+				"!beater_6",
+				"!beater_7"
+			],
+			"option_text": "Smash the window",
+			"result_text": "The almighty window is unamused. You only achieve further self harm.",
+			"result": [
+				"set-beater_6"
+			]
+		},
+		{
+			"req": [
+				"check_room_1",
+				"beater_1",
+				"beater_2",
+				"beater_3",
+				"beater_4",
+				"beater_5",
+				"beater_6",
+				"!beater_7"
+			],
+			"option_text": "Smash the window",
+			"result_text": "Your hands seem to be moving on their own now. The only thing you can make out is blood. Blood everywhere. Blood on the window. Blood on the floor. Blood seeping into your shoes. Blood dripping down your clothes. As you get further in, it only gets more pronounced. Blood. Blood. Blood.",
+			"result": [
+				"set-beater_7"
+			]
+		},
+		{
+			"req": [
+				"check_room_1",
+				"beater_1",
+				"beater_2",
+				"beater_3",
+				"beater_4",
+				"beater_5",
+				"beater_6",
+				"beater_7"
+			],
+			"option_text": "Smash the window",
+			"result_text": "There is no going back now. Panic builds in your body as you attempt to stop, but the more panicked you get, the harder you pound. Broken bone sticks out of your knuckles and the tips of your fingers, pulling nerves and blood vessels up along with it. Chunks of your hands begin to fall on the floor. The air the deep gashes is unbearable. Slowly but surely, the gashes turn to missing fingers, blown holes, and pulverized bits of bone, all of which fall to the floor. You feel yourself become weaker, your face getting cold as blood leaks out of you like a fountain. You fall backward and land with the thud of wood. A low, malicious laughter sounds as you see and feel everything steadily fade to black.",
+			"result": [
 			]
 		}
 	]
