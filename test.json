@@ -6,18 +6,19 @@
 			"option_text": "Try to open the door behind me",
 			"result_text": "opt 1",
 			"result": [
-				"set-tried_door"
+				"set-tried_door",
+				"print-test"
 			],
 			"req": [
 				"!tried_door"
-			]
+			],
+			"test": 123
 		},
 		{
 			"option_text": "Try the door again",
 			"result_text": "opt 2",
 			"result": [
-				"unset-tried_door",
-				"move-start_room"
+				"unset-tried_door"
 			],
 			"req": [
 				"tried_door"
