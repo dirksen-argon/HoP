@@ -270,11 +270,28 @@
 				"zone_1"
 			],
 			"option_text": "Dodge to the left",
-			"result_text": "You dodge to the left, closer to the growing hole. You turn back to see a short corridor has appeared with three doors at the end of it. Unfortunately, there's also a skeleton in the way.",
 			"result": [
 				"unset-zone_1",
-				"set-zone_2"
-			]
+				"set-zone_2",
+				"random-death_chance"
+			],
+			"death_chance": [
+				{
+					"weight": 80,
+					"commands": [
+						"print-live"
+					]
+				},
+				{
+					"weight": 1,
+					"commands": [
+						"print-die",
+						"reset"
+					]
+				}
+			],
+			"live": "You dodge to the left, closer to the growing hole. You turn back to see a short corridor has appeared with three doors at the end of it. Unfortunately, there's also a skeleton in the way.",
+			"die": "You dodge to the side, but the skeleton was just a little faster than you were. You hardly have the chance to look up as everything fades to black."
 		},
 		{
 			"req": [
