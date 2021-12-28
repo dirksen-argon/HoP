@@ -242,6 +242,12 @@ class Room:
             # iterate through each command in the list
             for result in results:
 
+                # error if command isn't a string
+                assert isinstance(result, str), "commands in the result list must be strings, not " + str(type(result))
+
+                # remove spaces from the command
+                result = result.replace(" ", "")
+
                 if "-" in result:
                     # split the command into a command-argument pair by splitting at the first "-"
                     command, argument = result.split("-", 2)
