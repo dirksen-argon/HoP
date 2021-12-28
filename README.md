@@ -53,4 +53,14 @@ result (OPTIONAL)
     
 &ensp;unset  
 &ensp;&ensp;The unset command will remove any instances of the argument string that are being stored as a flag to be checked later  
+
+&ensp;reset
+&ensp;&ensp;The reset command will reset the game back to the beggining if it has the argument "game" (argument is "game" by default) or end the game if the user doesn't wish to continue
+
+&ensp;quit
+&ensp;&ensp;The quit command will end the program
+
+&ensp;move
+&ensp;&ensp;The move command takes the name of a room as an argument. Example: "move-room_name"
+&ensp;&ensp;The move command will cause the current room to stop running and start running the new room.
     
