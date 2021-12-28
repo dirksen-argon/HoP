@@ -205,19 +205,35 @@
 		},
 		{
 			"req": [
-				"!check_door",
+				"!check_door_1",
+				"!check_door_2",
 				"!beater_7",
 				"!trap"
 			],
 			"option_text": "Examine the door",
 			"result_text": "Contrary to the barren plywood room, the door itself has been painted a muted white, with a darkened metallic handle. Both look brand new.",
 			"result": [
-				"set-check_door"
+				"set-check_door_1"
 			]
 		},
 		{
 			"req": [
-				"check_door",
+				"check_door_1",
+				"!check_door_2",
+				"!beater_7",
+				"!trap"
+			],
+			"option_text": "Examine the door again",
+			"result_text": "Yep. It's a door.",
+			"result": [
+				"unset-check_door_1",
+				"set-check_door_2"
+			]
+		},
+		{
+			"req": [
+				"!check_door_1",
+				"check_door_2",
 				"!beater_7",
 				"!trap"
 			],
