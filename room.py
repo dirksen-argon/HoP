@@ -29,7 +29,7 @@ class Room:
         #
 
         # ensure name is a string
-        assert isinstance(name, str), "name must be a string"
+        assert isinstance(name, str), "room name must be a string"
 
         # ensure json file matching name exists
         assert exists(dirname(__file__) + "/" + name + ".json"), "no file named \"" + name + ".json\" at " + dirname(__file__)
@@ -344,6 +344,20 @@ class Room:
 
                     # exit the program
                     sys.exit()
+
+                # if the command is "move", stop running the current room and run a new room
+                elif command == "move":
+
+                    assert argument != "", "argument for \"move\" cannot be empty"
+
+                    # create a new room with argument being the room's name
+                    next_room = Room(argument)
+
+                    # run the new room
+                    next_room.run()
+
+                    # stop running the current room
+                    game_running = False
 
                 # if the command is not a valid command raise an error
                 else:
