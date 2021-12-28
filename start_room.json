@@ -5,9 +5,10 @@
 		{
 			"req": [
 				"!tried_door",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
-			"option_text": "Try to open the door behind me",
+			"option_text": "Try to open the door",
 			"result_text": "You try to force the door open, but it won't budge!",
 			"result": [
 				"set-tried_door"
@@ -27,18 +28,21 @@
 			"req": [
 				"!check_room_1",
 				"!check_room_2",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
 			"option_text": "Examine the room around me",
 			"result_text": "The room around you, like the house outside, is made of barren plywood. The only light source is a large frosted-glass window situated in the front door. There are two large boxes in the right and leftmost corners in front of you. A big-brimmed hat and a long trench coat hang on a metal hook against the left wall. There are no other doors or windows.",
 			"result": [
-				"set-check_room_1"
+				"set-check_room_1",
+				"set-check_room_1_A"
 			]
 		},
 		{
 			"req": [
 				"check_room_1",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
 			"option_text": "Examine the room more closely",
 			"result_text": "You examine the room more closely. To your surprise, you find a small wooden trapdoor on the ceiling that you hadn't noticed before.",
@@ -50,7 +54,8 @@
 		{
 			"req": [
 				"check_room_2",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
 			"option_text": "Pull a box over to reach the trapdoor",
 			"result_text": "Area under development!",
@@ -59,14 +64,15 @@
 		},
 		{
 			"req": [
-				"check_room_1",
+				"check_room_1_A",
 				"!beater_1",
 				"!beater_2",
 				"!beater_3",
 				"!beater_4",
 				"!beater_5",
 				"!beater_6",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
 			"option_text": "Smash the window",
 			"result_text": "You attempt to smash the window with your fist. Great job! Now your hand hurts.",
@@ -76,14 +82,15 @@
 		},
 		{
 			"req": [
-				"check_room_1",
+				"check_room_1_A",
 				"beater_1",
 				"!beater_2",
 				"!beater_3",
 				"!beater_4",
 				"!beater_5",
 				"!beater_6",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
 			"option_text": "Smash the window",
 			"result_text": "You attempt to smash the window again. The pain in your fist makes you want to cry.",
@@ -93,14 +100,15 @@
 		},
 		{
 			"req": [
-				"check_room_1",
+				"check_room_1_A",
 				"beater_1",
 				"beater_2",
 				"!beater_3",
 				"!beater_4",
 				"!beater_5",
 				"!beater_6",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
 			"option_text": "Smash the window",
 			"result_text": "The window again dismisses your hit. Your knuckles are cracked and bleeding.",
@@ -110,14 +118,15 @@
 		},
 		{
 			"req": [
-				"check_room_1",
+				"check_room_1_A",
 				"beater_1",
 				"beater_2",
 				"beater_3",
 				"!beater_4",
 				"!beater_5",
 				"!beater_6",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
 			"option_text": "Smash the window",
 			"result_text": "The window has small red stains on its frosted glass. The cracks on your hand get larger.",
@@ -127,14 +136,15 @@
 		},
 		{
 			"req": [
-				"check_room_1",
+				"check_room_1_A",
 				"beater_1",
 				"beater_2",
 				"beater_3",
 				"beater_4",
 				"!beater_5",
 				"!beater_6",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
 			"option_text": "Smash the window",
 			"result_text": "The window has small red streaks on its frosted glass. The cracks on your hand get larger.",
@@ -144,14 +154,15 @@
 		},
 		{
 			"req": [
-				"check_room_1",
+				"check_room_1_A",
 				"beater_1",
 				"beater_2",
 				"beater_3",
 				"beater_4",
 				"beater_5",
 				"!beater_6",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
 			"option_text": "Smash the window",
 			"result_text": "The almighty window is unamused. You only achieve further self harm.",
@@ -161,7 +172,7 @@
 		},
 		{
 			"req": [
-				"check_room_1",
+				"check_room_1_A",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -178,7 +189,7 @@
 		},
 		{
 			"req": [
-				"check_room_1",
+				"check_room_1_A",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -188,9 +199,38 @@
 				"beater_7"
 			],
 			"option_text": "Smash the window",
-			"result_text": "There is no going back now. Panic builds in your body as you attempt to stop, but the more panicked you get, the harder you pound. Broken bone sticks out of your knuckles and the tips of your fingers, pulling nerves and blood vessels up along with it. Chunks of your hands begin to fall on the floor. The air the deep gashes is unbearable. Slowly but surely, the gashes turn to missing fingers, blown holes, and pulverized bits of bone, all of which fall to the floor. You feel yourself become weaker, your face getting cold as blood leaks out of you like a fountain. You fall backward and land with the thud of wood. A low, malicious laughter sounds as you see and feel everything steadily fade to black.",
+			"result_text": "There is no going back now. Panic builds in your body as you attempt to stop, but the more panicked you get, the harder you pound. Broken bone sticks out of your knuckles and the tips of your fingers, pulling nerves and blood vessels up along with it. Chunks of your hands begin to fall on the floor. Slowly but surely, the gashes turn to missing fingers, blown holes, and pulverized bits of bone, all of which fall to the floor. You feel yourself become weaker, your face getting cold as blood leaks out of you like a fountain. You fall backward and land with the thud of wood. Your ears let out a high-pitched ring as you see and feel everything steadily fade to black.",
 			"result": [
 			]
+		},
+		{
+			"req": [
+				"!check_door",
+				"!beater_7",
+				"!trap"
+			],
+			"option_text": "Examine the door",
+			"result_text": "Contrary to the barren plywood room, the door itself has been painted a muted white, with a darkened metallic handle. Both look brand new.",
+			"result": [
+				"set-check_door"
+			]
+		},
+		{
+			"req": [
+				"check_door",
+				"!beater_7",
+				"!trap"
+			],
+			"option_text": "Examine the door again",
+			"result_text": "Yep. It's still a door."
+		},
+		{
+			"req": [
+				"!beater_7",
+				"!trap"
+			],
+			"option_text": "Cry",
+			"result_text": "You sit on the floor and cry. Feels good."
 		}
 	]
 }
