@@ -17,7 +17,8 @@
 		{
 			"req": [
 				"tried_door",
-				"!beater_7"
+				"!beater_7",
+				"!trap"
 			],
 			"option_text": "Try the door again",
 			"result_text": "The door stays sturdy, not giving so much as a rattle.",
@@ -268,11 +269,22 @@
 				"trap",
 				"zone_1"
 			],
-			"option_text": "Dodge to the left"
-			"result_text": "You dodge to the left, closer to the growing hole."
+			"option_text": "Dodge to the left",
+			"result_text": "You dodge to the left, closer to the growing hole. You turn back to see a short corridor has appeared with three doors at the end of it. Unfortunately, there's also a skeleton in the way.",
 			"result": [
-				"!zone_1",
+				"unset-zone_1",
+				"set-zone_2"
+			]
+		},
+		{
+			"req": [
+				"trap",
 				"zone_2"
+			],
+			"option_text": "Charge the skeleton",
+			"result_text": "The skeleton impales you with its sword. Your attempts to struggle only accelerate your demise.",
+			"result": [
+				"reset"
 			]
 		}
 	]
