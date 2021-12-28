@@ -315,6 +315,9 @@ class Room:
                         # if the user inputted "Y", restart the game by ending all running rooms but keeping the program running
                         if user_input == "Y":
 
+                            # removing all active flags
+                            Room.__flags = []
+                                
                             # end all running rooms but keeps program running
                             gamer_running = False
 
