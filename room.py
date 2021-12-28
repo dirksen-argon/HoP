@@ -316,10 +316,10 @@ class Room:
                         if user_input == "Y":
 
                             # removing all active flags
-                            Room.__flags = []
+                            Room.__flags = {}
                                 
                             # end all running rooms but keeps program running
-                            gamer_running = False
+                            game_running = False
 
                             # print newline
                             print()
