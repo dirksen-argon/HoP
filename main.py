@@ -14,6 +14,6 @@ backpack = []
 
 running = True
 while running:
-    start_room = Room("start_room")
+    start_room = Room("start_room_intro")
 
     start_room.run()

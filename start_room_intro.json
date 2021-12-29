@@ -1,12 +1,11 @@
 {
-	"name": "start_room",
+	"name": "start_room_intro",
 	"room_text": "You are a young child caught out in the middle of suburbia, at night, alone. You come upon a large house. A REALLY large house, bigger than anything on either side of it, and certainly larger than anything you've ever seen before. It's made primarily out of bare plywood, some of it looking brand-new, but most looking molded and rotten. Suddenly, a strange force compels you to step forward. You attempt to resist it, but the urge is too strong! You slowly open the door and step inside. The door slams shut behind you! What do you do?",
 	"options": [
 		{
 			"req": [
 				"!tried_door",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Try to open the door",
 			"result_text": "You try to force the door open, but it won't budge!",
@@ -17,8 +16,7 @@
 		{
 			"req": [
 				"tried_door",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Try the door again",
 			"result_text": "The door stays sturdy, not giving so much as a rattle.",
@@ -29,8 +27,7 @@
 			"req": [
 				"!check_room_1",
 				"!check_room_2",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Examine the room around me",
 			"result_text": "The room around you, like the house outside, is made of barren plywood. The only light source is a large frosted-glass window situated in the front door. There are two large boxes in the right and leftmost corners in front of you. A big-brimmed hat and a long trench coat hang on a metal hook against the left wall. There are no other doors or windows.",
@@ -42,8 +39,7 @@
 		{
 			"req": [
 				"check_room_1",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Examine the room more closely",
 			"result_text": "You examine the room more closely. To your surprise, you find a small wooden trapdoor on the ceiling that you hadn't noticed before.",
@@ -55,8 +51,7 @@
 		{
 			"req": [
 				"check_room_2",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Pull a box over to reach the trapdoor",
 			"result_text": "Area under development!",
@@ -72,8 +67,7 @@
 				"!beater_4",
 				"!beater_5",
 				"!beater_6",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Smash the window",
 			"result_text": "You attempt to smash the window with your fist. Great job! Now your hand hurts.",
@@ -90,8 +84,7 @@
 				"!beater_4",
 				"!beater_5",
 				"!beater_6",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Smash the window",
 			"result_text": "You attempt to smash the window again. The pain in your fist makes you want to cry.",
@@ -108,8 +101,7 @@
 				"!beater_4",
 				"!beater_5",
 				"!beater_6",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Smash the window",
 			"result_text": "The window again dismisses your hit. Your knuckles are cracked and bleeding.",
@@ -126,8 +118,7 @@
 				"!beater_4",
 				"!beater_5",
 				"!beater_6",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Smash the window",
 			"result_text": "The window has small red stains on its frosted glass. The cracks on your hand get larger.",
@@ -144,8 +135,7 @@
 				"beater_4",
 				"!beater_5",
 				"!beater_6",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Smash the window",
 			"result_text": "The window has small red streaks on its frosted glass. The cracks on your hand get larger.",
@@ -162,8 +152,7 @@
 				"beater_4",
 				"beater_5",
 				"!beater_6",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Smash the window",
 			"result_text": "The almighty window is unamused. You only achieve further self harm.",
@@ -208,23 +197,20 @@
 		{
 			"req": [
 				"check_room_1_A",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Examine the hat and coat",
-			"result_text": "You examine the hat and coat against the left wall. The hat is made of fine leather, the coat of breathable black silk. Upon closer inspection, they both look incredibly old and tattered. The silk especially looks very, very dirty. Deep slash marks cover the surface of the two objects, as if someone cut into them repeatedly with a knife. You take a closer inspection and- woah. Woah. Woah! Inside the hat, cleverly covered by the angle of the hat, is a human skull, with lidless, bloodshot eyes staring back out at you. You instinctively jump back as it unhooks itself from the sharp metal hook. The ground shakes as it hits the ground. You hear a sharp clicking sound and see a large black hole growing around the front door. The skeleton draws its sword and slashes! What do you do?",
+			"result_text": "You examine the hat and coat against the left wall. The hat is made of fine leather, the coat of breathable black silk. Upon closer inspection, they both look incredibly old and tattered. The silk especially looks very, very dirty. Deep slash marks cover the surface of the two objects, as if someone cut into them repeatedly with a knife. You take a closer inspection and- woah. Woah. Woah! Inside the hat, cleverly covered by the angle of the hat, is a human skull, with lidless, bloodshot eyes staring back out at you. You instinctively jump back as it unhooks itself from the sharp metal hook. The ground shakes as it hits the ground. You hear a sharp clicking sound and see a large black hole growing around the front door. The skeleton draws its sword and slashes! ",
 			"result": [
-				"set-trap",
-				"set-zone_1"
-			]
-			 
+				"set-start_room_fight:zone_1",
+				"move-start_room_fight"
+			]	 
 		},
 		{
 			"req": [
 				"!check_door_1",
 				"!check_door_2",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Examine the door",
 			"result_text": "Contrary to the barren plywood room, the door itself has been painted a muted white, with a darkened metallic handle. Both look brand new.",
@@ -236,8 +222,7 @@
 			"req": [
 				"check_door_1",
 				"!check_door_2",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Examine the door again",
 			"result_text": "Yep. It's a door.",
@@ -250,59 +235,17 @@
 			"req": [
 				"!check_door_1",
 				"check_door_2",
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Examine the door again",
 			"result_text": "Yep. It's still a door."
 		},
 		{
 			"req": [
-				"!beater_7",
-				"!trap"
+				"!beater_7"
 			],
 			"option_text": "Cry",
 			"result_text": "You sit on the floor and cry. Feels good."
-		},
-		{
-			"req": [
-				"trap",
-				"zone_1"
-			],
-			"option_text": "Dodge to the left",
-			"result": [
-				"unset-zone_1",
-				"set-zone_2",
-				"random-death_chance"
-			],
-			"death_chance": [
-				{
-					"weight": 80,
-					"commands": [
-						"print-live"
-					]
-				},
-				{
-					"weight": 1,
-					"commands": [
-						"print-die",
-						"reset"
-					]
-				}
-			],
-			"live": "You dodge to the left, closer to the growing hole. You turn back to see a short corridor has appeared with three doors at the end of it. Unfortunately, there's also a skeleton in the way.",
-			"die": "You dodge to the side, but the skeleton was just a little faster than you were. You hardly have the chance to look up as everything fades to black."
-		},
-		{
-			"req": [
-				"trap",
-				"zone_2"
-			],
-			"option_text": "Charge the skeleton",
-			"result_text": "The skeleton impales you with its sword. Your attempts to struggle only accelerate your demise.",
-			"result": [
-				"reset"
-			]
 		}
 	]
 }
