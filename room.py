@@ -56,7 +56,10 @@ class Room:
         self.__name = name
 
         # get room_text from json dict
-        self.__text = room_dict["room_text"]  
+        if "room_text" in room_dict:
+            self.__text = room_dict["room_text"]
+        else:
+            self.__text = None
 
         # initialize list of options
         self.__options = []
@@ -73,7 +76,8 @@ class Room:
         '''
 
         # print out the room's introduction text
-        print(self.__text + "\n")
+        if self.__text:
+            print(self.__text + "\n")
 
         # show options and get user input, loop until done with room
         running = True  # flag for loop
