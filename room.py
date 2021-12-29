@@ -136,9 +136,29 @@ class Room:
                         # set the namespace to be the room's name
                         namespace = self.__name
                         
+                    # if requirement is empty, check if the namespace exits instead
+                    if req == "":
+
+                        # if the first character is "!", requirement is met if namespace doesn't exist
+                        if namespace[0] == "!":
+
+                            # the namespace is everything but the first "!"
+                            namespace = namespace[1:]
+
+                            # if the namespace exists, the requirement isn't met
+                            if namespace in Room.__flags.keys():
+                                break   # stop checking requirements for this option
+
+                        # if the first character isn't "!", requirement is met if namespace exists
+                        else:
+
+                            # if namespace doesn't exist, requirement isn't met
+                            if namespace not in Room.__flags.keys():
+                                break   # stop checking requirements for this option
+                            
                     # if requirement starts with "!" and the following string is marked as a flag, requirement is not met
-                    if req[0] == "!":
-                        
+                    elif req[0] == "!":
+
                         if namespace in Room.__flags.keys() and req[1:] in Room.__flags[namespace]:
                             break   # stop checking requirements for this option
                         
@@ -242,11 +262,24 @@ class Room:
             # iterate through each command in the list
             for result in results:
 
+                # error if command isn't a string
+                assert isinstance(result, str), "commands in the result list must be strings, not " + str(type(result))
+
+                # remove spaces from the command
+                result = result.replace(" ", "")
+
                 if "-" in result:
+                    
                     # split the command into a command-argument pair by splitting at the first "-"
                     command, argument = result.split("-", 2)
+
+                # if no argument is given, count it as ""
                 else:
+
+                    # keep the command
                     command = result
+
+                    # count the argument as ""
                     argument = ""
 
                 # if the argument has a ":" in it, split it into its namespace and argument
@@ -267,33 +300,47 @@ class Room:
                 # if the command is "set", add the argument to the flags list as a flag to keep track of it
                 if command == "set":
 
-                    assert argument != "" and argument != "!", "The \"set\" command requires an argument and cannot be \"!\""
-                    
                     # if the namespace for the new flag doesn't exist yet in the flag dict, create it
-                    if not(namespace in Room.__flags.keys()):
-                        
+                    if namespace not in Room.__flags.keys():
+
                         # create the namespace in the form of an empty list with the namespace name as the dict key
                         Room.__flags[namespace] = []
-                        
-                    # add the argument to the flags list as a flag
-                    Room.__flags[namespace].append(argument)
+
+                    # if there is no argument, set the namespace rather than an individual flag
+                    if argument != "":
+
+                        # error if argument is "!"
+                        assert argument != "!", "The \"set\" command argument cannot be \"!\""
+                            
+                        # add the argument to the flags list as a flag
+                        Room.__flags[namespace].append(argument)
                     
                     continue    # continue to the next command
                 
                 # if the command is "unset", remove a flag from the flags list if it exists
                 elif command == "unset":
 
-                    assert argument != "" and argument != "!", "The \"unset\" command requires an argument and cannot be \"!\""
+                    # error if argument is "!"
+                    assert argument != "!", "The \"unset\" command argument cannot be \"!\""
                     
                     # if the namespace exists in the flag dict, remove all occurences of the argument flag
                     if namespace in Room.__flags.keys():
-                        
-                        # while there are occurences of the argument flag, remove them
-                        while argument in Room.__flags[namespace]:
+
+                        # if no argument, delete the entire namespace
+                        if argument == "":
+
+                            # delete the namespace
+                            del Room.__flags[namespace]
+
+                        # if there is an argument, remove occurences of it from the namespace
+                        else:
                             
-                            # remove an occurence of the argument flag
-                            Room.__flags[namespace].remove(argument)
-                            
+                            # while there are occurences of the argument flag, remove them
+                            while argument in Room.__flags[namespace]:
+                                
+                                # remove an occurence of the argument flag
+                                Room.__flags[namespace].remove(argument)
+                                
                     continue    # continue to the next command
 
             # if hte command is "reset", end the game
