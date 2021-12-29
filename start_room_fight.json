@@ -1,5 +1,4 @@
 {
-	"name": "start_room_fight",
 	"room_text": "What do you do?",
 	"options": [
 				{
@@ -32,7 +31,8 @@
 		},
 		{
 			"req": [
-				"zone_2"
+				"zone_2",
+				"!item:"
 			],
 			"option_text": "Charge the skeleton",
 			"result": [
@@ -57,7 +57,7 @@
 			],
 			"live": "You charge the skeleton, and it misses its attack!",
 			"die": "The skeleton impales you with its sword. Your attempts to struggle only accelerate your demise."
-		},
+		},	 
 		{
 			"req": [
 				"zone_2"
