@@ -3,7 +3,8 @@
 	"options": [
 				{
 			"req": [
-				"zone_1"
+				"zone_1",
+				"!event:"
 			],
 			"option_text": "Dodge to the left",
 			"result": [
@@ -32,7 +33,8 @@
 		{
 			"req": [
 				"zone_2",
-				"!item:"
+				"!item:",
+				"!event:"
 			],
 			"option_text": "Charge the skeleton",
 			"result": [
@@ -60,9 +62,11 @@
 		},	 
 		{
 			"req": [
-				"zone_2"
+				"zone_2",
+				"!item:",
+				"!event:"
 			],
-			"option_text": "Attempt to skirt around the skeleton",
+			"option_text": "Attempt to skirt around the left of skeleton",
 			"result": [
 				"random-death_chance"
 			],
@@ -74,15 +78,43 @@
 					]
 				},
 				{
-					"weight": 15,
+					"weight": 25,
 					"commands": [
 						"print-die",
 						"reset"
 					]
 				}
 			],
-			"live": 
-			"die": 
+			"live": "You feel the sword displace the air as it whizzes past you. Now what?",
+			"die": "You're just a tad too slow. The skeleton slashes your head clean off. You feel the blood pour out of your neck as everything slowly fades to black."
+		},
+		{
+						"req": [
+				"zone_2",
+				"!item:",
+				"!event:"
+			],
+			"option_text": "Attempt to skirt around the left of skeleton",
+			"result": [
+				"random-death_chance"
+			],
+			"death_chance": [
+				{
+					"weight": 7,
+					"commands": [
+						"print-live"
+					]
+				},
+				{
+					"weight": 3,
+					"commands": [
+						"print-die",
+						"reset"
+					]
+				}
+			],
+			"live": "You feel the sword displace the air as it whizzes past you. Now what?",
+			"die": "You're just a tad too slow. The skeleton slashes your head clean off. You feel the blood pour out of your neck as everything slowly fades to black."
 		}
 	]
 }

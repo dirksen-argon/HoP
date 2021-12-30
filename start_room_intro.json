@@ -32,7 +32,8 @@
 			"result_text": "The room around you, like the house outside, is made of barren plywood. The only light source is a large frosted-glass window situated in the front door. There are two large boxes in the right and leftmost corners in front of you. A big-brimmed hat and a long trench coat hang on a metal hook against the left wall. There are no other doors or windows.",
 			"result": [
 				"set-check_room_1",
-				"set-check_room_1_A"
+				"set-check_room_1_A",
+				"set-smash"
 			]
 		},
 		{
@@ -59,7 +60,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"!beater_1",
 				"!beater_2",
 				"!beater_3",
@@ -76,7 +77,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"!beater_2",
 				"!beater_3",
@@ -93,7 +94,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"!beater_3",
@@ -110,7 +111,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -127,7 +128,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -144,7 +145,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -161,7 +162,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -178,7 +179,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -374,9 +375,10 @@
 				"!beater_7"
 			],
 			"option_text": "Examine the door",
-			"result_text": "Contrary to the barren plywood room, the door itself has been painted a muted white, with a darkened metallic handle. Both look brand new.",
+			"result_text": "Contrary to the barren plywood room, the door itself has been painted a muted white, with a darkened metallic handle. Both look brand new. In addition, a large frosted window sits just within your reach.",
 			"result": [
-				"set-check_door_1"
+				"set-check_door_1",
+				"set-smash"
 			]
 		},
 		{
