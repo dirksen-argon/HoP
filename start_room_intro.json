@@ -1,6 +1,5 @@
 {
-	"name": "start_room_intro",
-	"room_text": "You are a young child caught out in the middle of suburbia, at night, alone. You come upon a large house. A REALLY large house, bigger than anything on either side of it, and certainly larger than anything you've ever seen before. It's made primarily out of bare plywood, some of it looking brand-new, but most looking molded and rotten. Suddenly, a strange force compels you to step forward. You attempt to resist it, but the urge is too strong! You slowly open the door and step inside. The door slams shut behind you! What do you do?",
+	"room_text": "House of Palai. Test. \n\nYou are a young child caught out in the middle of suburbia, at night, alone. You come upon a large house. A REALLY large house, bigger than anything on either side of it, and certainly larger than anything you've ever seen before. It's made primarily out of bare plywood, some of it looking brand-new, but most looking molded and rotten. Suddenly, a strange force compels you to step forward. You attempt to resist it, but the urge is too strong! You slowly open the door and step inside. The door slams shut behind you! What do you do?",
 	"options": [
 		{
 			"req": [
@@ -33,7 +32,8 @@
 			"result_text": "The room around you, like the house outside, is made of barren plywood. The only light source is a large frosted-glass window situated in the front door. There are two large boxes in the right and leftmost corners in front of you. A big-brimmed hat and a long trench coat hang on a metal hook against the left wall. There are no other doors or windows.",
 			"result": [
 				"set-check_room_1",
-				"set-check_room_1_A"
+				"set-check_room_1_A",
+				"set-smash"
 			]
 		},
 		{
@@ -60,7 +60,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"!beater_1",
 				"!beater_2",
 				"!beater_3",
@@ -77,7 +77,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"!beater_2",
 				"!beater_3",
@@ -94,7 +94,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"!beater_3",
@@ -111,7 +111,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -128,7 +128,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -145,7 +145,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -162,7 +162,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -179,7 +179,7 @@
 		},
 		{
 			"req": [
-				"check_room_1_A",
+				"smash",
 				"beater_1",
 				"beater_2",
 				"beater_3",
@@ -189,7 +189,7 @@
 				"beater_7"
 			],
 			"option_text": "Smash the window",
-			"result_text": "There is no going back now. Panic builds in your body as you attempt to stop, but the more panicked you get, the harder you pound. Broken bone sticks out of your knuckles and the tips of your fingers, pulling nerves and blood vessels up along with it. Chunks of your hands begin to fall on the floor. Slowly but surely, the gashes turn to missing fingers, blown holes, and pulverized bits of bone, all of which fall to the floor. You feel yourself become weaker, your face getting cold as blood leaks out of you like a fountain. You fall backward and land with the thud of wood. Your ears let out a high-pitched ring as you see and feel everything steadily fades to black.",
+			"result_text": "There is no going back now. Panic builds in your body as you attempt to stop, but the more panicked you get, the harder you pound. Broken bone sticks out of your knuckles and the tips of your fingers, pulling nerves and blood vessels up along with it. Chunks of your hands begin to fall on the floor. Slowly but surely, the gashes turn to missing fingers, blown holes, and pulverized bits of bone, all of which fall to the floor. You feel yourself become weaker, your face getting cold as blood leaks out of you like a fountain. You fall backward and land with the thud of wood. Your ears let out a high-pitched ring as you see and feel everything steadily fade to black.",
 			"result": [
 				"reset"
 			]
@@ -200,11 +200,173 @@
 				"!beater_7"
 			],
 			"option_text": "Examine the hat and coat",
-			"result_text": "You examine the hat and coat against the left wall. The hat is made of fine leather, the coat of breathable black silk. Upon closer inspection, they both look incredibly old and tattered. The silk especially looks very, very dirty. Deep slash marks cover the surface of the two objects, as if someone cut into them repeatedly with a knife. You take a closer inspection and- woah. Woah. Woah! Inside the hat, cleverly covered by the angle of the hat, is a human skull, with lidless, bloodshot eyes staring back out at you. You instinctively jump back as it unhooks itself from the sharp metal hook. The ground shakes as it hits the ground. You hear a sharp clicking sound and see a large black hole growing around the front door. The skeleton draws its sword and slashes! ",
+			"result_text": "You examine the hat and coat against the left wall. The hat is made of fine leather, the coat of breathable black silk. Upon closer inspection, they both look incredibly old and tattered. The silk especially looks very, very dirty. Deep slash marks cover the surface of the two objects, as if someone cut into them repeatedly with a knife. You take a closer inspection and- woah. Woah. Woah! Inside the hat, cleverly covered by the angle of the hat, is a human skull, with lidless, bloodshot eyes staring back out at you. You instinctively jump back as it unhooks itself from the sharp metal hook. The ground shakes as it hits the ground. You hear a sharp clicking sound and see a large black hole growing around the front door. The skeleton draws its sword and slashes! What do you do?",
 			"result": [
 				"set-start_room_fight:zone_1",
 				"move-start_room_fight"
 			]	 
+		},
+		{
+			"req": [
+				"check_room_1_A",
+				"!beater_7"
+			],
+			"option_text": "Open the left box",
+			"result": [
+				"random-box_item"
+			],
+			"box_item": [
+				{
+					"commands": [
+						"print-hatchet",
+						"set-item:hatchet",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				},
+				{
+					"commands": [
+						"print-dagger",
+						"set-item:dagger",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				},
+				{
+					"commands": [
+						"print-nightstick",
+						"set-item:nightstick",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				},
+				{
+					"commands": [
+						"random-spider"
+					]
+				},
+				{
+					"commands": [
+						"print-head",
+						"set-event:head",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				},
+				{
+					"commands": [
+						"print-empty",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				}
+			],
+			"hatchet": "You open the left box to find a hatchet with a wooden handle and an unpolished head, which you promptly pick up. Suddenly, you hear a sharp clicking sound. A large black hole is forming around the front door! The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside! You jump back instinctively as the skeleton draws a sword and slashes! What do you do?",
+			"dagger": "You open the left box to find a small dagger with ornate engravings on the blade and hilt with a medium ruby on either side of said hilt. Suddenly, you hear a sharp clicking sound. A large black hole is forming around the front door! The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside! You jump back instinctively as the skeleton draws a sword and slashes! What do you do?",
+			"nightstick": "You open the left box to find a collapsable nightstick made of heavy metal and painted a sleek black. Suddenly, you hear a sharp clicking sound. A large black hole is forming around the front door! The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside! You jump back instinctively as the skeleton draws a sword and slashes! What do you do?",
+			"spider": [
+				{
+					"weight": 9,
+					"commands": [
+						"print-spider_live",
+						"set-event:spider",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				},
+				{
+					"weight": 1,
+					"commands": [
+						"print-spider_die",
+						"reset"
+					]
+				}
+			],
+			"spider_live": "You open the left box and find a large tarantula inside that hisses and lunges! You instinctively duck, just barely preventing the arachnid from landing on you. Suddenly, you hear a sharp clicking sound. A large black hole is forming around the front door! The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside! You jump back instinctively as the skeleton draws a sword and slashes! What do you do?",
+			"spider_die": "You open the left box and find a large tarantula inside that hisses and lunges! You attempt to duck, but not quite fast enough. The spider sinks its fangs into your jugular, and you feel the venom slowly circulate throughout your body. Fire builds up in your body as you feel everything steadily fade to black.",
+			"head": "You open the left box to find a severed head staring up at you. It moves two glazed eyes in your direction and screams! The painful sound brings you to your knees, hands over your ears, as you feel something large hit the ground. You turn to look, and the hat and coat have sprung to life, with a skeleton inside! It draws a sword and slashes! What do you do?",
+			"empty": "You open the left box to find nothing inside. Suddenly, you hear a sharp clicking sound. A large black hole is forming around the front door! The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside! You jump back instinctively as the skeleton draws a sword and slashes! What do you do?"
+		},
+		{
+			"req": [
+				"check_room_1_A",
+				"!beater_7"
+			],
+			"option_text": "Open the right box",
+			"result": [
+				"random-box_item"
+			],
+			"box_item": [
+				{
+					"commands": [
+						"print-hatchet",
+						"set-item:hatchet",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				},
+				{
+					"commands": [
+						"print-dagger",
+						"set-item:dagger",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				},
+				{
+					"commands": [
+						"print-nightstick",
+						"set-item:nightstick",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				},
+				{
+					"commands": [
+						"random-spider"
+					]
+				},
+				{
+					"commands": [
+						"print-head",
+						"set-event:head",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				},
+				{
+					"commands": [
+						"print-empty",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				}
+			],
+			"hatchet": "You open the right box to find a hatchet with a wooden handle and an unpolished head, which you promptly pick up. Suddenly, you hear a sharp clicking sound. A large black hole is forming around the front door! The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside! You press yourself against the wall as the skeleton draws a sword and slashes! What do you do?",
+			"dagger": "You open the right box to find a small dagger with ornate engravings on the blade and hilt with a medium ruby on either side of said hilt. Suddenly, you hear a sharp clicking sound. A large black hole is forming around the front door! The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside! You press yourself against the wall as the skeleton draws a sword and slashes! What do you do?",
+			"nightstick": "You open the right box to find a collapsable nightstick made of heavy metal and painted a sleek black. Suddenly, you hear a sharp clicking sound. A large black hole is forming around the front door! The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside! You press yourself against the wall as the skeleton draws a sword and slashes! What do you do?",
+			"spider": [
+				{
+					"weight": 9,
+					"commands": [
+						"print-spider_live",
+						"set-event:spider",
+						"set-start_room_fight:zone_1",
+						"move-start_room_fight"
+					]
+				},
+				{
+					"weight": 1,
+					"commands": [
+						"print-spider_die",
+						"reset"
+					]
+				}
+			],
+			"spider_live": "You open the right box and find a large tarantula inside that hisses and lunges! You instinctively duck, just barely preventing the arachnid from landing on you. Suddenly, you hear a sharp clicking sound. A large black hole is forming around the front door! The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside! You press yourself against the wall as the skeleton draws a sword and slashes! What do you do?",
+			"spider_die": "You open the right box and find a large tarantula inside that hisses and lunges! You attempt to duck, but not quite fast enough. The spider sinks its fangs into your jugular, and you feel the venom slowly circulate throughout your body. Fire builds up in your body as you feel everything steadily fade to black.",
+			"head": "You open the right box to find a severed head staring up at you. It moves two glazed eyes in your direction and screams! The painful sound brings you to your knees, hands over your ears, as you feel something large hit the ground. You turn to look, and the hat and coat have sprung to life, with a skeleton inside! It draws a sword and slashes! What do you do?",
+			"empty": "You open the right box to find nothing inside. Suddenly, you hear a sharp clicking sound. A large black hole is forming around the front door! The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside! You press yourself against the wall as the skeleton draws a sword and slashes! What do you do?"
 		},
 		{
 			"req": [
@@ -213,9 +375,10 @@
 				"!beater_7"
 			],
 			"option_text": "Examine the door",
-			"result_text": "Contrary to the barren plywood room, the door itself has been painted a muted white, with a darkened metallic handle. Both look brand new.",
+			"result_text": "Contrary to the barren plywood room, the door itself has been painted a muted white, with a darkened metallic handle. Both look brand new. In addition, a large frosted window sits just within your reach.",
 			"result": [
-				"set-check_door_1"
+				"set-check_door_1",
+				"set-smash"
 			]
 		},
 		{
