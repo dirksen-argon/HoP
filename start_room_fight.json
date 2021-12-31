@@ -1,5 +1,4 @@
 {
-	"room_text": "What do you do?",
 	"options": [
 				{
 			"req": [
@@ -94,7 +93,7 @@
 				"!item:",
 				"!event:"
 			],
-			"option_text": "Attempt to skirt around the left of skeleton",
+			"option_text": "Attempt to skirt around the right of skeleton",
 			"result": [
 				"random-death_chance"
 			],
@@ -102,7 +101,9 @@
 				{
 					"weight": 7,
 					"commands": [
-						"print-live"
+						"print-live",
+						"unset-zone_2",
+						"set-zone_3"
 					]
 				},
 				{
@@ -115,6 +116,34 @@
 			],
 			"live": "You feel the sword displace the air as it whizzes past you. Now what?",
 			"die": "You're just a tad too slow. The skeleton slashes your head clean off. You feel the blood pour out of your neck as everything slowly fades to black."
+		},
+		{
+			"req": [
+				"zone_1",
+				"!event:"
+			],
+			"option_text": "Dodge to the right",
+			"result": [
+				"random-death_chance"
+			],
+			"death_chance": [
+				{
+					"weight": 80,
+					"commands": [
+						"print-live",
+						"unset-zone_1",
+						"set-zone_3"
+					]
+				},
+				{
+					"weight": 4,
+					"commands": [
+						"print-die"
+					]
+				}
+			],
+			"live": 
+			"die": 
 		}
 	]
 }
