@@ -2,6 +2,7 @@ from json import loads              # for converting json to dict
 from os.path import dirname, exists # for finding files
 import sys                          # for sys.exit() for ending the program
 from random import choice           # for running the random command
+from functions import slow_type     # for printing text in specific ways
 
 class Room:
     '''
@@ -77,7 +78,7 @@ class Room:
 
         # print out the room's introduction text
         if self.__text:
-            print(self.__text + "\n")
+            slow_type(self.__text + "\n\n")
 
         # show options and get user input, loop until done with room
         running = True  # flag for loop
@@ -193,13 +194,13 @@ class Room:
                 break   # stop showing options
 
             # print the corresponding letter of the option to its left
-            print(chr(letter_ascii), end=": ")
+            slow_type(chr(letter_ascii) + ": ")
 
             # increment the letter by 1 up the alphabet
             letter_ascii += 1
 
             # print the option's text
-            print(option["option_text"])
+            slow_type(option["option_text"] + "\n")
 
         # return the list of options shown to the user
         return shown_options
@@ -256,7 +257,7 @@ class Room:
         if "result_text" in option:
             
             # print the result_text
-            print(option["result_text"] + "\n")
+            slow_type(option["result_text"] + "\n\n")
 
         # if there is a result list in our option, run each command in the list
         if "result" in option:
@@ -361,7 +362,8 @@ class Room:
                         while getting_input:
 
                             # get input from user
-                            user_input = input("Continue? (Y/N): ").upper()
+                            slow_type("Continue? (Y/N): ")
+                            user_input = input().upper()
 
                             # make sure input is "Y" or "N"
                             getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True
@@ -426,7 +428,7 @@ class Room:
                     assert isinstance(option[argument], str), "The argument for \"print\" must be the label of a string, not a " + str(type(option[argument]))
 
                     # print out the string
-                    print(option[argument], end="\n\n")
+                    slow_type(option[argument] + "\n\n")
 
                 # if the command is "random", choose a random set of commands and run them
                 elif command == "random":

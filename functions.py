@@ -11,11 +11,156 @@ if __name__ != "__main__":
     # Higher numbers result in slower speeds, and vice-versa.
     # "slow_type does not accept input() statements, so
     # always put those outisde of it.
-    def slow_type(string, speed = 0.01):
+    def slow_type(string):
+        '''
+        Take a string and print it in a unique way dictated by codes in the string
+            preceded by the "@" symbol.
+
+        Parameters:
+            string (str): The string that will be printed. May contain codes preceded
+                by the escape character "@".
+        '''
+
+        # by default, the delay between letters printing is 10 milliseconds, though
+        # the print() function is slow enough that it might functionally act as a longer
+        # delay
+        delay = 10
+
+        # by default, the letters will be printed one at a time rather than all at once
+        slow_typing = True
+
+        # used to store chunks of output string before printing all characters at once
+        output = ""
+
+        # create an iterator of the input string
+        string = iter(string)
+
+        # for each character in the string, print it unless it is @, in which case
+        # get the command afterwards and change the function of displaying the letters
+        # accordingly
         for letter in string:
-            print(letter, end = "")
-            sleep(speed)
+
+            # if the letter is the escape character "@", get the code and change
+            # the function accordingly
+            if letter == "@":
+
+                # get the next letter in the string (or None if no more letters exist)
+                letter = next(string, None)
+
+                # error if the end of the string was reached as the code is incomplete
+                assert letter != None, "The \"@\" symbol must have a code after it"
+
+                # if the first character in the code is "d", change the delay between letters
+                if letter == "d":
+
+                    # used to store the code representing the new delay
+                    new_delay = ""
+
+                    # get the next four characters and combine them
+                    for i in range(4):
+
+                        # get the next letter, or None if end of string is reached
+                        letter = next(string, None)
+
+                        # error if end of string is reached before full code is collected
+                        assert letter != None, "The @dXXXX command requires a four digit number, but instead hit the end of the text"
+
+                        # append the new digit to the 4 digit code
+                        new_delay += letter
+
+                    # if the new delay (milliseconds) isn't a number throw an error
+                    assert new_delay.isnumeric(), "The @dXXXX command requires a four digit number, not " + new_delay
+
+                    # convert to an integer and set the delay
+                    delay = int(new_delay)
+
+                    # restart the loop, checking the next letter
+                    continue
+
+                # if the first character in the code is "@", print the "@" symbol
+                elif letter == "@":
+
+                    # do nothing, thus keeping "@" in the letter variable to be printed later
+                    pass
+
+                # if the first character in the code is "w", wait for the specified amount of milliseconds
+                elif letter == "w":
+
+                    # used to store the code as a string
+                    wait = ""
+
+                    # get the next four characters as the code for how long to wait
+                    for i in range(4):
+
+                        # get the next letter, or None if end of string is reached
+                        letter = next(string, None)
+
+                        # error if end of string is reached before full code is collected
+                        assert letter != None, "The @wXXXX command requires a four digit number, but instead hit the end of the text"
+
+                        # append the new digit to the wait digits
+                        wait += letter
+
+                    # error if wait isn't only comprised of digits
+                    assert wait.isnumeric(), "The @wXXXX command requires a four digit number, not " + wait
+
+                    # convert wait to an integer
+                    wait = int(wait)
+
+                    # sleep for "wait" milliseconds
+                    sleep(0.001 * wait)
+
+                    # restart the loop checking for the next character
+                    continue
+
+                # if the first character in the code is "s", stop slow typing and begin saving up letters to print at once
+                elif letter == "s":
+
+                    # stop slow typing
+                    slow_typing = False
+
+                    # restart the loop checking for the next character
+                    continue
+
+                # if the first character in the code is "o", print out all stored letters and begin slow typing again
+                elif letter == "o":
+
+                    # begin slow typing
+                    slow_typing = True
+
+                    # print out all stored letters
+                    print(output, end="")
+
+                    # clear stored letters
+                    output = ""
+
+                    # restart the loop checking for the next character
+                    continue
+
+                # if the first character in the code doesn't match a command, raise an error
+                else:
+                    # raise error
+                    raise AssertionError("@" + letter + " is not a valid command")
+
+            # if slow typing is enabled, print the single character then wait a delay
+            if slow_typing:
+
+                # print the current letter
+                print(letter, end="")
+
+                # wait for "delay" milliseconds
+                sleep(0.001 * delay)
+
+            # if slow typing is disabled, store letters to be printed at once later
+            else:
+
+                # store the current letter for later
+                output += letter
+
+        # print out any stored letters that haven't been printed yet
+        print(output, end="")
         
+
     # "pick_door" used to pick out singular doors. Not used in the starting
     # room or the elevator room, but used most other places.
     def pick_door(current_room):
@@ -89,3 +234,5 @@ else:
           "expected wrinkles to feel really rough, but it just feels weird.\n\n" + \
 
           "Anyways, yeah, this isn't the game. Good try though!")
+
+
