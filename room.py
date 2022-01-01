@@ -9,10 +9,11 @@ class Room:
     Represents a text adventure scenario with multiple options for the user to pick from.
 
     Attributes:
-        name (string): The name of the room and its corresponding .json file.
-        text (string): The text displayed when the room is first entered.
-        options (list[dict]): The options the user will choose from.
-        flags (dict[string:list]): The flags keeping track of user choices organized into namespaces based on the room names
+        __name (string): The name of the room and its corresponding .json file.
+        __text (string): The text displayed when the room is first entered.
+        __options (list[dict]): The options the user will choose from.
+        __constants (list[?]): List of constants to be utilize by commands.
+        __flags (dict[string:list]): The flags keeping track of user choices organized into namespaces based on the room names
     '''
 
     # initialize dict of flags
@@ -70,6 +71,21 @@ class Room:
             # add option to options list
             self.__options.append(option)
 
+        # initialize list of constants
+        self.__constants = {}
+
+        # get constants from the json dict
+        if "constants" in room_dict.keys():
+
+            # error if "constants" isn't a list as intended
+            assert isinstance(room_dict["constants"], dict), "\"constants\" must be a a dictionary"
+
+            # add every constant to the constants dict
+            for constant in room_dict["constants"].keys():
+
+                # add the constant to the constants dict
+                self.__constants[constant] = room_dict["constants"][constant]
+                
 
     def run(self):
         '''
@@ -421,14 +437,29 @@ class Room:
                     # error if there is no argument
                     assert argument != "", "the \"print\" command requires an argument"
 
-                    # error if argument doesn't match any element in the option
-                    assert argument in option, "Cannot print " + argument + " as it does not exist"
+                    # check if the target text is in the curretn option
+                    if argument in option:
+
+                        # store the found text
+                        text = option[argument]
+
+                    # check if the target text is in the constants dictionary
+                    elif argument in self.__constants.keys():
+
+                        # store the found text
+                        text = self.__constants[argument]
+
+                    # error if argument doesn't match any element in the option object or constants dict
+                    else:
+
+                        # raise error
+                        raise AssertionError("Cannot print " + argument + " as it does not exist")
 
                     # error if argument is not the label of a string
-                    assert isinstance(option[argument], str), "The argument for \"print\" must be the label of a string, not a " + str(type(option[argument]))
+                    assert isinstance(text, str), "The argument for \"print\" must be the label of a string, not a " + str(type(text))
 
                     # print out the string
-                    slow_type(option[argument] + "\n\n")
+                    slow_type(text + "\n\n")
 
                 # if the command is "random", choose a random set of commands and run them
                 elif command == "random":
@@ -436,17 +467,32 @@ class Room:
                     # error if no argument for "random" command
                     assert argument != "", "the \"random\" command requires an argument"
 
+                    # check if table is in option object
+                    if argument in option:
+
+                        # get table from option object
+                        table = option[argument]
+
+                    # check if table is in constants dictionary
+                    elif argument in self.__constants.keys():
+
+                        # get table from constants dictionary
+                        table = self.__constants[argument]
+                        
                     # error if no random table matching argument
-                    assert argument in option, "Cannot find random table: \"" + argument + "\""
+                    else:
+
+                        # raise error
+                        raise AssertionError("Cannot find random table: \"" + argument + "\"")
 
                     # error if random table is not a list
-                    assert isinstance(option[argument], list), argument + " must be the label of a list, not a " + str(type(option[argument]))
+                    assert isinstance(table, list), argument + " must be the label of a list, not a " + str(type(table))
 
                     # create list for storing each occurence of lists of commands to be chosen randomly
                     bag = []
 
                     # add each command list to the random bag taking into accout its weight
-                    for random_group in option[argument]:
+                    for random_group in table:
 
                         # if weight is an attribute, use it to set the weight | weight is the relative likelihood of a list being chosen
                         if "weight" in random_group:
