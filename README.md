@@ -32,6 +32,8 @@ req (OPTIONAL)
 &ensp;req is a list of strings where each string is a flag that must be set for the option to be displayed.  
 &ensp;If a flag starts with "!", then that flag must not be set for the option to be displayed.  
 &ensp;If a flag is in a different namespace, write the namespace before the flag name and separate with a colon. Example: "namespace:flag_name"  
+&ensp;If only a namespace is shown (Example: "namespace:"), a colon is necessary after it and it will be met if the namespace exists  
+&ensp;If a namespace begins with "!", then that requirement will only be met if that namespace is fully unset  
 
 option_text  
 &ensp;contains the text describing its corresponding option  
@@ -50,6 +52,7 @@ result (OPTIONAL)
 &ensp;set  
 &ensp;&ensp;The set command will store the argument as a string to be checked later.  
 &ensp;&ensp;set can be used to set flags to be checked by the req list in the JSON structure.  
+&ensp;&ensp;You can set a namespace to exist (even if it is empty) using the set command. Just include a ":" after the namespace name.  
     
 &ensp;unset  
 &ensp;&ensp;The unset command will remove any instances of the argument string that are being stored as a flag to be checked later  
@@ -70,5 +73,6 @@ result (OPTIONAL)
 &ensp;random  
 &ensp;&ensp;The random command will run a randomly selected set of commands. Its argument is the name of a list containing the random choices.  
 &ensp;&ensp;The list contains objects. Each object has a "weight" integer(OPTIONAL) and a "commands" list.  
-&ensp;&ensp; The weight integer is the weight of the corresponding commands list being randomly selected.  
-&ensp;&ensp; The "commands" list is a list of strings containing commands, exactly like the "result" list.  
+&ensp;&ensp;The weight integer is the weight of the corresponding commands list being randomly selected.  
+&ensp;&ensp;The "commands" list is a list of strings containing commands, exactly like the "result" list.  
+&ensp;&ensp;A "req" list (OPTIONAL) is allowed. The "req" list contains commands in the same way as the "req" list inside option objects (see above)
