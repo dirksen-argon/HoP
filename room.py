@@ -219,6 +219,9 @@ class Room:
         # get input from user and convert to uppercase
         user_input = input("\n").upper()
 
+        # remove spaces
+        user_input = user_input.replace(" ", "")
+
         # print a newline
         print()
 
