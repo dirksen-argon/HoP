@@ -65,6 +65,9 @@ class Room:
 
         # initialize list of options
         self.__options = []
+
+        # error if no options list in the json
+        assert "options" in room_dict, "A list of options is mandatory to run a room"
         
         # get options from json dict
         for option in room_dict["options"]:
@@ -198,6 +201,9 @@ class Room:
                 
                 # add the option to the shown_options list
                 shown_options.append(option)
+
+        # error if no options to show
+        assert len(shown_options) > 0, "No options met the requrements to be shown. At least one option must be able to be shown"
 
         # options are ordered by letter, so keep track of the current letter in ASCII from starting with "A"
         letter_ascii = ord("A")
