@@ -3,6 +3,7 @@ if __name__ != "__main__":
     import json
     from time import sleep
     from random import choice
+    import sys
     
     # "slow_type" used for text scroll. Default speed can be
     # altered by ending a string, typing a comma, and then
@@ -24,7 +25,7 @@ if __name__ != "__main__":
         # by default, the delay between letters printing is 10 milliseconds, though
         # the print() function is slow enough that it might functionally act as a longer
         # delay
-        delay = 10
+        delay = 65
 
         # by default, the letters will be printed one at a time rather than all at once
         slow_typing = True
@@ -130,6 +131,7 @@ if __name__ != "__main__":
 
                     # print out all stored letters
                     print(output, end="")
+                    sys.stdout.flush()
 
                     # clear stored letters
                     output = ""
@@ -147,6 +149,7 @@ if __name__ != "__main__":
 
                 # print the current letter
                 print(letter, end="")
+                sys.stdout.flush()
 
                 # wait for "delay" milliseconds
                 sleep(0.001 * delay)
@@ -159,6 +162,7 @@ if __name__ != "__main__":
 
         # print out any stored letters that haven't been printed yet
         print(output, end="")
+        sys.stdout.flush()
         
 
     # "pick_door" used to pick out singular doors. Not used in the starting
