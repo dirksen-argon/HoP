@@ -88,6 +88,10 @@ class Room:
 
                 # add the constant to the constants dict
                 self.__constants[constant] = room_dict["constants"][constant]
+
+        if "commands" in room_dict.keys():
+            assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"
+            self.__run_results(room_dict["commands"][:])
                 
 
     def run(self):
@@ -114,9 +118,24 @@ class Room:
 
                 # restart loop
                 continue
+            
+            # if there is "result_text" in our option, print it
+            if "result_text" in chosen_option:
+                
+                # print the result_text
+                slow_type(chosen_option["result_text"] + "\n\n")
 
-            # run the results of the choice
-            running = self.__run_results(chosen_option)
+            # if there is a result list in our option, run each command in the list
+            if "result" in chosen_option:
+
+                # get the list of commands
+                results = chosen_option["result"][:]
+
+                # error if results isn't a list
+                assert isinstance(results, list), "\"result\" must be a list"
+                
+                # run the results of the choice
+                running = self.__run_results(results, chosen_option)
             
                     
     def __display_options(self):
@@ -261,7 +280,7 @@ class Room:
         return option
         
 
-    def __run_results(self, option):
+    def __run_results(self, results, option={}):
         '''
         Evaluate and run the results set to happen for the chosen option
 
@@ -274,272 +293,261 @@ class Room:
 
         # keep track of whether a result would end the game
         game_running = True
-        
-        # if there is "result_text" in our option, print it
-        if "result_text" in option:
             
-            # print the result_text
-            slow_type(option["result_text"] + "\n\n")
+        # iterate through each command in the list
+        for result in results:
 
-        # if there is a result list in our option, run each command in the list
-        if "result" in option:
+            # error if command isn't a string
+            assert isinstance(result, str), "commands in the result list must be strings, not " + str(type(result))
 
-            results = option["result"][:]
-            
-            # iterate through each command in the list
-            for result in results:
+            # remove spaces from the command
+            result = result.replace(" ", "")
 
-                # error if command isn't a string
-                assert isinstance(result, str), "commands in the result list must be strings, not " + str(type(result))
-
-                # remove spaces from the command
-                result = result.replace(" ", "")
-
-                if "-" in result:
-                    
-                    # split the command into a command-argument pair by splitting at the first "-"
-                    command, argument = result.split("-", 2)
-
-                # if no argument is given, count it as ""
-                else:
-
-                    # keep the command
-                    command = result
-
-                    # count the argument as ""
-                    argument = ""
-
-                # if the argument has a ":" in it, split it into its namespace and argument
-                if ":" in argument:
-                    
-                    # get the namespace (left of the ":") and the argument (right of the ":")
-                    namespace, argument = argument.split(":", 2)
-
-                    # verify that there are no more colons
-                    assert ":" not in argument, "too many \":\" in flag " + flag
-                    
-                # if there is no ":" in the argument, then the namespace is the same as the room name
-                else:
-                    
-                    # the namespace is the same as the room's name
-                    namespace = self.__name
-
-                # if the command is "set", add the argument to the flags list as a flag to keep track of it
-                if command == "set":
-
-                    # if the namespace for the new flag doesn't exist yet in the flag dict, create it
-                    if namespace not in Room.__flags.keys():
-
-                        # create the namespace in the form of an empty list with the namespace name as the dict key
-                        Room.__flags[namespace] = []
-
-                    # if there is no argument, set the namespace rather than an individual flag
-                    if argument != "":
-
-                        # error if argument is "!"
-                        assert argument != "!", "The \"set\" command argument cannot be \"!\""
-                            
-                        # add the argument to the flags list as a flag
-                        Room.__flags[namespace].append(argument)
-                    
-                    continue    # continue to the next command
+            if "-" in result:
                 
-                # if the command is "unset", remove a flag from the flags list if it exists
-                elif command == "unset":
+                # split the command into a command-argument pair by splitting at the first "-"
+                command, argument = result.split("-", 2)
+
+            # if no argument is given, count it as ""
+            else:
+
+                # keep the command
+                command = result
+
+                # count the argument as ""
+                argument = ""
+
+            # if the argument has a ":" in it, split it into its namespace and argument
+            if ":" in argument:
+                
+                # get the namespace (left of the ":") and the argument (right of the ":")
+                namespace, argument = argument.split(":", 2)
+
+                # verify that there are no more colons
+                assert ":" not in argument, "too many \":\" in flag " + flag
+                
+            # if there is no ":" in the argument, then the namespace is the same as the room name
+            else:
+                
+                # the namespace is the same as the room's name
+                namespace = self.__name
+
+            # if the command is "set", add the argument to the flags list as a flag to keep track of it
+            if command == "set":
+
+                # if the namespace for the new flag doesn't exist yet in the flag dict, create it
+                if namespace not in Room.__flags.keys():
+
+                    # create the namespace in the form of an empty list with the namespace name as the dict key
+                    Room.__flags[namespace] = []
+
+                # if there is no argument, set the namespace rather than an individual flag
+                if argument != "":
 
                     # error if argument is "!"
-                    assert argument != "!", "The \"unset\" command argument cannot be \"!\""
-                    
-                    # if the namespace exists in the flag dict, remove all occurences of the argument flag
-                    if namespace in Room.__flags.keys():
+                    assert argument != "!", "The \"set\" command argument cannot be \"!\""
+                        
+                    # add the argument to the flags list as a flag
+                    Room.__flags[namespace].append(argument)
+                
+                continue    # continue to the next command
+            
+            # if the command is "unset", remove a flag from the flags list if it exists
+            elif command == "unset":
 
-                        # if no argument, delete the entire namespace
-                        if argument == "":
+                # error if argument is "!"
+                assert argument != "!", "The \"unset\" command argument cannot be \"!\""
+                
+                # if the namespace exists in the flag dict, remove all occurences of the argument flag
+                if namespace in Room.__flags.keys():
 
-                            # delete the namespace
-                            del Room.__flags[namespace]
+                    # if no argument, delete the entire namespace
+                    if argument == "":
 
-                        # if there is an argument, remove occurences of it from the namespace
-                        else:
+                        # delete the namespace
+                        del Room.__flags[namespace]
+
+                    # if there is an argument, remove occurences of it from the namespace
+                    else:
+                        
+                        # while there are occurences of the argument flag, remove them
+                        while argument in Room.__flags[namespace]:
                             
-                            # while there are occurences of the argument flag, remove them
-                            while argument in Room.__flags[namespace]:
-                                
-                                # remove an occurence of the argument flag
-                                Room.__flags[namespace].remove(argument)
-                                
-                    continue    # continue to the next command
+                            # remove an occurence of the argument flag
+                            Room.__flags[namespace].remove(argument)
+                            
+                continue    # continue to the next command
 
-            # if hte command is "reset", end the game
-                elif command == "reset":
+        # if hte command is "reset", end the game
+            elif command == "reset":
 
-                    # if no argument is given, assume it is intended to be "game"
-                    argument = "game" if argument == "" else argument
+                # if no argument is given, assume it is intended to be "game"
+                argument = "game" if argument == "" else argument
 
-                    # if the argument is "game", end the game
-                    if argument == "game":
+                # if the argument is "game", end the game
+                if argument == "game":
 
-                        # get input from the user regarding whether to replay or quit
-                        getting_input = True    # True while user hasn't yet inputted valid input
-                        while getting_input:
+                    # get input from the user regarding whether to replay or quit
+                    getting_input = True    # True while user hasn't yet inputted valid input
+                    while getting_input:
 
-                            # get input from user
-                            slow_type("Continue? (Y/N): ")
-                            user_input = input().upper()
+                        # get input from user
+                        slow_type("Continue? (Y/N): ")
+                        user_input = input().upper()
 
-                            # make sure input is "Y" or "N"
-                            getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True
+                        # make sure input is "Y" or "N"
+                        getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True
 
-                        # if the user inputted "Y", restart the game by ending all running rooms but keeping the program running
-                        if user_input == "Y":
+                    # if the user inputted "Y", restart the game by ending all running rooms but keeping the program running
+                    if user_input == "Y":
 
-                            # removing all active flags
-                            Room.__flags = {}
-                                
-                            # end all running rooms but keeps program running
-                            game_running = False
+                        # removing all active flags
+                        Room.__flags = {}
+                            
+                        # end all running rooms but keeps program running
+                        game_running = False
 
-                            # print newline
-                            print()
+                        # print newline
+                        print()
 
-                        # if the user inputted "N", end the program
-                        else:
-
-                            # end the program
-                            sys.exit()
-
-                    # if the argument is invalid raise an error
-                    else:
-                        
-                        # raise an error due to invalid argument
-                        raise AssertionError(argument + " is not a valid argument of reset")
-
-                # if the quit command is run, exit the program
-                elif command == "quit":
-
-                    # if the quit command has any arguments, raise an error
-                    assert argument == "", argument + " is not a valid argument of \"quit\""
-
-                    # exit the program
-                    sys.exit()
-
-                # if the command is "move", stop running the current room and run a new room
-                elif command == "move":
-
-                    assert argument != "", "argument for \"move\" cannot be empty"
-
-                    # create a new room with argument being the room's name
-                    next_room = Room(argument)
-
-                    # run the new room
-                    next_room.run()
-
-                    # stop running the current room
-                    game_running = False
-
-                # if the command is "print", print out a string with the argument as its name
-                elif command == "print":
-
-                    # error if there is no argument
-                    assert argument != "", "the \"print\" command requires an argument"
-
-                    # check if the target text is in the curretn option
-                    if argument in option:
-
-                        # store the found text
-                        text = option[argument]
-
-                    # check if the target text is in the constants dictionary
-                    elif argument in self.__constants.keys():
-
-                        # store the found text
-                        text = self.__constants[argument]
-
-                    # error if argument doesn't match any element in the option object or constants dict
+                    # if the user inputted "N", end the program
                     else:
 
-                        # raise error
-                        raise AssertionError("Cannot print " + argument + " as it does not exist")
+                        # end the program
+                        sys.exit()
 
-                    # error if argument is not the label of a string
-                    assert isinstance(text, str), "The argument for \"print\" must be the label of a string, not a " + str(type(text))
+                # if the argument is invalid raise an error
+                else:
+                    
+                    # raise an error due to invalid argument
+                    raise AssertionError(argument + " is not a valid argument of reset")
 
-                    # print out the string
-                    slow_type(text + "\n\n")
+            # if the quit command is run, exit the program
+            elif command == "quit":
 
-                # if the command is "random", choose a random set of commands and run them
-                elif command == "random":
+                # if the quit command has any arguments, raise an error
+                assert argument == "", argument + " is not a valid argument of \"quit\""
 
-                    # error if no argument for "random" command
-                    assert argument != "", "the \"random\" command requires an argument"
+                # exit the program
+                sys.exit()
 
-                    # check if table is in option object
-                    if argument in option:
+            # if the command is "move", stop running the current room and run a new room
+            elif command == "move":
 
-                        # get table from option object
-                        table = option[argument]
+                assert argument != "", "argument for \"move\" cannot be empty"
 
-                    # check if table is in constants dictionary
-                    elif argument in self.__constants.keys():
+                # create a new room with argument being the room's name
+                next_room = Room(argument)
 
-                        # get table from constants dictionary
-                        table = self.__constants[argument]
-                        
-                    # error if no random table matching argument
-                    else:
+                # run the new room
+                next_room.run()
 
-                        # raise error
-                        raise AssertionError("Cannot find random table: \"" + argument + "\"")
+                # stop running the current room
+                game_running = False
 
-                    # error if random table is not a list
-                    assert isinstance(table, list), argument + " must be the label of a list, not a " + str(type(table))
+            # if the command is "print", print out a string with the argument as its name
+            elif command == "print":
 
-                    # create list for storing each occurence of lists of commands to be chosen randomly
-                    bag = []
+                # error if there is no argument
+                assert argument != "", "the \"print\" command requires an argument"
 
-                    # add each command list to the random bag taking into accout its weight
-                    for random_group in table:
+                # check if the target text is in the curretn option
+                if argument in option:
 
-                        # if weight is an attribute, use it to set the weight | weight is the relative likelihood of a list being chosen
-                        if "weight" in random_group:
+                    # store the found text
+                    text = option[argument]
 
-                            # error if weight is not an integer
-                            assert isinstance(random_group["weight"], int), "weight must be an integer, not a " + str(type(random_group["weight"]))
+                # check if the target text is in the constants dictionary
+                elif argument in self.__constants.keys():
 
-                            # set weight from the JSON
-                            weight = random_group["weight"]
+                    # store the found text
+                    text = self.__constants[argument]
 
-                        # if weight is not specified, set it to 1
-                        else:
-                            # set the weight to 1
-                            weight = 1
-
-                        # error if no commands list
-                        assert "commands" in random_group, "Every object in a random table must have a \"commands\" list"
-
-                        # error if commands list is not a list
-                        assert isinstance(random_group["commands"], list), "\"commands\" must be a list, not a " + str(type(random_group["commands"]))
-
-                        # add 1 occurence of the command list for every weight point
-                        for i in range(weight):
-
-                            # add an occurence of the command list to the random bag
-                            bag.append(random_group["commands"])
-
-                    # error if the bag is empty
-                    assert bag != [], "No choices were found in random table: " + argument
-
-                    # get a random command list from the bag
-                    chosen_command_list = choice(bag)
-
-                    # add the commands from the randomly selected command list to the list of commands running right now
-                    results += chosen_command_list
-
-                # if the command is not a valid command raise an error
+                # error if argument doesn't match any element in the option object or constants dict
                 else:
 
-                    # raise an error due to an invalid command
-                    raise AssertionError(command + " is not a valid command")
+                    # raise error
+                    raise AssertionError("Cannot print " + argument + " as it does not exist")
+
+                # error if argument is not the label of a string
+                assert isinstance(text, str), "The argument for \"print\" must be the label of a string, not a " + str(type(text))
+
+                # print out the string
+                slow_type(text + "\n\n")
+
+            # if the command is "random", choose a random set of commands and run them
+            elif command == "random":
+
+                # error if no argument for "random" command
+                assert argument != "", "the \"random\" command requires an argument"
+
+                # check if table is in option object
+                if argument in option:
+
+                    # get table from option object
+                    table = option[argument]
+
+                # check if table is in constants dictionary
+                elif argument in self.__constants.keys():
+
+                    # get table from constants dictionary
+                    table = self.__constants[argument]
+                    
+                # error if no random table matching argument
+                else:
+
+                    # raise error
+                    raise AssertionError("Cannot find random table: \"" + argument + "\"")
+
+                # error if random table is not a list
+                assert isinstance(table, list), argument + " must be the label of a list, not a " + str(type(table))
+
+                # create list for storing each occurence of lists of commands to be chosen randomly
+                bag = []
+
+                # add each command list to the random bag taking into accout its weight
+                for random_group in table:
+
+                    # if weight is an attribute, use it to set the weight | weight is the relative likelihood of a list being chosen
+                    if "weight" in random_group:
+
+                        # error if weight is not an integer
+                        assert isinstance(random_group["weight"], int), "weight must be an integer, not a " + str(type(random_group["weight"]))
+
+                        # set weight from the JSON
+                        weight = random_group["weight"]
+
+                    # if weight is not specified, set it to 1
+                    else:
+                        # set the weight to 1
+                        weight = 1
+
+                    # error if no commands list
+                    assert "commands" in random_group, "Every object in a random table must have a \"commands\" list"
+
+                    # error if commands list is not a list
+                    assert isinstance(random_group["commands"], list), "\"commands\" must be a list, not a " + str(type(random_group["commands"]))
+
+                    # add 1 occurence of the command list for every weight point
+                    for i in range(weight):
+
+                        # add an occurence of the command list to the random bag
+                        bag.append(random_group["commands"])
+
+                # error if the bag is empty
+                assert bag != [], "No choices were found in random table: " + argument
+
+                # get a random command list from the bag
+                chosen_command_list = choice(bag)
+
+                # add the commands from the randomly selected command list to the list of commands running right now
+                results += chosen_command_list
+
+            # if the command is not a valid command raise an error
+            else:
+
+                # raise an error due to an invalid command
+                raise AssertionError(command + " is not a valid command")
 
         # return whether the game would end
         return game_running
