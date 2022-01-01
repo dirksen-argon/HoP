@@ -57,10 +57,16 @@ class Room:
         # set name of room
         self.__name = name
 
-        # get room_text from json dict
+        # get room_text from json dict if it exists
         if "room_text" in room_dict:
+
+            # get the room text
             self.__text = room_dict["room_text"]
+
+        # if there is no room text, note that
         else:
+
+            # there is no room text
             self.__text = None
 
         # initialize list of options
@@ -71,6 +77,7 @@ class Room:
         
         # get options from json dict
         for option in room_dict["options"]:
+            
             # add option to options list
             self.__options.append(option)
 
@@ -89,8 +96,13 @@ class Room:
                 # add the constant to the constants dict
                 self.__constants[constant] = room_dict["constants"][constant]
 
+        # if there are commands to run on startup, run them
         if "commands" in room_dict.keys():
+
+            # error if "commands" is not a list
             assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"
+
+            # run the startup commands
             self.__run_results(room_dict["commands"][:])
                 
 
@@ -155,70 +167,16 @@ class Room:
             # if option has requirements, verify they are met
             if "req" in option:
 
-                # check each requirement
-                for req in option["req"]:
+                # if requirements are met, append the option to be displayed later
+                if self.__check_requirements(option["req"]):
 
-                    # make sure req isn't empty
-                    assert req != "", "empty strings in JSON req lists are not allowed"
-
-                    # make sure req isn't an exclamation mark
-                    assert req != "!", "\"\!\" is used for inverting requirements and is not allowed by itself in a JSON req list"
-
-                    # if there is a ":" in the requirement, its flag is under a different namespace
-                    if ":" in req:
-                        
-                        # get the namespace (left of the ":") and the requirement (right of the ":")
-                        namespace, req = req.split(":", 2)
-
-                        # make sure there are no more colons
-                        assert not(":" in req), "too many \":\" in requirement " + req
-                        
-                    # if there isn't a ":", the namespace is the same as the Room name
-                    else:
-                        
-                        # set the namespace to be the room's name
-                        namespace = self.__name
-                        
-                    # if requirement is empty, check if the namespace exits instead
-                    if req == "":
-
-                        # if the first character is "!", requirement is met if namespace doesn't exist
-                        if namespace[0] == "!":
-
-                            # the namespace is everything but the first "!"
-                            namespace = namespace[1:]
-
-                            # if the namespace exists, the requirement isn't met
-                            if namespace in Room.__flags.keys():
-                                break   # stop checking requirements for this option
-
-                        # if the first character isn't "!", requirement is met if namespace exists
-                        else:
-
-                            # if namespace doesn't exist, requirement isn't met
-                            if namespace not in Room.__flags.keys():
-                                break   # stop checking requirements for this option
-                            
-                    # if requirement starts with "!" and the following string is marked as a flag, requirement is not met
-                    elif req[0] == "!":
-
-                        if namespace in Room.__flags.keys() and req[1:] in Room.__flags[namespace]:
-                            break   # stop checking requirements for this option
-                        
-                    # if requirement is not marked as a flag, requirement is not met
-                    elif namespace not in Room.__flags.keys() or (namespace in Room.__flags.keys() and req not in Room.__flags[namespace]):
-                        break   # stop checking requirements for this option
-                    
-                # if all requirements have been verified without issue, add the option to the shown_options list
-                else:
-                    
-                    # add the option to the shown_options list
+                    # append the option so that it is displayed later
                     shown_options.append(option)
-                    
-            # if no requirements were specified, room passes all requirements
+
+            # if there are no requiremnts, requirements are assumed to be met
             else:
-                
-                # add the option to the shown_options list
+
+                # requirements are met
                 shown_options.append(option)
 
         # error if no options to show
@@ -519,8 +477,30 @@ class Room:
 
                     # if weight is not specified, set it to 1
                     else:
+                        
                         # set the weight to 1
                         weight = 1
+
+                    # if there are requirements tied to this group, verify they are met
+                    if "req" in random_group:
+
+                        # error if req is not a list
+                        assert isinstance(random_group["req"], list), "\"req\" must be the name of a list, not a " + str(type(random_group["req"]))
+
+                        # check the requirements of the random group
+                        requirements_met = self.__check_requirements(random_group["req"])
+
+                    # if there are no requiremnts, then requirements are assumed to be met
+                    else:
+
+                        # requirements are met
+                        requirements_met = True
+
+                    # if requirements are not met, do not use this random group
+                    if requirements_met == False:
+
+                        # set weight to 0, effectivly preventing this group from being used
+                        weight = 0
 
                     # error if no commands list
                     assert "commands" in random_group, "Every object in a random table must have a \"commands\" list"
@@ -552,4 +532,67 @@ class Room:
         # return whether the game would end
         return game_running
 
+    def __check_requirements(self, requirements):
 
+        # check each requirement
+        for req in requirements:
+
+            # make sure req isn't empty
+            assert req != "", "empty strings in JSON req lists are not allowed"
+
+            # make sure req isn't an exclamation mark
+            assert req != "!", "\"\!\" is used for inverting requirements and is not allowed by itself in a JSON req list"
+
+            # if there is a ":" in the requirement, its flag is under a different namespace
+            if ":" in req:
+                
+                # get the namespace (left of the ":") and the requirement (right of the ":")
+                namespace, req = req.split(":", 2)
+
+                # make sure there are no more colons
+                assert not(":" in req), "too many \":\" in requirement " + req
+                
+            # if there isn't a ":", the namespace is the same as the Room name
+            else:
+                
+                # set the namespace to be the room's name
+                namespace = self.__name
+                
+            # if requirement is empty, check if the namespace exits instead
+            if req == "":
+
+                # if the first character is "!", requirement is met if namespace doesn't exist
+                if namespace[0] == "!":
+
+                    # the namespace is everything but the first "!"
+                    namespace = namespace[1:]
+
+                    # if the namespace exists, the requirement isn't met
+                    if namespace in Room.__flags.keys():
+                        break   # stop checking requirements for this option
+
+                # if the first character isn't "!", requirement is met if namespace exists
+                else:
+
+                    # if namespace doesn't exist, requirement isn't met
+                    if namespace not in Room.__flags.keys():
+                        break   # stop checking requirements for this option
+                    
+            # if requirement starts with "!" and the following string is marked as a flag, requirement is not met
+            elif req[0] == "!":
+
+                if namespace in Room.__flags.keys() and req[1:] in Room.__flags[namespace]:
+                    break   # stop checking requirements for this option
+                
+            # if requirement is not marked as a flag, requirement is not met
+            elif namespace not in Room.__flags.keys() or (namespace in Room.__flags.keys() and req not in Room.__flags[namespace]):
+                break   # stop checking requirements for this option
+            
+        # if all requirements have been verified without issue, add the option to the shown_options list
+        else:
+
+            # return True as all requirments were met
+            return True
+
+        # return False as at least one requirment is not met
+        return False
