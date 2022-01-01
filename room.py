@@ -103,7 +103,9 @@ class Room:
             assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"
 
             # run the startup commands
-            self.__run_results(room_dict["commands"][:])
+            command_result = self.__run_results(room_dict["commands"][:])
+
+            assert command_result == True, "commands such as reset are not allowed at startup of a room"
                 
 
     def run(self):
