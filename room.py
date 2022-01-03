@@ -35,7 +35,7 @@ class Room:
         assert isinstance(name, str), "room name must be a string"
 
         # ensure json file matching name exists
-        assert exists(dirname(__file__) + "/" + name + ".json"), "no file named \"" + name + ".json\" at " + dirname(__file__)
+        assert exists(dirname(__file__) + "/rooms/" + name + ".json"), "no file named \"" + name + ".json\" at " + dirname(__file__)
 
 
         #
@@ -43,7 +43,7 @@ class Room:
         #
 
         # open json file
-        json_handle = open(name + ".json", "r")
+        json_handle = open(dirname(__file__) + "/rooms/" + name + ".json", "r")
 
         # get text from json file
         room_json = json_handle.read()
