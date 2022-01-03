@@ -4,6 +4,9 @@ import sys                          # for sys.exit() for ending the program
 from random import choice           # for running the random command
 from functions import slow_type     # for printing text in specific ways
 
+
+
+
 class Room:
     '''
     Represents a text adventure scenario with multiple options for the user to pick from.
@@ -19,6 +22,9 @@ class Room:
     # initialize dict of flags
     __flags = {}
 
+
+    
+
     def __init__(self, name):
         '''
         The constructor for Room class.
@@ -27,112 +33,112 @@ class Room:
             name (string): The name of the room and its corresponding .json file
         '''
 
-        #
-        # verify that the room name is valid
-        #
+        # -------------------
+        # get json from files
+        # -------------------
+
+        # FIND AND GET DATA FROM ROOM JSON FILE
 
         # ensure name is a string
         assert isinstance(name, str), "room name must be a string"
-
         # ensure json file matching name exists
         assert exists(dirname(__file__) + "/rooms/" + name + ".json"), "no file named \"" + name + ".json\" at " + dirname(__file__)
-
-
-        #
-        # get attributes from json file
-        #
-
         # open json file
         json_handle = open(dirname(__file__) + "/rooms/" + name + ".json", "r")
-
         # get text from json file
         room_json = json_handle.read()
-
         # close json file
         json_handle.close()
 
+        # -------------------------------------
+        # asign values from json where needed
+        # name, text, flags, options, constants
+        # -------------------------------------
+
+        # NAME
         # convert json text to dictionary
         room_dict = loads(room_json)
-
         # set name of room
         self.__name = name
 
+        # TEXT
         # get room_text from json dict if it exists
         if "room_text" in room_dict:
-
             # get the room text
             self.__text = room_dict["room_text"]
-
         # if there is no room text, note that
         else:
-
             # there is no room text
             self.__text = None
 
-        # initialize list of options
-        self.__options = []
-
-        # error if no options list in the json
-        assert "options" in room_dict, "A list of options is mandatory to run a room"
-        
-        # get options from json dict
-        for option in room_dict["options"]:
-            
-            # add option to options list
-            self.__options.append(option)
-
-        # initialize list of constants
-        self.__constants = {}
-
-        # get constants from the json dict
-        if "constants" in room_dict.keys():
-
-            # error if "constants" isn't a list as intended
-            assert isinstance(room_dict["constants"], dict), "\"constants\" must be a a dictionary"
-
-            # add every constant to the constants dict
-            for constant in room_dict["constants"].keys():
-
-                # add the constant to the constants dict
-                self.__constants[constant] = room_dict["constants"][constant]
-
-        # if there are commands to run on startup, run them
-        if "commands" in room_dict.keys():
-
-            # error if "commands" is not a list
-            assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"
-
-            # run the startup commands
-            command_result = self.__run_results(room_dict["commands"][:])
-
-            # error if disallowed command is run
-            assert command_result == True, "commands such as reset are not allowed at startup of a room"
-
+        # FLAGS
         # if data.json exists, get its flags for Room.__flags
         if exists(dirname(__file__) + "/data.json"):
-
             # open data.json    
             data_handle = open("data.json", "r")
-
             # get the text from data.json
             data_json = data_handle.read()
-
             # convert to dict and use it to set Room.__flags
             Room.__flags = loads(data_json)
 
-                
+        # OPTIONS
+        # initialize list of options
+        self.__options = []
+        # error if no options list in the json
+        assert "options" in room_dict, "A list of options is mandatory to run a room"        
+        # get options from json dict
+        for option in room_dict["options"]:            
+            # add option to options list
+            self.__options.append(option)
+
+        # CONSTANTS
+        # initialize list of constants
+        self.__constants = {}
+        # get constants from the json dict
+        if "constants" in room_dict.keys():
+            # error if "constants" isn't a list as intended
+            assert isinstance(room_dict["constants"], dict), "\"constants\" must be a a dictionary"
+            # add every constant to the constants dict
+            for constant in room_dict["constants"].keys():
+                # add the constant to the constants dict
+                self.__constants[constant] = room_dict["constants"][constant]
+
+
+        # --------------------
+        # run startup commands
+        # --------------------
+
+        # if there are commands to run on startup, run them
+        if "commands" in room_dict.keys():
+            # error if "commands" is not a list
+            assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"
+            # run the startup commands
+            command_result = self.__run_results(room_dict["commands"][:])
+            # error if disallowed command is run
+            assert command_result == True, "commands such as reset are not allowed at startup of a room"
+
+        # ---------------------
+        # display the room text
+        # ---------------------
+
+        # print out the room's introduction text
+        if self.__text:
+            slow_type(self.__text + "\n\n")
+
+
+
 
     def run(self):
         '''
         Describe the room to the user and allow them to interact using set options
         '''
 
-        # print out the room's introduction text
-        if self.__text:
-            slow_type(self.__text + "\n\n")
+        # ---------------------------
+        # run game loop for this room
+        # ---------------------------
 
-        # show options and get user input, loop until done with room
         running = True  # flag for loop
+        # show options and get user input, loop until done with room
         while (running):    
 
             #display options to the user
@@ -141,11 +147,11 @@ class Room:
             # get input from the user
             chosen_option = self.__get_input(shown_options)
 
-            # if input was not gotten successfully, restart loop to try again
-            if not(chosen_option):
-
-                # restart loop
-                continue
+##            # if input was not gotten successfully, restart loop to try again
+##            if not(chosen_option):
+##
+##                # restart loop
+##                continue
             
             # if there is "result_text" in our option, print it
             if "result_text" in chosen_option:
@@ -231,27 +237,31 @@ class Room:
         Returns:
             option (dict): option chosen by the user
         '''
-        
-        # get input from user and convert to uppercase
-        user_input = input("\n").upper()
+        valid_input = False
 
-        # remove spaces
-        user_input = user_input.replace(" ", "")
+        while not(valid_input):
+            # get input from user and convert to uppercase
+            user_input = input("\n").upper()
 
-        # print a newline
-        print()
+            # remove spaces
+            user_input = user_input.replace(" ", "")
 
-        # validate user input
-        # if user input is not a single character
-        if len(user_input) != 1:
-            return False    # reprint options and get user input again
-        
-        # if user input is not in the range A-? where ? is the letter corresponding to the last printed option
-        elif ord(user_input) < ord("A") or ord(user_input) > ord("A") + len(shown_options) - 1:
-            return False    # reprint options and get user input again
+            # print a newline
+            print()
 
-        # convert user input to an index and get the corresponding option
-        option = shown_options[ord(user_input) - ord("A")]
+            # validate user input
+            # if user input is not a single character
+            if len(user_input) != 1:
+                continue # reprint options and get user input again
+            
+            # if user input is not in the range A-? where ? is the letter corresponding to the last printed option
+            elif ord(user_input) < ord("A") or ord(user_input) > ord("A") + len(shown_options) - 1:
+                continue # reprint options and get user input again
+
+            # convert user input to an index and get the corresponding option
+            option = shown_options[ord(user_input) - ord("A")]
+
+            valid_input = True
 
         # return the option the user picked
         return option
@@ -377,6 +387,8 @@ class Room:
                         # make sure input is "Y" or "N"
                         getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True
 
+                        namespaces_to_delete = []
+
                         # check each namespace to remove flags from it
                         for namespace in Room.__flags.keys():
 
@@ -393,7 +405,10 @@ class Room:
                             if Room.__flags[namespace] == []:
 
                                 # delete the namespace
-                                del Room.__flags[namespace]
+                                namespaces_to_delete.append(namespace)
+
+                        for namespace in namespaces_to_delete:
+                            del Room.__flags[namespace]
                             
                         # end all running rooms but keeps program running
                         game_running = False
