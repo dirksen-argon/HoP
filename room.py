@@ -1,4 +1,4 @@
-from json import loads              # for converting json to dict
+from json import loads, dumps       # for converting json to dict and vice versa
 from os.path import dirname, exists # for finding files
 import sys                          # for sys.exit() for ending the program
 from random import choice           # for running the random command
@@ -105,7 +105,20 @@ class Room:
             # run the startup commands
             command_result = self.__run_results(room_dict["commands"][:])
 
+            # error if disallowed command is run
             assert command_result == True, "commands such as reset are not allowed at startup of a room"
+
+        # if data.json exists, get its flags for Room.__flags
+        if exists(dirname(__file__) + "/data.json"):
+
+            # open data.json    
+            data_handle = open("data.json", "r")
+
+            # get the text from data.json
+            data_json = data_handle.read()
+
+            # convert to dict and use it to set Room.__flags
+            Room.__flags = loads(data_json)
 
                 
 
@@ -364,9 +377,6 @@ class Room:
                         # make sure input is "Y" or "N"
                         getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True
 
-                    # if the user inputted "Y", restart the game by ending all running rooms but keeping the program running
-                    if user_input == "Y":
-
                         # check each namespace to remove flags from it
                         for namespace in Room.__flags.keys():
 
@@ -387,6 +397,21 @@ class Room:
                             
                         # end all running rooms but keeps program running
                         game_running = False
+
+                        # convert the flags to a json string
+                        json_text = dumps(Room.__flags)
+
+                        # open "data.json" for writing
+                        data_handle = open("data.json", "w")
+
+                        # write the flags' json string into data.json
+                        data_handle.write(json_text)
+
+                        # close data.json
+                        data_handle.close()
+
+                    # if the user inputted "Y", restart the game by ending all running rooms but keeping the program running
+                    if user_input == "Y":
 
                         # print newline
                         print()
