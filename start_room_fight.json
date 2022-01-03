@@ -1,4 +1,7 @@
 {
+	"commands": [
+		"set-zone_3"
+	],
 	"options": [
 				{
 			"req": [
@@ -65,7 +68,7 @@
 				"!item:",
 				"!event:"
 			],
-			"option_text": "Attempt to skirt around the left of skeleton",
+			"option_text": "Skirt around the left of skeleton",
 			"result": [
 				"random-death_chance"
 			],
@@ -73,7 +76,9 @@
 				{
 					"weight": 75,
 					"commands": [
-						"print-live"
+						"print-live",
+						"unset-zone_2",
+						"set-zone_3"
 					]
 				},
 				{
@@ -93,7 +98,7 @@
 				"!item:",
 				"!event:"
 			],
-			"option_text": "Attempt to skirt around the right of skeleton",
+			"option_text": "Skirt around the right of skeleton",
 			"result": [
 				"random-death_chance"
 			],
@@ -116,6 +121,48 @@
 			],
 			"live": "You feel the sword displace the air as it whizzes past you. Now what?",
 			"die": "You're just a tad too slow. The skeleton slashes your head clean off. You feel the blood pour out of your neck as everything slowly fades to black."
+		},
+		{
+			"req": [
+				"zone_3",
+				"!item:"
+			],
+			"option_text": "Pick a door",
+			"result_text": "The three doors at the end of the hall are painted different colors, with different small details and manufacturing. The colors are:"
+			"result": [
+				"random-door",
+				"random-door",
+				"random-door"
+			],
+			"door": [
+				{
+					"req": [
+						"!red_door"
+					],
+					"commands": [
+						"set-red_door",
+						"print-red"
+					]
+				},
+				{
+					"req": [
+						"!green_door"
+					],
+					"commands": [
+						"set-green_door",
+						"print-green"
+					]
+				},
+				{
+					"req": [
+						"blue_door"
+					],
+					"commands": [
+						"set-blue_door",
+						"print-blue"
+					]
+				},
+			]
 		},
 		{
 			"req": [
@@ -142,8 +189,8 @@
 					]
 				}
 			],
-			"live": 
-			"die": 
+			"live": "You dodge to the right of the skeleton, as well as further from the growing hole! A short corridor has appeared at the back of the room that you now stand at the mouth of, with three doors at the end of it. What do you do?",
+			"die": "You dodge to the side, but the skeleton was just a little faster than you were. You hardly have the chance to look up as everything fades to black."
 		}
 	]
 }
