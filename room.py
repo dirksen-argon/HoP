@@ -302,89 +302,66 @@ class Room:
 
             # if the argument has a ":" in it, split it into its namespace and argument
             if ":" in argument:
-                
-                # get the namespace (left of the ":") and the argument (right of the ":")
-                namespace, argument = argument.split(":", 2)
-
-                # verify that there are no more colons
-                assert ":" not in argument, "too many \":\" in flag " + flag
+                namespace, argument = argument.split(":", 2)                    # get the namespace (left of the ":") and the argument (right of the ":")
+                assert ":" not in argument, "too many \":\" in flag " + flag    # verify that there are no more colons
                 
             # if there is no ":" in the argument, then the namespace is the same as the room name
             else:
-                
-                # the namespace is the same as the room's name
-                namespace = self.__name
+                namespace = self.__name # the namespace is the same as the room's name
+
 
             # if the command is "set", add the argument to the flags list as a flag to keep track of it
             if command == "set":
 
                 # if the namespace for the new flag doesn't exist yet in the flag dict, create it
                 if namespace not in Room.__flags.keys():
-
-                    # create the namespace in the form of an empty list with the namespace name as the dict key
-                    Room.__flags[namespace] = []
+                    Room.__flags[namespace] = []    # create the namespace in the form of an empty list with the namespace name as the dict key
 
                 # if there is no argument, set the namespace rather than an individual flag
                 if argument != "":
-
-                    # error if argument is "!"
-                    assert argument != "!", "The \"set\" command argument cannot be \"!\""
-                        
-                    # add the argument to the flags list as a flag
-                    Room.__flags[namespace].append(argument)
+                    assert argument != "!", "The \"set\" command argument cannot be \"!\""  # error if argument is "!"
+                    Room.__flags[namespace].append(argument)                                # add the argument to the flags list as a flag
                 
                 continue    # continue to the next command
+
             
             # if the command is "unset", remove a flag from the flags list if it exists
             elif command == "unset":
-
-                # error if argument is "!"
-                assert argument != "!", "The \"unset\" command argument cannot be \"!\""
+                assert argument != "!", "The \"unset\" command argument cannot be \"!\""    # error if argument is "!"
                 
                 # if the namespace exists in the flag dict, remove all occurences of the argument flag
                 if namespace in Room.__flags.keys():
 
                     # if no argument, delete the entire namespace
                     if argument == "":
-
-                        # delete the namespace
-                        del Room.__flags[namespace]
+                        del Room.__flags[namespace] # delete the namespace
 
                     # if there is an argument, remove occurences of it from the namespace
                     else:
                         
                         # while there are occurences of the argument flag, remove them
                         while argument in Room.__flags[namespace]:
-                            
-                            # remove an occurence of the argument flag
-                            Room.__flags[namespace].remove(argument)
+                            Room.__flags[namespace].remove(argument)    # remove an occurence of the argument flag
                             
                 continue    # continue to the next command
+            
 
-        # if hte command is "reset", end the game
+            # if the command is "reset", end the game
             elif command == "reset":
-
-                # if no argument is given, assume it is intended to be "game"
-                argument = "game" if argument == "" else argument
+                argument = "game" if argument == "" else argument   # if no argument is given, assume it is intended to be "game"
 
                 # if the argument is "game", end the game
                 if argument == "game":
+                    getting_input = True    # True while user hasn't yet inputted valid input
 
                     # get input from the user regarding whether to replay or quit
-                    getting_input = True    # True while user hasn't yet inputted valid input
                     while getting_input:
-
-                        # get input from user
-                        slow_type("Continue? (Y/N): ")
-
-                        # convert to uppercase
-                        user_input = input().upper()
-
-                        # make sure input is "Y" or "N"
-                        getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True
-
-                        flags_to_delete = []
-                        namespaces_to_delete = []
+                        slow_type("Continue? (Y/N): ")                                                                              # get input from user
+                        user_input = input().upper()                                                                                # convert to uppercase
+                        getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True # make sure input is "Y" or "N"
+                        
+                        flags_to_delete = []        # list of flags to delete
+                        namespaces_to_delete = []   # list of namespaces to delete
 
                         # check each namespace to remove flags from it
                         for namespace in Room.__flags.keys():
@@ -396,7 +373,7 @@ class Room:
                                 if Room.__flags[namespace][flag_i][0] != "$":
 
                                     # delete the flag if it doesnt have the "$"
-                                    flags_to_delete.append(namespace, flag_i)
+                                    flags_to_delete.append((namespace, flag_i))
 
                             # if the namespace is empty, delete it
                             if Room.__flags[namespace] == []:
