@@ -106,6 +106,7 @@ class Room:
             command_result = self.__run_results(room_dict["commands"][:])
 
             assert command_result == True, "commands such as reset are not allowed at startup of a room"
+
                 
 
     def run(self):
@@ -356,6 +357,8 @@ class Room:
 
                         # get input from user
                         slow_type("Continue? (Y/N): ")
+
+                        # convert to uppercase
                         user_input = input().upper()
 
                         # make sure input is "Y" or "N"
@@ -364,8 +367,23 @@ class Room:
                     # if the user inputted "Y", restart the game by ending all running rooms but keeping the program running
                     if user_input == "Y":
 
-                        # removing all active flags
-                        Room.__flags = {}
+                        # check each namespace to remove flags from it
+                        for namespace in Room.__flags.keys():
+
+                            # check each flag in the namespace to see if it should be deleted
+                            for flag_i in range(len(Room.__flags[namespace])):
+
+                                # if the flag starts with "$", it stays between resets
+                                if Room.__flags[namespace][flag_i][0] != "$":
+
+                                    # delete the flag if it doesnt have the "$"
+                                    del Room.__flags[namespace][flag_i]
+
+                            # if the namespace is empty, delete it
+                            if Room.__flags[namespace] == []:
+
+                                # delete the namespace
+                                del Room.__flags[namespace]
                             
                         # end all running rooms but keeps program running
                         game_running = False
