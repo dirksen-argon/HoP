@@ -56,52 +56,41 @@ class Room:
         # -------------------------------------
 
         # NAME
-        # convert json text to dictionary
-        room_dict = loads(room_json)
-        # set name of room
-        self.__name = name
+        room_dict = loads(room_json)    # convert json text to dictionary
+        self.__name = name              # set name of room
+
 
         # TEXT
-        # get room_text from json dict if it exists
-        if "room_text" in room_dict:
-            # get the room text
-            self.__text = room_dict["room_text"]
-        # if there is no room text, note that
-        else:
-            # there is no room text
-            self.__text = None
+        self.__text = room_dict["room_text"] if "room_text" in room_dict else None  # get room_text from json dict if it exists
+
 
         # FLAGS
         # if data.json exists, get its flags for Room.__flags
         if exists(dirname(__file__) + "/data.json"):
-            # open data.json    
-            data_handle = open("data.json", "r")
-            # get the text from data.json
-            data_json = data_handle.read()
-            # convert to dict and use it to set Room.__flags
-            Room.__flags = loads(data_json)
+            data_handle = open("data.json", "r")    # open data.json 
+            data_json = data_handle.read()          # get the text from data.json
+            Room.__flags = loads(data_json)         # convert to dict and use it to set Room.__flags
+
 
         # OPTIONS
-        # initialize list of options
-        self.__options = []
-        # error if no options list in the json
-        assert "options" in room_dict, "A list of options is mandatory to run a room"        
+        self.__options = []                                                             # initialize list of options
+        assert "options" in room_dict, "A list of options is mandatory to run a room"   # error if no options list in the json
+        
         # get options from json dict
         for option in room_dict["options"]:            
-            # add option to options list
-            self.__options.append(option)
+            self.__options.append(option)   # add option to options list
+
 
         # CONSTANTS
-        # initialize list of constants
-        self.__constants = {}
+        self.__constants = {}   # initialize list of constants
+        
         # get constants from the json dict
         if "constants" in room_dict.keys():
-            # error if "constants" isn't a list as intended
-            assert isinstance(room_dict["constants"], dict), "\"constants\" must be a a dictionary"
+            assert isinstance(room_dict["constants"], dict), "\"constants\" must be a a dictionary" # error if "constants" isn't a list as intended
+            
             # add every constant to the constants dict
             for constant in room_dict["constants"].keys():
-                # add the constant to the constants dict
-                self.__constants[constant] = room_dict["constants"][constant]
+                self.__constants[constant] = room_dict["constants"][constant]   # add the constant to the constants dict
 
 
         # --------------------
@@ -110,12 +99,9 @@ class Room:
 
         # if there are commands to run on startup, run them
         if "commands" in room_dict.keys():
-            # error if "commands" is not a list
-            assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"
-            # run the startup commands
-            command_result = self.__run_results(room_dict["commands"][:])
-            # error if disallowed command is run
-            assert command_result == True, "commands such as reset are not allowed at startup of a room"
+            assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"                   # error if "commands" is not a list
+            command_result = self.__run_results(room_dict["commands"][:])                                   # run the startup commands
+            assert command_result == True, "commands such as reset are not allowed at startup of a room"    # error if disallowed command is run
 
         # ---------------------
         # display the room text
@@ -141,37 +127,42 @@ class Room:
         # show options and get user input, loop until done with room
         while (running):    
 
+
+            # -------------------------
+            # show the user the options
+            # -------------------------
+            
             #display options to the user
             shown_options = self.__display_options()
+
+
+            # --------------
+            # get user input
+            # --------------
 
             # get input from the user
             chosen_option = self.__get_input(shown_options)
 
-##            # if input was not gotten successfully, restart loop to try again
-##            if not(chosen_option):
-##
-##                # restart loop
-##                continue
-            
-            # if there is "result_text" in our option, print it
-            if "result_text" in chosen_option:
-                
-                # print the result_text
-                slow_type(chosen_option["result_text"] + "\n\n")
+            # ------------------------------------------
+            # carry out the results of the chosen option
+            # print the text, run the commands
+            # ------------------------------------------
 
+            # PRINT THE TEXT
+            # if there is "result_text" in our option, print it
+            if "result_text" in chosen_option:                
+                slow_type(chosen_option["result_text"] + "\n\n")    # print the result_text
+
+            # RUN THE COMMANDS
             # if there is a result list in our option, run each command in the list
             if "result" in chosen_option:
-
-                # get the list of commands
-                results = chosen_option["result"][:]
-
-                # error if results isn't a list
-                assert isinstance(results, list), "\"result\" must be a list"
-                
-                # run the results of the choice
-                running = self.__run_results(results, chosen_option)
+                results = chosen_option["result"][:]                            # get the list of commands
+                assert isinstance(results, list), "\"result\" must be a list"   # error if results isn't a list              
+                running = self.__run_results(results, chosen_option)            # run the results of the choice
             
-                    
+
+
+  
     def __display_options(self):
         '''
         display the user's options
@@ -179,9 +170,13 @@ class Room:
         Returns:
             shown_options (list[dict]): list of options that have been shown to the player
         '''
+
         
-        # initialize list of options that meet all requirements and can be shown to players
-        shown_options = []
+        # -------------------------------------
+        # check the requirements of the options
+        # -------------------------------------
+
+        shown_options = []  # initialize list of options that meet all requirements and can be shown to players
 
         # check if each option's requirements are met
         for option in self.__options:
@@ -191,21 +186,22 @@ class Room:
 
                 # if requirements are met, append the option to be displayed later
                 if self.__check_requirements(option["req"]):
-
-                    # append the option so that it is displayed later
-                    shown_options.append(option)
+                    shown_options.append(option)    # append the option so that it is displayed later
 
             # if there are no requiremnts, requirements are assumed to be met
             else:
+                shown_options.append(option)    # requirements are met
 
-                # requirements are met
-                shown_options.append(option)
+        assert len(shown_options) > 0, "No options met the requrements to be shown. At least one option must be able to be shown"   # error if no options to show
 
-        # error if no options to show
-        assert len(shown_options) > 0, "No options met the requrements to be shown. At least one option must be able to be shown"
 
-        # options are ordered by letter, so keep track of the current letter in ASCII from starting with "A"
-        letter_ascii = ord("A")
+        # -----------------------------
+        # print out the options
+        # print options, return options
+        # -----------------------------
+
+        # PRINT OPTIONS
+        letter_ascii = ord("A") # options are ordered by letter, so keep track of the current letter in ASCII from starting with "A"
 
         # display every option passing requirements to the user
         for option in shown_options:
@@ -214,18 +210,15 @@ class Room:
             if letter_ascii > ord("Z"):
                 break   # stop showing options
 
-            # print the corresponding letter of the option to its left
-            slow_type(chr(letter_ascii) + ": ")
+            slow_type(chr(letter_ascii) + ": ")     # print the corresponding letter of the option to its left
+            letter_ascii += 1                       # increment the letter by 1 up the alphabet
+            slow_type(option["option_text"] + "\n") # print the option's text
 
-            # increment the letter by 1 up the alphabet
-            letter_ascii += 1
-
-            # print the option's text
-            slow_type(option["option_text"] + "\n")
-
-        # return the list of options shown to the user
-        return shown_options
+        # RETURN OPTIONS
+        return shown_options    # return the list of options shown to the user
     
+
+
 
     def __get_input(self, shown_options):
         '''
@@ -237,19 +230,33 @@ class Room:
         Returns:
             option (dict): option chosen by the user
         '''
-        valid_input = False
 
+
+        # ------------------------------
+        # loop until we have valid input
+        # loop, return input
+        # ------------------------------
+        
+        # LOOP
+        valid_input = False # flag for running loop
+
+        # loop until valid input is obtained from the user
         while not(valid_input):
-            # get input from user and convert to uppercase
-            user_input = input("\n").upper()
 
-            # remove spaces
-            user_input = user_input.replace(" ", "")
 
-            # print a newline
-            print()
+            # --------------
+            # get user input
+            # --------------
+            
+            user_input = input("\n").upper()            # get input from user and convert to uppercase
+            user_input = user_input.replace(" ", "")    # remove spaces
+            print()                                     # print a newline
 
+
+            # -------------------
             # validate user input
+            # -------------------
+
             # if user input is not a single character
             if len(user_input) != 1:
                 continue # reprint options and get user input again
@@ -258,51 +265,40 @@ class Room:
             elif ord(user_input) < ord("A") or ord(user_input) > ord("A") + len(shown_options) - 1:
                 continue # reprint options and get user input again
 
-            # convert user input to an index and get the corresponding option
-            option = shown_options[ord(user_input) - ord("A")]
+            option = shown_options[ord(user_input) - ord("A")]  # convert user input to an index and get the corresponding option
+            valid_input = True                                  # valid input is obtained so we can stop looping
 
-            valid_input = True
+        # RETURN INPUT
+        return option   # return the option the user picked
 
-        # return the option the user picked
-        return option
-        
+
+    
 
     def __run_results(self, results, option={}):
         '''
         Evaluate and run the results set to happen for the chosen option
 
         Parameters:
-            option: an option to parse through and run the results of picking that option
+            results (list[str]): List of commands to run
+            option (dict[???]): Dictionary that may contain values affecting certain commands
 
         Returns:
             game_running (bool): Boolean value dictating whether to stop running the game
         '''
 
-        # keep track of whether a result would end the game
-        game_running = True
+        #
+        #
+        #
+        
+        game_running = True # keep track of whether a result would end the game
             
         # iterate through each command in the list
         for result in results:
 
-            # error if command isn't a string
-            assert isinstance(result, str), "commands in the result list must be strings, not " + str(type(result))
-
-            # remove spaces from the command
-            result = result.replace(" ", "")
-
-            if "-" in result:
-                
-                # split the command into a command-argument pair by splitting at the first "-"
-                command, argument = result.split("-", 2)
-
-            # if no argument is given, count it as ""
-            else:
-
-                # keep the command
-                command = result
-
-                # count the argument as ""
-                argument = ""
+            
+            assert isinstance(result, str), "commands in the result list must be strings, not " + str(type(result)) # error if command isn't a string
+            result = result.replace(" ", "")                                                                        # remove spaces from the command
+            command, argument = result.split("-", 2) if "-" in result else (result, "")                             # split the result into a command and an argument
 
             # if the argument has a ":" in it, split it into its namespace and argument
             if ":" in argument:
@@ -387,6 +383,7 @@ class Room:
                         # make sure input is "Y" or "N"
                         getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True
 
+                        flags_to_delete = []
                         namespaces_to_delete = []
 
                         # check each namespace to remove flags from it
@@ -399,13 +396,16 @@ class Room:
                                 if Room.__flags[namespace][flag_i][0] != "$":
 
                                     # delete the flag if it doesnt have the "$"
-                                    del Room.__flags[namespace][flag_i]
+                                    flags_to_delete.append(namespace, flag_i)
 
                             # if the namespace is empty, delete it
                             if Room.__flags[namespace] == []:
 
                                 # delete the namespace
                                 namespaces_to_delete.append(namespace)
+
+                        for namespace, flag in flags_to_delete:
+                            del Room.__flags[namespace][flag]
 
                         for namespace in namespaces_to_delete:
                             del Room.__flags[namespace]
