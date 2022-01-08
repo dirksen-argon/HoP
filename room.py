@@ -343,6 +343,11 @@ if __name__ != "__main__":
                     self.__run_results(self.__random(argument, option), option) # get a random list of commands and run them
                     continue                                                    # continue to the next command
 
+                # if the command is "if", run a list of commands if requirements are met
+                elif command == "if":
+                    self.__if(argument, option) # run commands if requirements are met
+                    continue                    # continue to the next command
+
                 # if the command is not a valid command raise an error
                 else:
                     raise AssertionError(command + " is not a valid command")   # raise an error due to an invalid command
@@ -427,6 +432,8 @@ if __name__ != "__main__":
             Parameters:
                 namespace (str): A string representing the namespace to set the flag in
                 argument (str): A string representing the flag to set
+                mode (str): used to convey specific instructions to the method
+                    "reset" will prevent the method from recording its changes
             '''
 
 
@@ -464,6 +471,8 @@ if __name__ != "__main__":
             Parameters:
                 namespace (str): A string representing the namespace to unset or the namespace where the flag to be unset is
                 argument (str): A string representing the flag to unset
+                mode (str): used to convey specific instructions to the method
+                    "reset" will prevent the method from recording its changes
             '''
 
             # --------------------------------------------
@@ -499,6 +508,7 @@ if __name__ != "__main__":
                 argument (str): A string that specifies the way the program handles the reset
                     "game" will reset the game back to the starting room
                     "quit" will end the program
+                    "reset" will reset the current room
             '''
 
 
@@ -725,3 +735,58 @@ if __name__ != "__main__":
             assert bag != [], "No choices were found in random table: " + argument  # error if the bag is empty
             chosen_command_list = choice(bag)                                       # get a random command list from the bag
             return chosen_command_list                                              # return the list of commands to be run
+
+
+
+
+        def __if(self, argument, option=None):
+            '''
+            Run a list of commands if specific requirements are met.
+
+            Parameters:
+                argument (str): label for JSON object containing requirements and commands
+                option (str): an option which might have the JSON object referenced by the argument
+            '''
+            
+
+            # ---------------------------------
+            # get the requirements and commands
+            # ---------------------------------
+
+            option = {} if option == None else option                                                       # if option not set, keep it as an empty dict
+            assert isinstance(option, dict), "the option used in the \"if\" command must be a dictionary"   # error if option isn't a dictionary
+            assert isinstance(argument, str), "the argument for the \"if\" command must be a string"        # error if argument isn't a string
+
+            # if the requirements and commands are in the option, get them
+            if argument in option:
+                if_commands = option[argument]  # store the JSON object with the requirements and commands
+
+            # if the requirements and commands are in constants, get them
+            elif argument in self.__constants:
+                if_commands = self.__constants[argument]    # store the JSON object with the requirements and commands
+
+            # error if cannot find JSON with requirements and commands
+            else:
+                raise AssertionError("could not find \"" + argument + "\"") # no requirements or commands so error
+
+            assert isinstance(if_commands, dict), "\"" + argument + "\" must be a dictionary"                                   # error if not a dictionary
+            assert "req" in if_commands, "\"req\" list not found in \"" + argument + "\""                                       # error if no requirements
+            assert isinstance(if_commands["req"], list), "\"req\" in \"" + argument + "\" must be a list"                       # error if requirements not a list
+            assert "commands" in if_commands, "\"" + argument + "\" must have a \"commands\" list"                              # error if no commands
+            assert isinstance(if_commands["commands"], list), "the \"commands\" list in \"" + argument + "\" must be a list"    # error if commands not a lsit
+            commands = if_commands["commands"]                                                                                  # get commands list
+
+
+            # -----------------------------------
+            # check requirements and run commands
+            # -----------------------------------
+
+            # if requirements are met, run the commands
+            if self.__check_requirements(if_commands["req"]):
+                self.__run_results(commands, option)    # run the commands
+                return True                             # return True as requirements were met
+
+            return False    # return False as requirements weren't met
+
+
+
