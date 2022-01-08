@@ -49,10 +49,10 @@ if __name__ != "__main__":
             # close json file
             json_handle.close()
 
-            # -------------------------------------
+            # ----------------------------------------------
             # asign values from json where needed
-            # name, text, flags, options, constants
-            # -------------------------------------
+            # name, text, flags, options, constants, changes
+            # ----------------------------------------------
 
             # NAME
             room_dict = loads(room_json)    # convert json text to dictionary
@@ -91,9 +91,9 @@ if __name__ != "__main__":
                 for constant in room_dict["constants"].keys():
                     self.__constants[constant] = room_dict["constants"][constant]   # add the constant to the constants dict
 
-
-
-            #TEMPORARY__changes = {"set":[], "unset":[]}  # initialize dict for storing changes made during room
+            # CHANGES
+            self.__changes = {"set":[], "unset":[]}  # initialize dict for storing changes made during room
+            
             
             # --------------------
             # run startup commands
@@ -336,7 +336,7 @@ if __name__ != "__main__":
 
                 # if the command is "print", print out a string with the argument as its name
                 elif command == "print":
-                    self.__print(argument)  # print out a string with the label matching the argument
+                    self.__print(argument, option)  # print out a string with the label matching the argument
                     continue                # continue to the next command
 
                 # if the command is "random", choose a random set of commands and run them
@@ -450,6 +450,7 @@ if __name__ != "__main__":
             if argument != "":
                 assert argument != "!", "The \"set\" command argument cannot be \"!\""  # error if argument is "!"
                 Room.__flags[namespace].append(argument)                                # add the argument to the flags list as a flag
+                #self.__changes.append
 
 
 
@@ -588,7 +589,7 @@ if __name__ != "__main__":
 
 
 
-        def __print(self, argument):
+        def __print(self, argument, option=None):
             '''
             Print out the string with the specified label.
 
@@ -596,6 +597,8 @@ if __name__ != "__main__":
                 argument (str): A string which is the key for a string located in the option object in the JSON or in the constants list in the JSON
             '''
 
+            option = {} if option == None else option
+            
 
             # -----------------------
             # get the string to print
@@ -624,6 +627,8 @@ if __name__ != "__main__":
             
             slow_type(text + "\n\n")    # print out the target string to the user
             
+
+
 
         def __random(self, argument="", option=None):
             '''
