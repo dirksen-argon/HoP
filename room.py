@@ -49,10 +49,10 @@ if __name__ != "__main__":
             # close json file
             json_handle.close()
 
-            # ----------------------------------------------
+            # -------------------------------------------------------------
             # asign values from json where needed
-            # name, text, flags, options, constants, changes
-            # ----------------------------------------------
+            # name, text, flags, options, constants, changes, text settings
+            # -------------------------------------------------------------
 
             # NAME
             room_dict = loads(room_json)    # convert json text to dictionary
@@ -93,6 +93,9 @@ if __name__ != "__main__":
 
             # CHANGES
             self.__changes = []  # initialize list for storing changes made during room
+
+            # TEXT SETTINGS
+            self.__text_settings = room_dict["text_settings"] if "text_settings" in room_dict else ""   # get text settings if they are set in the JSON
             
             
             # --------------------
@@ -211,7 +214,7 @@ if __name__ != "__main__":
                 if letter_ascii > ord("Z"):
                     break   # stop showing options
 
-                slow_type(chr(letter_ascii) + ": ")     # print the corresponding letter of the option to its left
+                slow_type(self.__text_settings + chr(letter_ascii) + ": ")     # print the corresponding letter of the option to its left
                 letter_ascii += 1                       # increment the letter by 1 up the alphabet
                 slow_type(option["option_text"] + "\n") # print the option's text
 
@@ -569,7 +572,7 @@ if __name__ != "__main__":
 
                 # get input from the user regarding whether to replay or quit
                 while getting_input:
-                    slow_type("Continue? (Y/N): ")                                                                              # get input from user
+                    slow_type(self.__text_settings + "Continue? (Y/N): ")                                                                              # get input from user
                     user_input = input().upper()                                                                                # convert to uppercase
                     getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True # make sure input is "Y" or "N"
                     game_running = False                                                                                        # end all running rooms but keeps program running
