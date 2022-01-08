@@ -214,6 +214,7 @@
 			],
 			"option_text": "Open the left box",
 			"result": [
+				"set-left_box
 				"random-box_item"
 			],
 			"box_item": [
@@ -279,6 +280,7 @@
 			],
 			"option_text": "Open the right box",
 			"result": [
+				"set-right_box",
 				"random-box_item"
 			],
 			"box_item": [
