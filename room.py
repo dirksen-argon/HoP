@@ -92,7 +92,7 @@ if __name__ != "__main__":
                     self.__constants[constant] = room_dict["constants"][constant]   # add the constant to the constants dict
 
             # CHANGES
-            self.__changes = {"set":[], "unset":[]}  # initialize dict for storing changes made during room
+            self.__changes = []  # initialize list for storing changes made during room
             
             
             # --------------------
@@ -127,8 +127,7 @@ if __name__ != "__main__":
 
             running = True  # flag for loop
             # show options and get user input, loop until done with room
-            while (running):    
-
+            while (running):
 
                 # -------------------------
                 # show the user the options
@@ -276,7 +275,7 @@ if __name__ != "__main__":
 
         
 
-        def __run_results(self, results, option={}):
+        def __run_results(self, results, option={}, mode=""):
             '''
             Evaluate and run the results set to happen for the chosen option
 
@@ -314,13 +313,13 @@ if __name__ != "__main__":
 
                 # if the command is "set", add the argument to the flags list as a flag to keep track of it
                 if command == "set":
-                    self.__set(namespace, argument) # set the flag/namespace
-                    continue                        # continue to the next command
+                    self.__set(namespace, argument, mode=mode)  # set the flag/namespace
+                    continue                                    # continue to the next command
                 
                 # if the command is "unset", remove a flag from the flags list if it exists
                 elif command == "unset":
-                    self.__unset(namespace, argument)   # unset the flag/namespace
-                    continue                            # continue to the next command
+                    self.__unset(namespace, argument, mode=mode)    # unset the flag/namespace
+                    continue                                        # continue to the next command
                 
                 # if the command is "reset", end the game
                 elif command == "reset":
@@ -421,7 +420,7 @@ if __name__ != "__main__":
             return False    # return False as at least one requirment is not met
 
 
-        def __set(self, namespace=None, argument=""):
+        def __set(self, namespace=None, argument="", mode=""):
             '''
             Set a flag to be stored for later use.
 
@@ -450,12 +449,15 @@ if __name__ != "__main__":
             if argument != "":
                 assert argument != "!", "The \"set\" command argument cannot be \"!\""  # error if argument is "!"
                 Room.__flags[namespace].append(argument)                                # add the argument to the flags list as a flag
-                #self.__changes.append
+
+                # if there is not a reset happening, record the change for later
+                if mode != "reset" and argument[0] != "$":
+                    self.__changes.append("unset-" + namespace + ":" + argument)    # record the change so it can be undone on a reset
 
 
 
 
-        def __unset(self, namespace=None, argument=""):
+        def __unset(self, namespace=None, argument="", mode=""):
             '''
             Unset a flag so that it no longer applies to requirements.
 
@@ -484,6 +486,10 @@ if __name__ != "__main__":
                     # while there are occurences of the argument flag, remove them
                     while argument in Room.__flags[namespace]:
                         Room.__flags[namespace].remove(argument)    # remove an occurence of the argument flag
+
+                        # if there is not a reset happening, record the change for later
+                        if mode != "reset":
+                            self.__changes.append("set-" + namespace + ":" + argument)    # record the change so it can be undone on a reset
 
         def __reset(self, argument="game"):
             '''
@@ -580,7 +586,11 @@ if __name__ != "__main__":
 
             # if "room" is the argument, restart the room
             elif argument == "room":
-                pass #TEMPORARY
+                self.__changes.reverse()                            # reverse the list of changes so we can undo them in the correct order
+                self.__run_results(self.__changes, mode="reset")    # undo every change made
+                self.__changes = []                                 # reset changes list
+                
+                return True
                 
             # if the argument is invalid raise an error
             else:
