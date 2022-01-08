@@ -41,7 +41,7 @@
 			]
 		},
 		{
-						"req": [
+			"req": [
 				"zone_2",
 				"!item:",
 				"!event:"
@@ -49,7 +49,6 @@
 			"option_text": "Skirt around the right of skeleton",
 			"result_text": "You feel the sword displace the air as it whizzes past you. Now what?",
 			"result": [
-				"print-live",
 					"unset-zone_2",
 					"set-zone_3"
 			]
@@ -61,7 +60,7 @@
 				"!pick_door"
 			],
 			"option_text": "Pick a door",
-			"result_text": "The three doors at the end of the hall are painted different colors, with different small details and manufacturing. The colors are:",
+			"result_text": "The three doors at the end of the hall are painted different colors, with different small details and manufacturing.",
 			"result": [
 				"set-pick_door",
 				"random-door",
@@ -191,6 +190,108 @@
 		},
 		{
 			"req": [
+				"zone_3",
+				"start_room_intro:!left_box"
+			],
+			"option_text": "Open the left box",
+			"result": [
+				"set-start_room_intro:left_box",
+				"random-box_item"
+			],
+			"box_item": [
+				{
+					"commands": [
+						"print-hatchet",
+						"set-item:hatchet"
+					]
+				},
+				{
+					"commands": [
+						"print-dagger",
+						"set-item:dagger"
+					]
+				},
+				{
+					"commands": [
+						"print-nightstick",
+						"set-item:nightstick"
+					]
+				},
+				{
+					"commands": [
+						"print-spider",
+						"set-event:spider_1"
+					]
+				},
+				{
+					"commands": [
+						"print-head",
+						"set-event:head_1"
+					]
+				},
+				{
+					"commands": [
+						"print-empty"
+					]
+				}
+			],
+			"hatchet": "It's an old hatchet.",
+			"dagger": "It's a ceremonial dagger.",
+			"nightstick": "It's a police nightstick.",
+			"spider": "It's a giant spider! The creature lunges at you, even as the skeleton grows ever closer!",
+			"head": "It's a severed head! The undead atrocity screams a shrill scream, bringing you to your knees. The skeleton looms ever closer.",
+			"empty": "It's empty!"
+		},
+		{
+			"req": [
+				"zone_3",
+				"start_room_intro:!right_box"
+			],
+			"option_text": "Open the left box",
+			"result": [
+				"set-start_room_intro:right_box",
+				"random-box_item"
+			],
+			"box_item": [
+				{
+					"commands": [
+						"print-hatchet",
+						"set-item:hatchet"
+					]
+				},
+				{
+					"commands": [
+						"print-dagger",
+						"set-item:dagger"
+					]
+				},
+				{
+					"commands": [
+						"print-nightstick",
+						"set-item:nightstick"
+					]
+				},
+				{
+					"commands": [
+						"print-spider",
+						"set-event:spider_1"
+					]
+				},
+				{
+					"commands": [
+						"print-head",
+						"set-event:head_1"
+					]
+				},
+				{
+					"commands": [
+						"print-empty"
+					]
+				}
+			]
+		},
+		{
+			"req": [
 				"zone_1",
 				"!event:"
 			],
@@ -202,8 +303,8 @@
 			]
 		},
 		{
-			"option_text": "Cry"
-			"result_text": "You sit on the floor and cry. The skeleton impales you though the heart. You feel the driving black sever your arteries like tension strings as everything slowly fades to black.
+			"option_text": "Cry",
+			"result_text": "You sit on the floor and cry. The skeleton impales you though the heart. You feel the driving black sever your arteries like tension strings as everything slowly fades to black.",
 			"result": [
 				"reset"
 			]
