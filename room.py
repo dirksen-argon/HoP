@@ -96,6 +96,7 @@ if __name__ != "__main__":
 
             # TEXT SETTINGS
             self.__text_settings = room_dict["text_settings"] if "text_settings" in room_dict else ""   # get text settings if they are set in the JSON
+            self.__delay_modifier = 0                                                                   # initialize global modifier for text delay
             
             
             # --------------------
@@ -114,7 +115,7 @@ if __name__ != "__main__":
 
             # print out the room's introduction text
             if self.__text:
-                slow_type(self.__text + "\n\n")
+                slow_type(self.__text + "\n\n", self.__delay_modifier)
 
 
 
@@ -214,9 +215,9 @@ if __name__ != "__main__":
                 if letter_ascii > ord("Z"):
                     break   # stop showing options
 
-                slow_type(self.__text_settings + chr(letter_ascii) + ": ")     # print the corresponding letter of the option to its left
-                letter_ascii += 1                       # increment the letter by 1 up the alphabet
-                slow_type(option["option_text"] + "\n") # print the option's text
+                slow_type(self.__text_settings + chr(letter_ascii) + ": ", self.__delay_modifier)   # print the corresponding letter of the option to its left
+                letter_ascii += 1                                               # increment the letter by 1 up the alphabet
+                slow_type(option["option_text"] + "\n", self.__delay_modifier)  # print the option's text
 
             # RETURN OPTIONS
             return shown_options    # return the list of options shown to the user
@@ -299,6 +300,10 @@ if __name__ != "__main__":
             # iterate through each command in the list
             for result in results:
 
+
+                # ------------------------------
+                # get the namespace and argument
+                # ------------------------------
                 
                 assert isinstance(result, str), "commands in the result list must be strings, not " + str(type(result)) # error if command isn't a string
                 result = result.replace(" ", "")                                                                        # remove spaces from the command
@@ -314,6 +319,10 @@ if __name__ != "__main__":
                     namespace = self.__name # the namespace is the same as the room's name
 
 
+                # --------------------------------
+                # determine the command and run it
+                # --------------------------------
+                
                 # if the command is "set", add the argument to the flags list as a flag to keep track of it
                 if command == "set":
                     self.__set(namespace, argument, mode=mode)  # set the flag/namespace
@@ -350,6 +359,11 @@ if __name__ != "__main__":
                 elif command == "if":
                     self.__if(argument, option) # run commands if requirements are met
                     continue                    # continue to the next command
+
+                # if the command is "delay", change the type speed globally for text
+                elif command == "delay":
+                    self.__delay(argument)  # change the global delay for slow typing
+                    continue                # continue to the next command
 
                 # if the command is not a valid command raise an error
                 else:
@@ -503,6 +517,9 @@ if __name__ != "__main__":
                         if mode != "reset":
                             self.__changes.append("set-" + namespace + ":" + argument)    # record the change so it can be undone on a reset
 
+
+
+
         def __reset(self, argument="game"):
             '''
             End the game in a way specified by the parameter.
@@ -572,7 +589,7 @@ if __name__ != "__main__":
 
                 # get input from the user regarding whether to replay or quit
                 while getting_input:
-                    slow_type(self.__text_settings + "Continue? (Y/N): ")                                                                              # get input from user
+                    slow_type(self.__text_settings + "Continue? (Y/N): ", self.__delay_modifier)                                # get input from user
                     user_input = input().upper()                                                                                # convert to uppercase
                     getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True # make sure input is "Y" or "N"
                     game_running = False                                                                                        # end all running rooms but keeps program running
@@ -648,7 +665,7 @@ if __name__ != "__main__":
             # print the string
             # ----------------
             
-            slow_type(text + "\n\n")    # print out the target string to the user
+            slow_type(text + "\n\n", self.__delay_modifier)    # print out the target string to the user
             
 
 
@@ -793,3 +810,34 @@ if __name__ != "__main__":
 
 
 
+
+        def __delay(self, argument):
+            '''
+
+            '''
+            
+            assert isinstance(argument, str), "the argument for the \"delay\" command must be a string, not a " + str(type(argument))
+
+            assert len(argument) > 0, "the argument cannot be empty for the \"delay\" command"
+
+            if argument[0] == "~":
+                positive = False
+                assert len(argument) > 1, "the argument must be a number for the \"delay\" command"
+                argument = argument[1:]
+            else:
+                positive = True
+
+            assert argument.isnumeric(), "the argument for \"delay\" must be an integer"
+            
+            delay_modifier = int(argument)
+
+            delay_modifier = delay_modifier if positive else delay_modifier * -1
+
+            self.__delay_modifier = delay_modifier
+
+            
+            
+
+
+
+            

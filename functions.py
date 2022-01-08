@@ -12,7 +12,7 @@ if __name__ != "__main__":
     # Higher numbers result in slower speeds, and vice-versa.
     # "slow_type does not accept input() statements, so
     # always put those outisde of it.
-    def slow_type(string):
+    def slow_type(string, delay_modifier=0):
         '''
         Take a string and print it in a unique way dictated by codes in the string
             preceded by the "@" symbol.
@@ -152,7 +152,8 @@ if __name__ != "__main__":
                 sys.stdout.flush()
 
                 # wait for "delay" milliseconds
-                sleep(0.001 * delay)
+                sleep_time = 0.001 * (delay + delay_modifier) if delay + delay_modifier >= 0 else 0
+                sleep(sleep_time)
 
             # if slow typing is disabled, store letters to be printed at once later
             else:
