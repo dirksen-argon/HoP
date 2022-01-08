@@ -620,7 +620,23 @@ if __name__ != "__main__":
                 self.__run_results(self.__changes, mode="reset")    # undo every change made
                 self.__changes = []                                 # reset changes list
                 
-                return True
+                # get input from the user regarding whether to replay or quit
+                while getting_input:
+                    slow_type(self.__text_settings + "Continue? (Y/N): ", self.__delay_modifier)                                # get input from user
+                    user_input = input().upper()                                                                                # convert to uppercase
+                    getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True # make sure input is "Y" or "N"
+                    json_text = dumps(Room.__flags)                                                                             # convert the flags to a json string
+                    data_handle = open("data.json", "w")                                                                        # open "data.json" for writing
+                    data_handle.write(json_text)                                                                                # write the flags' json string into data.json
+                    data_handle.close()
+
+                # if the user inputted "Y", allow them to continue playing
+                if user_input == "Y":
+                    return True # continue playing
+
+                # if the user inputted "N", end the program
+                else:
+                    sys.exit()  # end the program
                 
             # if the argument is invalid raise an error
             else:
