@@ -1,6 +1,8 @@
 {
-
-		"room_text": "@d0065House of Palai.@w0600 Test.@w0350\n@w0350\n@w0350You are a young child caught out in the middle of suburbia,@w0050 at night,@w0050 alone.@w0500 You come upon a large house.@w0500 A REALLY large house,@w0050 bigger than anything on either side of it,@w0050 and certainly larger than anything you've ever seen before.@w0500 It's made primarily out of bare plywood,@w0050 some of it looking brand-new,@w0030 but most looking molded and rotten.@w0500 Suddenly,@w0050 a strange force compels you to step forward.@w0300 You attempt to resist it,@w0020 but the urge is too strong!@w0300 You slowly open the door and step inside.@w0300@d0050 The door slams shut behind you!@w1000@d0065@w0100\n@w0100\n@w0100What do you do?",
+	"commands": [
+		"delay-~999"
+	],
+	"room_text": "@d0065House of Palai.@w0600 Test.@w0350\n@w0350\n@w0350You are a young child caught out in the middle of suburbia,@w0050 at night,@w0050 alone.@w0500 You come upon a large house.@w0500 A REALLY large house,@w0050 bigger than anything on either side of it,@w0050 and certainly larger than anything you've ever seen before.@w0500 It's made primarily out of bare plywood,@w0050 some of it looking brand-new,@w0030 but most looking molded and rotten.@w0500 Suddenly,@w0050 a strange force compels you to step forward.@w0300 You attempt to resist it,@w0020 but the urge is too strong!@w0300 You slowly open the door and step inside.@w0300@d0050 The door slams shut behind you!@w1000@d0065@w0100\n@w0100\n@w0100What do you do?",
 	"options": [
 		{
 			"req": [
@@ -214,7 +216,7 @@
 			],
 			"option_text": "Open the left box",
 			"result": [
-				"set-left_box
+				"set-left_box",
 				"random-box_item"
 			],
 			"box_item": [
@@ -310,7 +312,7 @@
 				},
 				{
 					"commands": [
-						"print-spider"
+						"print-spider",
 						"set-event:spider",
 						"set-start_room_fight:zone_1",
 						"move-start_room_fight"

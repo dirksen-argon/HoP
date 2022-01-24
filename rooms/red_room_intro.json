@@ -1,5 +1,11 @@
 {
-	"room_text": "It's the red room aaaagrrrrhhhh big scary meat man",
+	"room_text": "Area under development. Thank you for playing!",
 	"options": [
+		{
+			"option_text": "Return",
+			"result": [
+				"reset"
+			]
+		}
 	]
 }

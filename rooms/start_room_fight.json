@@ -1,12 +1,14 @@
 {
 	"commands": [
-		"set-zone_1"
+		"set-zone_1",
+		"delay-~999"
 	],
 	"options": [
 		{
 			"req": [
 				"zone_1",
-				"!event:"
+				"!event:",
+				"!pick_door"
 			],
 			"option_text": "Dodge to the left",
 			"result_text": "You dodge to the left, closer to the growing pit. You turn back to see a short corridor has appeared with three doors at the end of it. Unfortunately, there's also a skeleton in the way.",
@@ -19,7 +21,8 @@
 			"req": [
 				"zone_2",
 				"!item:",
-				"!event:"
+				"!event:",
+				"!pick_door"
 			],
 			"option_text": "Charge the skeleton",
 			"result_text": "The skeleton impales you with its sword. Your attempts to struggle only accelerate your demise.",
@@ -31,7 +34,8 @@
 			"req": [
 				"zone_2",
 				"!item:",
-				"!event:"
+				"!event:",
+				"!pick_door"
 			],
 			"option_text": "Skirt around the left of skeleton",
 			"resut_text": "You feel the sword displace the air as it whizzes past you. Now what?",
@@ -44,7 +48,8 @@
 			"req": [
 				"zone_2",
 				"!item:",
-				"!event:"
+				"!event:",
+				"!pick_door"
 			],
 			"option_text": "Skirt around the right of skeleton",
 			"result_text": "You feel the sword displace the air as it whizzes past you. Now what?",
@@ -56,67 +61,33 @@
 		{
 			"req": [
 				"zone_3",
-				"!item:",
-				"!pick_door"
+				"!monster_dead",
+				"!pick_door",
+				"!pick_door_A"
 			],
 			"option_text": "Pick a door",
-			"result_text": "The three doors at the end of the hall are painted different colors, with different small details and manufacturing.",
+			"result_text": "The three doors at the end of the hall are painted different colors, with different small details and manufacturing. The colors are:",
 			"result": [
 				"set-pick_door",
 				"random-door",
 				"random-door",
 				"random-door",
-				"set-no_peeking"
+				"set-no_peeking",
+				"set-pick_door_A"
+			]
+		},
+		{
+			"req": [
+				"zone_3",
+				"!monster_dead",
+				"!pick_door",
+				"pick_door_A"
 			],
-			"door": [
-				{
-					"req": [
-						"!red_door"
-					],
-					"commands": [
-						"set-red_door"
-					]
-				},
-				{
-					"req": [
-						"!green_door"
-					],
-					"commands": [
-						"set-green_door"
-					]
-				},
-				{
-					"req": [
-						"!blue_door"
-					],
-					"commands": [
-						"set-blue_door"
-					]
-				},
-				{
-					"req": [
-						"!purple_door"
-					],
-					"commands": [
-						"set-purple_door"
-					]
-				},
-				{
-					"req": [
-						"!yellow_door"
-					],
-					"commands": [
-						"set-yellow_door"
-					]
-				},
-				{
-					"req": [
-						"!brown_door"
-					],
-					"commands": [
-						"set-brown_door"
-					]
-				}
+			"option_text": "Pick a door",
+			"result_text": "The colors are:",
+			"result": [
+				"set-no_peeking",
+				"set-pick_door"
 			]
 		},
 		{
@@ -185,115 +156,77 @@
 			"result_text": "You enter the brown door and quickly shut the door behind you!",
 			"result": [
 				"set-event:banger",
-				"move-brown_door_intro"
+				"move-brown_room_intro"
+			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"!show_door"
+			],
+			"option_text": "Pick a door",
+			"result": [
+				"if-nowhere",
+				"set-show_door",
+				"set-pick_door_A"
 			]
 		},
 		{
 			"req": [
 				"zone_3",
-				"start_room_intro:!left_box"
+				"start_room_intro:!left_box",
+				"!red_loop",
+				"!green_loop",
+				"!yellow_loop",
+				"!purple_loop",
+				"!blue_loop",
+				"!brown_loop",
+				"!show_door",
+				"!pick_door",
+				"!monster_dead"
 			],
 			"option_text": "Open the left box",
 			"result": [
 				"set-start_room_intro:left_box",
 				"random-box_item"
+			]
+		},
+		{
+			"req": [
+				"no_peeking",
+				"pick_door"
 			],
-			"box_item": [
-				{
-					"commands": [
-						"print-hatchet",
-						"set-item:hatchet"
-					]
-				},
-				{
-					"commands": [
-						"print-dagger",
-						"set-item:dagger"
-					]
-				},
-				{
-					"commands": [
-						"print-nightstick",
-						"set-item:nightstick"
-					]
-				},
-				{
-					"commands": [
-						"print-spider",
-						"set-event:spider_1"
-					]
-				},
-				{
-					"commands": [
-						"print-head",
-						"set-event:head_1"
-					]
-				},
-				{
-					"commands": [
-						"print-empty"
-					]
-				}
-			],
-			"hatchet": "It's an old hatchet.",
-			"dagger": "It's a ceremonial dagger.",
-			"nightstick": "It's a police nightstick.",
-			"spider": "It's a giant spider! The creature lunges at you, even as the skeleton grows ever closer!",
-			"head": "It's a severed head! The undead atrocity screams a shrill scream, bringing you to your knees. The skeleton looms ever closer.",
-			"empty": "It's empty!"
+			"option_text": "Exit",
+			"result": [
+				"unset-no_peeking",
+				"unset-pick_door"
+			]
 		},
 		{
 			"req": [
 				"zone_3",
-				"start_room_intro:!right_box"
+				"start_room_intro:!right_box",
+				"!red_loop",
+				"!green_loop",
+				"!yellow_loop",
+				"!purple_loop",
+				"!blue_loop",
+				"!brown_loop",
+				"!show_door",
+				"!pick_door",
+				"!monster_dead"
 			],
-			"option_text": "Open the left box",
+			"option_text": "Open the right box",
 			"result": [
 				"set-start_room_intro:right_box",
 				"random-box_item"
-			],
-			"box_item": [
-				{
-					"commands": [
-						"print-hatchet",
-						"set-item:hatchet"
-					]
-				},
-				{
-					"commands": [
-						"print-dagger",
-						"set-item:dagger"
-					]
-				},
-				{
-					"commands": [
-						"print-nightstick",
-						"set-item:nightstick"
-					]
-				},
-				{
-					"commands": [
-						"print-spider",
-						"set-event:spider_1"
-					]
-				},
-				{
-					"commands": [
-						"print-head",
-						"set-event:head_1"
-					]
-				},
-				{
-					"commands": [
-						"print-empty"
-					]
-				}
 			]
 		},
 		{
 			"req": [
 				"zone_1",
-				"!event:"
+				"!event:",
+				"!pick_door"
 			],
 			"option_text": "Dodge to the right",
 			"result_text": "You dodge to the right of the skeleton, as well as further from the growing pit! A short corridor has appeared at the back of the room that you now stand at the mouth of, with three doors at the end of it. What do you do?",
@@ -303,11 +236,586 @@
 			]
 		},
 		{
+			"req": [
+				"item:hatchet",
+				"!pick_door"
+			],
+			"option_text": "Slash the skeleton with the hatchet",
+			"result_text": "You slash at the skeleton's torso, which promptly gives way and falls to the ground! A strange force then lifts the slashed torso up from the ground and places it firmly back on the body.",
+			"result": [
+				"set-hatchet_1"
+			]
+		},
+		{
+			"req": [
+				"hatchet_1",
+				"!pick_door"
+			],
+			"option_text": "Slash the skeleton with the hatchet",
+			"result_text": "You attempt to slash the skeleton again. It grabs your hand and impales you. You slowly see everything fade to black.",
+			"result": [
+				"reset"
+			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"show_door",
+				"red_door",
+				"!red_loop",
+				"!green_loop",
+				"!yellow_loop",
+				"!purple_loop",
+				"!blue_loop",
+				"!brown_loop"
+			],
+			"option_text": "Red Door",
+			"result": [
+				"set-red_loop"
+			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"red_loop",
+				"red_door"
+			],
+			"option_text": "Go through the red door",
+			"result": [
+				"move-red_room_intro"
+			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"red_door",
+				"red_loop",
+				"!red_peeper"
+			],
+			"option_text": "Peek behind the red door",
+			"result_text": "You peek behind the red door to find a truly horrific scene. It's a small kitchen whose white tiles have been painted red with blood. Human bodies hang on meat hooks on the ceiling. In the middle of the kitchen is an island, on which a young boy is screaming for his life. His arms and legs have been individually chained to the sides of the island. A large figure dressed in a corse white material stands over him, hacking his left leg off with a meat cleaver. The figure is wearing a chef's hat made of the same white material, with leather gloves over its hands and a black veil covering its face. It snaps its neck sharply in your direction and then charges, swinging the cleaver violently and screaming incoherently.",
+			"result": [
+				"set-red_peeper"
+			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"red_door",
+				"red_loop",
+				"!red_door_ex"
+			],
+			"option_text": "Examine the red door",
+			"result_text": "The red door is rather plain compared to the others, much more akin to a standard suburban door. There are six panels on it, and the door handle is round rather than vertical. The paint is very light, as the door's wooden texture can be seen and felt.",
+			"result":[
+				"set-red_door_ex"
+			]
+		},
+		{
+			"req": [
+				"red_door_ex",
+				"red_loop"
+			],
+			"option_text": "Examine the red door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"red_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-red_loop"
+			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"show_door",
+				"green_door",
+				"!red_loop",
+				"!green_loop",
+				"!yellow_loop",
+				"!purple_loop",
+				"!blue_loop",
+				"!brown_loop"
+			],
+			"option_text": "Green Door",
+			"result": [
+				"set-green_loop"
+			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"green_loop",
+				"green_door"
+			],
+			"option_text": "Go through the green door",
+			"result": [
+				"move-green_room_intro"
+			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"green_door",
+				"green-loop",
+				"!green_peeper"
+			],
+			"option_text": "Peek behind the green door",
+			"result_text": "Behind the green door is a staircase matted with old beige carpeting descending into pitch-black. The walls are wallpapered white with red flowers with a popcorn ceiling tying it together.",
+			"result": [
+				"set-green_peeper"
+			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"green_door",
+				"green_loop",
+				"!green_door_ex"
+			],
+			"option_text": "Examine the green door",
+			"result_text": "The green door looks like what would come of an ancient builder attempting modern architecture. The vertical handle especially is barely functional, but the paneling is ornate with carvings like plants and the paint is masterfully coated, making it sleek to the touch and eye.",
+			"result": [
+				"set-green_door_ex"
+			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"green_door",
+				"green_loop",
+				"green_door_ex"
+			],
+			"option_text": "Examine the green door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"green_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-green_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"yellow_door",
+				"!red_loop",
+				"!green_loop",
+				"!yellow_loop",
+				"!purple_loop",
+				"!blue_loop",
+				"!brown_loop"
+			],
+			"option_text": "Yellow Door",
+			"result": [
+				"set-yellow_loop"
+			]
+		},
+		{
+			"req": [
+				"yellow_loop"
+			],
+			"option_text": "Go through the yellow door",
+			"result": [
+				"move-yellow_room_intro"
+			]
+		},
+		{
+			"req": [
+				"yellow_loop",
+				"!yellow_peeper"
+			],
+			"option_text": "Peek behind the yellow door",
+			"result_text": "The yellow door opens into the interior of a warehouse. A short wall sits to your right, with the long wall, and most of the interior, going off to your left. Whirring machinery lines the perimeter, as well as open shelves that house strange and fantastic gadgets.",
+			"result": [
+				"set-yellow_peeper"
+			]
+		},
+		{
+			"req": [
+				"yellow_loop",
+				"!yellow_door_ex"
+			],
+			"option_text": "Examine the yellow door",
+			"result_text": "The yellow door is cold to the touch and completely featureless save for the vertical handle used to open it. It is heavy when pushed.",
+			"result": [
+				"set-yellow_door_ex"
+			]
+		},
+		{
+			"req": [
+				"yellow_loop",
+				"yellow_door_ex"
+			],
+			"option_text": "Examine the yellow door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"yellow_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-yellow_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"purple_door",
+				"!red_loop",
+				"!green_loop",
+				"!yellow_loop",
+				"!purple_loop",
+				"!blue_loop",
+				"!brown_loop"
+			],
+			"option_text": "Purple Door",
+			"result": [
+				"set-purple_loop"
+			]
+		},
+		{
+			"req": [
+				"purple_loop"
+			],
+			"option_text": "Go through the purple door",
+			"result": [
+				"move-purple_room_intro"
+			]
+		},
+		{
+			"req": [
+				"purple_loop",
+				"!purple_peeper"
+			],
+			"option_text": "Peek behind the purple door",
+			"result_text": "The purple door gives way to a long hallway decorated with red carpet, expensive wood paneling, a clean white ceiling, and several small glass chandeliers. From where you're standing, it is impossible to see where it leads.",
+			"result": [
+				"set-purple_peeper"
+			]
+		},
+		{
+			"req": [
+				"purple_loop",
+				"!purple_door_ex"
+			],
+			"option_text": "Examine the purple door",
+			"result_text": "The purple door has paneling resembling an archway that terminates at about the midway point down the door. Below that is a simple box panel. The deep purple color used is sleek, though noticeably sticky.",
+			"result": [
+				"set-purple_door_ex"
+			]	
+		},
+		{
+			"req": [
+				"purple_loop",
+				"purple_door_ex"
+			],
+			"option_text": "Examine the purple door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"purple_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-purple_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"blue_door",
+				"!red_loop",
+				"!green_loop",
+				"!yellow_loop",
+				"!purple_loop",
+				"!blue_loop",
+				"!brown_loop"
+			],
+			"option_text": "Blue Door",
+			"result": [
+				"set-blue_loop"
+			]
+		},
+		{
+			"req": [
+				"blue_loop"
+			],
+			"option_text": "Go through the blue door",
+			"result": [
+				"move-blue_room_intro"
+			]
+		},
+		{
+			"req": [
+				"blue_loop",
+				"!blue_peeper"
+			],
+			"option_text": "Peek behind the blue door",
+			"result_text": "The blue door gives way to a stone staircase depending into a dimly lit stone hallway. The rock is damp and covered with hard water and moss.",
+			"result": [
+				"set-blue_peeper"
+			]
+		},
+		{
+			"req": [
+				"blue_loop",
+				"!blue_door_ex"
+			],
+			"option_text": "Examine the blue door",
+			"result_text": "Unlike the others, the blue door seems to get its color from its material rather than a coat of paint. The deep blue is slightly reflective, as well as waxy to the touch. The handle is replaced with a circular inset with lips around its edges.",
+			"result": [
+				"set-blue_door_ex"
+			]
+		},
+		{
+			"req": [
+				"blue_loop",
+				"blue_door_ex"
+			],
+			"option_text": "Examine the blue door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"blue_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-blue_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"brown_door",
+				"!red_loop",
+				"!green_loop",
+				"!yellow_loop",
+				"!purple_loop",
+				"!blue_loop",
+				"!brown_loop"
+			],
+			"option_text": "Brown Door",
+			"result": [
+				"set-brown_loop"
+			]
+		},
+		{
+			"req": [
+				"brown_loop"
+			],
+			"option_text": "Go through the brown door",
+			"result": [
+				"move-brown_room_intro"
+			]
+		},
+		{
+			"req": [
+				"brown_loop",
+				"!brown_peeper"
+			],
+			"option_text": "Peek behind the brown door",
+			"result_text": "The brown door takes you to the bottom of a ravine, with a river flowing from your left to your right. Overhead can be heard the sounds of clinking and clanking, though you can't yet quite see what causes them.",
+			"result": [
+				"set-brown_peeper"
+			]
+		},
+		{
+			"req": [
+				"brown_loop",
+				"!brown_door_ex"
+			],
+			"option_text": "Examine the brown door",
+			"result_text": "The brown door is made of a rough and heavy wood that is little helped by the manner in which it was painted. Said paint seems to have been coated on in heaps without any though or care, giving the door a very, very rough texture.",
+			"result": [
+				"set-brown_door_ex"
+			]
+		},
+		{
+			"req": [
+				"brown_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-brown_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"!red_loop",
+				"!green_loop",
+				"!yellow_loop",
+				"!purple_loop",
+				"!blue_loop",
+				"!brown_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-show_door"
+			]
+		},
+		{
+			"req": [
+				"!monster_dead",
+				"zone_3",
+				"!pick_door"
+			],
+			"option_text": "Push the skeleton into the pit",
+			"result_text": "You push the skeleton into the pit. The pit continues to grow, pushing you into the hallway, having taken over the previous room, where its growing ceases. After a few seconds, you hear a distant indeterminable sound resonating from the inky depths.",
+			"result": [
+				"set-monster_dead"
+			]
+		},
+		{
+			"req": [
+				"!monster_dead",
+				"!pick_door"
+			],
 			"option_text": "Cry",
 			"result_text": "You sit on the floor and cry. The skeleton impales you though the heart. You feel the driving black sever your arteries like tension strings as everything slowly fades to black.",
 			"result": [
 				"reset"
 			]
+		},
+		{
+			"req": [
+				"monster_dead",
+				"!red_loop",
+				"!green_loop",
+				"!yellow_loop",
+				"!purple_loop",
+				"!blue_loop",
+				"!brown_loop",
+				"!show_door"
+			],
+			"option_text": "Cry",
+			"result_text": "You sit on the floor and cry. An intense feeling of dread overcomes you."
 		}
-	]
+	],
+	"constants": {
+		"nowhere": {
+			"req": [
+				"!pick_door_A"
+			],
+			"commands": [
+				"random-door",
+				"random-door",
+				"random-door"
+			]
+		},
+		"box_item": [
+			{
+				"commands": [
+					"print-hatchet",
+					"set-item:hatchet"
+				]
+			},
+			{
+				"commands": [
+					"print-dagger",
+					"set-item:dagger"
+				]
+			},
+			{
+				"commands": [
+					"print-nightstick",
+					"set-item:nightstick"
+				]
+			},
+			{
+				"commands": [
+					"print-spider",
+					"set-event:spider_1"
+				]
+			},
+			{
+				"commands": [
+					"print-head",
+					"set-event:head_1"
+				]
+			},
+			{
+				"commands": [
+					"print-empty"
+				]
+			}
+		],
+		"door": [
+			{
+				"req": [
+					"!red_door"
+				],
+				"commands": [
+					"set-red_door"
+				]
+			},
+			{
+				"req": [
+					"!green_door"
+					],
+				"commands": [
+					"set-green_door"
+				]
+			},
+			{
+				"req": [
+					"!blue_door"
+				],
+				"commands": [
+					"set-blue_door"
+				]
+			},
+			{
+				"req": [
+					"!purple_door"
+				],
+				"commands": [
+					"set-purple_door"
+				]
+			},
+			{
+				"req": [
+					"!yellow_door"
+				],
+				"commands": [
+					"set-yellow_door"
+				]
+			},
+			{
+				"req": [
+					"!brown_door"
+				],
+				"commands": [
+					"set-brown_door"
+				]
+			}
+		],
+		"hatchet": "It's an old hatchet.",
+		"dagger": "It's a ceremonial dagger.",
+		"nightstick": "It's a police nightstick.",
+		"spider": "It's a giant spider! The creature lunges at you, even as the skeleton grows ever closer!",
+		"head": "It's a severed head! The undead atrocity screams a shrill scream, bringing you to your knees. The skeleton looms ever closer.",
+		"empty": "It's empty!",
+		"door_ex": "Yep. It's a door."
+	}
 }
