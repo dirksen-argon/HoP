@@ -93,70 +93,73 @@
 		{
 			"req": [
 				"red_door",
-				"no_peeking"
+				"no_peeking",
+				"!in_loop"
 			],
 			"option_text": "Red Door",
-			"result_text": "You quickly dash behind the red door and into the red room.",
 			"result": [
-				"set-event:banger",
-				"move-red_room_intro"
+				"set-red_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
 				"green_door",
-				"no_peeking"
+				"no_peeking",
+				"!in_loop"
 			],
 			"option_text": "Green Door",
-			"result_text": "You enter the green door and quickly shut the door behind you! A loud banging can be heard behind the door that slowly withers and fades.",
 			"result": [
-				"move-green_room_intro"
+				"set-green_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
 				"blue_door",
-				"no_peeking"
+				"no_peeking",
+				"!in_loop"
 			],
 			"option_text": "Blue Door",
-			"result_text": "You enter the blue door and quickly shut the door behind you! A loud banging can be heard behind the door that slowly withers and fades.",
 			"result": [
-				"move-blue_room_intro"
+				"set-blue_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
 				"purple_door",
-				"no_peeking"
+				"no_peeking",
+				"!in_loop"
 			],
 			"option_text": "Purple Door",
-			"result_text": "You enter the purple door and quickly shut the door behind you! A loud banging can be heard behind the door that slowly withers and fades.",
 			"result": [
-				"move-purple_room_intro"
+				"set-purple_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
 				"yellow_door",
-				"no_peeking"
+				"no_peeking",
+				"!in_loop"
 			],
 			"option_text": "Yellow Door",
-			"result_text": "You enter the yellow door and quickly shut the door behind you!",
 			"result": [
-				"set-event:banger",
-				"move-yellow_room_intro"
+				"set-yellow_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
 				"brown_door",
-				"no_peeking"
+				"no_peeking",
+				"!in_loop"
 			],
 			"option_text": "Brown Door",
-			"result_text": "You enter the brown door and quickly shut the door behind you!",
 			"result": [
-				"set-event:banger",
-				"move-brown_room_intro"
+				"set-brown_move",
+				"set-in_loop"
 			]
 		},
 		{
@@ -168,7 +171,8 @@
 			"result": [
 				"if-nowhere",
 				"set-show_door",
-				"set-pick_door_A"
+				"set-pick_door_A",
+				"set-in_loop_2"
 			]
 		},
 		{
@@ -194,6 +198,7 @@
 		{
 			"req": [
 				"no_peeking",
+				"!in_loop",
 				"pick_door"
 			],
 			"option_text": "Exit",
@@ -237,73 +242,86 @@
 		},
 		{
 			"req": [
-				"item:hatchet",
-				"!pick_door"
+				"show_door",
+				"red_door",
+				"!in_loop"
 			],
-			"option_text": "Slash the skeleton with the hatchet",
-			"result_text": "You slash at the skeleton's torso, which promptly gives way and falls to the ground! A strange force then lifts the slashed torso up from the ground and places it firmly back on the body.",
+			"option_text": "Red Door",
 			"result": [
-				"set-hatchet_1"
+				"set-red_loop",
+				"set-red_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
-				"hatchet_1",
-				"!pick_door"
+				"red_move",
+				"ded"
 			],
-			"option_text": "Slash the skeleton with the hatchet",
-			"result_text": "You attempt to slash the skeleton again. It grabs your hand and impales you. You slowly see everything fade to black.",
+			"option_text": "Go through the red door",
+			"result": [
+				"if-through",
+				"move-red_room_intro"
+			]
+		},
+		{
+			"req": [
+				"red_move",
+				"!monster_dead"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-red_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"red_loop",
+				"!red_peeper",
+				"!ded"
+			],
+			"option_text": "Peek behind the red door",
+			"result_text": "You peek behind the red door to find a truly horrific scene. It's a small kitchen whose white tiles have been painted red with blood. Human bodies hang on meat hooks on the ceiling. In the middle of the kitchen is an island, on which a young boy is screaming for his life. His arms and legs have been individually chained to the sides of the island. A large figure dressed in a corse white material stands over him, hacking his left leg off with a meat cleaver. The figure is wearing a chef's hat made of the same white material, with leather gloves over its hands and a black veil covering its face. It snaps its neck sharply in your direction and then charges, swinging the cleaver violently and screaming incoherently.",
+			"result": [
+				"set-red_peeper",
+				"set-ded"
+			]
+		},
+		{
+			"req": [
+				"ded"
+			],
+			"option_text": "CLOSE THE DOOR",
+			"result_text": "You slam the door on the creature's face! Some heavy pounding can be heard from the other side that swiftly subsides.",
+			"result": [
+				"unset-ded"
+			]
+		},
+		{
+			"req": [
+				"ded"
+			],
+			"option_text": "Fight",
+			"result": [
+				"move-start_room_butcher"
+			]
+		},
+		{
+			"req": [
+				"ded"
+			],
+			"option_text": "Exit",
+			"result_text": "The butcher swings his cleaver into you again and again, screaming incoherent words as he does. The third blow cracks your skull, and before you even hit the floor everything fades to black.",
 			"result": [
 				"reset"
 			]
 		},
 		{
 			"req": [
-				"monster_dead",
-				"show_door",
-				"red_door",
-				"!red_loop",
-				"!green_loop",
-				"!yellow_loop",
-				"!purple_loop",
-				"!blue_loop",
-				"!brown_loop"
-			],
-			"option_text": "Red Door",
-			"result": [
-				"set-red_loop"
-			]
-		},
-		{
-			"req": [
-				"monster_dead",
 				"red_loop",
-				"red_door"
-			],
-			"option_text": "Go through the red door",
-			"result": [
-				"move-red_room_intro"
-			]
-		},
-		{
-			"req": [
-				"monster_dead",
-				"red_door",
-				"red_loop",
-				"!red_peeper"
-			],
-			"option_text": "Peek behind the red door",
-			"result_text": "You peek behind the red door to find a truly horrific scene. It's a small kitchen whose white tiles have been painted red with blood. Human bodies hang on meat hooks on the ceiling. In the middle of the kitchen is an island, on which a young boy is screaming for his life. His arms and legs have been individually chained to the sides of the island. A large figure dressed in a corse white material stands over him, hacking his left leg off with a meat cleaver. The figure is wearing a chef's hat made of the same white material, with leather gloves over its hands and a black veil covering its face. It snaps its neck sharply in your direction and then charges, swinging the cleaver violently and screaming incoherently.",
-			"result": [
-				"set-red_peeper"
-			]
-		},
-		{
-			"req": [
-				"monster_dead",
-				"red_door",
-				"red_loop",
-				"!red_door_ex"
+				"!red_door_ex",
+				"!ded"
 			],
 			"option_text": "Examine the red door",
 			"result_text": "The red door is rather plain compared to the others, much more akin to a standard suburban door. There are six panels on it, and the door handle is round rather than vertical. The paint is very light, as the door's wooden texture can be seen and felt.",
@@ -314,7 +332,8 @@
 		{
 			"req": [
 				"red_door_ex",
-				"red_loop"
+				"red_loop",
+				"!ded"
 			],
 			"option_text": "Examine the red door again",
 			"result": [
@@ -323,46 +342,53 @@
 		},
 		{
 			"req": [
-				"red_loop"
+				"red_loop",
+				"!ded"
 			],
 			"option_text": "Exit",
 			"result": [
-				"unset-red_loop"
+				"unset-red_loop",
+				"unset-red_move",
+				"unset-in_loop"
 			]
 		},
 		{
 			"req": [
-				"monster_dead",
 				"show_door",
 				"green_door",
-				"!red_loop",
-				"!green_loop",
-				"!yellow_loop",
-				"!purple_loop",
-				"!blue_loop",
-				"!brown_loop"
+				"!in_loop"
 			],
 			"option_text": "Green Door",
 			"result": [
-				"set-green_loop"
+				"set-green_loop",
+				"set-green_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
-				"monster_dead",
-				"green_loop",
-				"green_door"
+				"green_move"
 			],
 			"option_text": "Go through the green door",
 			"result": [
+				"if-through",
 				"move-green_room_intro"
 			]
 		},
 		{
 			"req": [
-				"monster_dead",
-				"green_door",
-				"green-loop",
+				"green_move",
+				"!monster_dead"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-green_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"green_loop",
 				"!green_peeper"
 			],
 			"option_text": "Peek behind the green door",
@@ -373,8 +399,6 @@
 		},
 		{
 			"req": [
-				"monster_dead",
-				"green_door",
 				"green_loop",
 				"!green_door_ex"
 			],
@@ -386,8 +410,6 @@
 		},
 		{
 			"req": [
-				"monster_dead",
-				"green_door",
 				"green_loop",
 				"green_door_ex"
 			],
@@ -402,32 +424,43 @@
 			],
 			"option_text": "Exit",
 			"result": [
-				"unset-green_loop"
+				"unset-green_loop",
+				"unset-green_move",
+				"unset-in_loop"
 			]
 		},
 		{
 			"req": [
 				"show_door",
 				"yellow_door",
-				"!red_loop",
-				"!green_loop",
-				"!yellow_loop",
-				"!purple_loop",
-				"!blue_loop",
-				"!brown_loop"
+				"!in_loop"
 			],
 			"option_text": "Yellow Door",
 			"result": [
-				"set-yellow_loop"
+				"set-yellow_loop",
+				"set-yellow_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
-				"yellow_loop"
+				"yellow_move"
 			],
 			"option_text": "Go through the yellow door",
 			"result": [
+				"if-through",
 				"move-yellow_room_intro"
+			]
+		},
+		{
+			"req": [
+				"yellow_move",
+				"!monster_dead"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-yellow_move",
+				"unset-in_loop"
 			]
 		},
 		{
@@ -468,32 +501,43 @@
 			],
 			"option_text": "Exit",
 			"result": [
-				"unset-yellow_loop"
+				"unset-yellow_loop",
+				"unset-yellow_move",
+				"unset-in_loop"
 			]
 		},
 		{
 			"req": [
 				"show_door",
 				"purple_door",
-				"!red_loop",
-				"!green_loop",
-				"!yellow_loop",
-				"!purple_loop",
-				"!blue_loop",
-				"!brown_loop"
+				"!in_loop"
 			],
 			"option_text": "Purple Door",
 			"result": [
-				"set-purple_loop"
+				"set-purple_loop",
+				"set-purple_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
-				"purple_loop"
+				"purple_move"
 			],
 			"option_text": "Go through the purple door",
 			"result": [
+				"if-through",
 				"move-purple_room_intro"
+			]
+		},
+		{
+			"req": [
+				"purple_move",
+				"!monster_dead"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-purple_move",
+				"unset-in_loop"
 			]
 		},
 		{
@@ -534,32 +578,43 @@
 			],
 			"option_text": "Exit",
 			"result": [
-				"unset-purple_loop"
+				"unset-purple_loop",
+				"unset-purple_move",
+				"unset-in_loop"
 			]
 		},
 		{
 			"req": [
 				"show_door",
 				"blue_door",
-				"!red_loop",
-				"!green_loop",
-				"!yellow_loop",
-				"!purple_loop",
-				"!blue_loop",
-				"!brown_loop"
+				"!in_loop"
 			],
 			"option_text": "Blue Door",
 			"result": [
-				"set-blue_loop"
+				"set-blue_loop",
+				"set-blue_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
-				"blue_loop"
+				"blue_move"
 			],
 			"option_text": "Go through the blue door",
 			"result": [
+				"if-through",
 				"move-blue_room_intro"
+			]
+		},
+		{
+			"req": [
+				"blue_move",
+				"!monster_dead"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-blue_move",
+				"unset-in_loop"
 			]
 		},
 		{
@@ -568,7 +623,7 @@
 				"!blue_peeper"
 			],
 			"option_text": "Peek behind the blue door",
-			"result_text": "The blue door gives way to a stone staircase depending into a dimly lit stone hallway. The rock is damp and covered with hard water and moss.",
+			"result_text": "The blue door gives way to a stone staircase decending into a dimly lit stone hallway. The rock is damp and covered with hard water and moss.",
 			"result": [
 				"set-blue_peeper"
 			]
@@ -600,32 +655,43 @@
 			],
 			"option_text": "Exit",
 			"result": [
-				"unset-blue_loop"
+				"unset-blue_loop",
+				"unset-blue_move",
+				"unset-in_loop"
 			]
 		},
 		{
 			"req": [
 				"show_door",
 				"brown_door",
-				"!red_loop",
-				"!green_loop",
-				"!yellow_loop",
-				"!purple_loop",
-				"!blue_loop",
-				"!brown_loop"
+				"!in_loop"
 			],
 			"option_text": "Brown Door",
 			"result": [
-				"set-brown_loop"
+				"set-brown_loop",
+				"set-brown_move",
+				"set-in_loop"
 			]
 		},
 		{
 			"req": [
-				"brown_loop"
+				"brown_move"
 			],
 			"option_text": "Go through the brown door",
 			"result": [
+				"if-through",
 				"move-brown_room_intro"
+			]
+		},
+		{
+			"req": [
+				"brown_move",
+				"!monster_dead"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-brown_move",
+				"unset-in_loop"
 			]
 		},
 		{
@@ -652,26 +718,34 @@
 		},
 		{
 			"req": [
+				"brown_loop",
+				"brown_door_ex"
+			],
+			"option_text": "Examine the brown door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
 				"brown_loop"
 			],
 			"option_text": "Exit",
 			"result": [
-				"unset-brown_loop"
+				"unset-brown_loop",
+				"unset-brown_move",
+				"unset-in_loop"
 			]
 		},
 		{
 			"req": [
 				"show_door",
-				"!red_loop",
-				"!green_loop",
-				"!yellow_loop",
-				"!purple_loop",
-				"!blue_loop",
-				"!brown_loop"
+				"!in_loop"
 			],
 			"option_text": "Exit",
 			"result": [
-				"unset-show_door"
+				"unset-show_door",
+				"unset-in_loop_2"
 			]
 		},
 		{
@@ -700,13 +774,8 @@
 		{
 			"req": [
 				"monster_dead",
-				"!red_loop",
-				"!green_loop",
-				"!yellow_loop",
-				"!purple_loop",
-				"!blue_loop",
-				"!brown_loop",
-				"!show_door"
+				"!in_loop",
+				"!in_loop_2"
 			],
 			"option_text": "Cry",
 			"result_text": "You sit on the floor and cry. An intense feeling of dread overcomes you."
@@ -721,6 +790,14 @@
 				"random-door",
 				"random-door",
 				"random-door"
+			]
+		},
+		"through": {
+			"req": [
+				"!monster_dead"
+			],
+			"commands": [
+				"set-event:banger"
 			]
 		},
 		"box_item": [
@@ -745,13 +822,13 @@
 			{
 				"commands": [
 					"print-spider",
-					"set-event:spider_1"
+					"move-start_room_spider"
 				]
 			},
 			{
 				"commands": [
 					"print-head",
-					"set-event:head_1"
+					"move-start_room_head"
 				]
 			},
 			{
