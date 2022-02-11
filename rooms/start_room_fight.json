@@ -1,14 +1,16 @@
 {
 	"commands": [
 		"set-zone_1",
-		"delay-~999"
+		"delay-~999",
+		"set-item:hatchet"
 	],
 	"options": [
 		{
 			"req": [
 				"zone_1",
 				"!event:",
-				"!pick_door"
+				"!pick_door",
+				"!in_loop"
 			],
 			"option_text": "Dodge to the left",
 			"result_text": "You dodge to the left, closer to the growing pit. You turn back to see a short corridor has appeared with three doors at the end of it. Unfortunately, there's also a skeleton in the way.",
@@ -22,7 +24,8 @@
 				"zone_2",
 				"!item:",
 				"!event:",
-				"!pick_door"
+				"!pick_door",
+				"!in_loop"
 			],
 			"option_text": "Charge the skeleton",
 			"result_text": "The skeleton impales you with its sword. Your attempts to struggle only accelerate your demise.",
@@ -35,7 +38,8 @@
 				"zone_2",
 				"!item:",
 				"!event:",
-				"!pick_door"
+				"!pick_door",
+				"!in_loop"
 			],
 			"option_text": "Skirt around the left of skeleton",
 			"resut_text": "You feel the sword displace the air as it whizzes past you. Now what?",
@@ -49,7 +53,8 @@
 				"zone_2",
 				"!item:",
 				"!event:",
-				"!pick_door"
+				"!pick_door",
+				"!in_loop"
 			],
 			"option_text": "Skirt around the right of skeleton",
 			"result_text": "You feel the sword displace the air as it whizzes past you. Now what?",
@@ -63,7 +68,8 @@
 				"zone_3",
 				"!monster_dead",
 				"!pick_door",
-				"!pick_door_A"
+				"!pick_door_A",
+				"!in_loop"
 			],
 			"option_text": "Pick a door",
 			"result_text": "The three doors at the end of the hall are painted different colors, with different small details and manufacturing. The colors are:",
@@ -81,7 +87,8 @@
 				"zone_3",
 				"!monster_dead",
 				"!pick_door",
-				"pick_door_A"
+				"pick_door_A",
+				"!in_loop"
 			],
 			"option_text": "Pick a door",
 			"result_text": "The colors are:",
@@ -165,7 +172,8 @@
 		{
 			"req": [
 				"monster_dead",
-				"!show_door"
+				"!show_door",
+				"!in_loop"
 			],
 			"option_text": "Pick a door",
 			"result": [
@@ -187,7 +195,8 @@
 				"!brown_loop",
 				"!show_door",
 				"!pick_door",
-				"!monster_dead"
+				"!monster_dead",
+				"!in_loop"
 			],
 			"option_text": "Open the left box",
 			"result": [
@@ -219,7 +228,8 @@
 				"!brown_loop",
 				"!show_door",
 				"!pick_door",
-				"!monster_dead"
+				"!monster_dead",
+				"!in_loop"
 			],
 			"option_text": "Open the right box",
 			"result": [
@@ -231,13 +241,202 @@
 			"req": [
 				"zone_1",
 				"!event:",
-				"!pick_door"
+				"!pick_door",
+				"!in_loop"
 			],
 			"option_text": "Dodge to the right",
 			"result_text": "You dodge to the right of the skeleton, as well as further from the growing pit! A short corridor has appeared at the back of the room that you now stand at the mouth of, with three doors at the end of it. What do you do?",
 			"result": [
 				"unset-zone_1",
 				"set-zone_3"
+			]
+		},
+		{
+			"req": [
+				"item:hatchet",
+				"!pick_door",
+				"!hatchet_loop"
+			],
+			"option_text": "Hatchet",
+			"result": [
+				"set-hatchet_loop",
+				"set-in_loop"
+			]
+		},
+		{
+			"req": [
+				"item:hatchet",
+				"!pick_door",
+				"hatchet_loop",
+				"!monster_dead",
+				"!hatchet_torso"
+			],
+			"option_text": "Slash the torso",
+			"result_text": "You slash at the skeleton's torso, which promptly gives way and falls to the ground! A strange force then lifts the slashed torso up from the ground and places it firmly back on the body.",
+			"result": [
+				"set-hatchet_torso"
+			]
+		},
+		{
+			"req": [
+				"item:hatchet",
+				"!pick_door",
+				"hatchet_loop",
+				"!monster_dead",
+				"!hatchet_ankle"
+			],
+			"option_text": "Slash the ankle",
+			"result_text": "You slash at the skeleton's ankle, which causes the skeleton to fall to the ground! A strange force then causes the broken bone to fuse back together, and the skeleton gets back on its feet.",
+			"result": [
+				"set-hatchet_ankle"
+			]
+		},
+		{
+			"req": [
+				"hatchet_loop",
+				"!hatchet_arm",
+				"!monster_dead"
+			],
+			"option_text": "Slash the arm",
+			"result_text": "You slash at the skeleton's arm, which promptly falls to the ground. A strange force then picks it back up and reattaches it to the body.",
+			"result": [
+				"set-hatchet_arm"
+			]
+		},
+		{
+			"req": [
+				"hatchet_loop",
+				"!hatchet_head",
+				"!monster_dead"
+			],
+			"option_text": "Slash the head",
+			"result_text": "You slash at the skeleton's head, which cracks open and leaks a strange green goo. The skeleton starts to stumble.",
+			"result": [
+				"set-hatchet_head"
+			]
+		},
+		{
+			"req": [
+				"item:hatchet",
+				"!pick_door",
+				"hatchet_torso",
+				"!monster_dead",
+				"hatchet_loop"
+			],
+			"option_text": "Slash the torso again",
+			"result_text": "You attempt to slash the torso again, but it sees your attack coming. With a mighty swing, it slashes off your hand at the wrist. The shock and pain builds through your body as the skeleton drives its sword through your heart. You barely have a chance to breathe as everything slowly fades to black.",
+			"result": [
+				"reset"
+			]
+		},
+		{
+			"req": [
+				"hatchet_ankle",
+				"hatchet_loop"
+			],
+			"option_text": "Slash the ankle again",
+			"result_text": "You attempt to slash the ankle again, but it sees your attack coming. With a mighty swing, it slashes off your arm. The shock and pain builds through your body as the skeleton places one foot on your back and stabs you through the heart. Your eyes fill with tears as everything slowly fades to black.",
+			"result": [
+				"reset"
+			]
+		},
+		{
+			"req": [
+				"hatchet_arm",
+				"hatchet_loop"
+			],
+			"option_text": "Slash the arm again",
+			"result_text": "You attempt to slash the arm again, but it sees your attack coming. With a mighty swing, it slashes the skin off your forearm and punctures your eye. You scream as the sword is driven into your head as everything slowly fades to black.",
+			"result": [
+				"reset"
+			]
+		},
+		{
+			"req": [
+				"hatchet_head",
+				"hatchet_loop"
+			],
+			"option_text": "Slash the head again",
+			"result_text": "You slash the skeleton's head once more. The skeleton's skull completely bursts open and it falls to the ground. The room becomes slowly engulfed by the growing pit, but it luckily terminates at the hallway's entrance. What do you do?",
+			"result": [
+				"unset-hatchet_loop",
+				"unset-in_loop",
+				"set-monster_dead"
+			]
+		},
+		{
+			"req": [
+				"hatchet_loop",
+				"monster_dead",
+				"!in_loop_2"
+			],
+			"option_text": "Slash the floor",
+			"result_text": "You slash at the plywood floor, which appears to work! The hatchet sinks into the wood and it cuts as expected. You take a few more swings and the floor gives out from under you, dropping you into the same pit you had escaped from. The ground comes up on you quickly-",
+			"result": [
+				"reset"
+			]
+		},
+		{
+			"req": [
+				"hatchet_loop",
+				"monster_dead",
+				"!hugh",
+				"!in_loop_2"
+			],
+			"option_text": "Slash the wall",
+			"result_text": "You attempt to slash at the walls of the hallway. Incredibly, though feeling like plywood, the wall deflects every swing you give.",
+			"result": [
+				"set-hugh"
+			]
+		},
+		{
+			"req": [
+				"hatchet_loop",
+				"monster_dead",
+				"hugh",
+				"!in_loop_2"
+			],
+			"option_text": "Slash the wall again",
+			"result_text": "You attempt to slash the wall again, but it still does not give way. On your final swing, some strange force causes the head of the hatchet to disintegrate into dust.",
+			"result": [
+				"unset-item:hatchet",
+				"unset-in_loop",
+				"unset-hatchet_loop"
+			]
+		},
+		{
+			"req": [
+				"hatchet_loop",
+				"monster_dead",
+				"!in_loop_2"
+			],
+			"option_text": "Slash a Door",
+			"result": [
+				"set-in_loop_2",
+				"set-slash_door",
+				"if-nowhere",
+				"set-pick_door_A"
+			]
+		},
+		{
+			"req": [
+				"hatchet_loop",
+				"slash_door",
+				"red_door"
+			],
+			"option_text": "Slash the red door",
+			"result_text": "
+		},
+		{
+			"req": [
+				"item:hatchet",
+				"hatchet_loop",
+				"!in_loop_2"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-hatchet_loop",
+				"unset-in_loop"
 			]
 		},
 		{
@@ -752,7 +951,8 @@
 			"req": [
 				"!monster_dead",
 				"zone_3",
-				"!pick_door"
+				"!pick_door",
+				"!in_loop"
 			],
 			"option_text": "Push the skeleton into the pit",
 			"result_text": "You push the skeleton into the pit. The pit continues to grow, pushing you into the hallway, having taken over the previous room, where its growing ceases. After a few seconds, you hear a distant indeterminable sound resonating from the inky depths.",
@@ -763,7 +963,8 @@
 		{
 			"req": [
 				"!monster_dead",
-				"!pick_door"
+				"!pick_door",
+				"!in_loop"
 			],
 			"option_text": "Cry",
 			"result_text": "You sit on the floor and cry. The skeleton impales you though the heart. You feel the driving black sever your arteries like tension strings as everything slowly fades to black.",

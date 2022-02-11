@@ -2,7 +2,7 @@
 	"commands": [
 		"delay-~999"
 	],
-	"room_text": "@d0065House of Palai.@w0600 Test.@w0350\n@w0350\n@w0350You are a young child caught out in the middle of suburbia,@w0050 at night,@w0050 alone.@w0500 You come upon a large house.@w0500 A REALLY large house,@w0050 bigger than anything on either side of it,@w0050 and certainly larger than anything you've ever seen before.@w0500 It's made primarily out of bare plywood,@w0050 some of it looking brand-new,@w0030 but most looking molded and rotten.@w0500 Suddenly,@w0050 a strange force compels you to step forward.@w0300 You attempt to resist it,@w0020 but the urge is too strong!@w0300 You slowly open the door and step inside.@w0300@d0050 The door slams shut behind you!@w1000@d0065@w0100\n@w0100\n@w0100What do you do?",
+	"room_text": "@0065dHouse of Palai.@w0600 Test.@0350w\n@w0350\n@w0350You are a young child caught out in the middle of suburbia,@0050w at night,@0050w alone.@0500w You come upon a large house.@0500w A REALLY large house,@0050w bigger than anything on either side of it,@0050w and certainly larger than anything you've ever seen before.@0500w It's made primarily out of bare plywood,@0050w some of it looking brand-new,@0030w but most looking molded and rotten.@0500w Suddenly,@0050w a strange force compels you to step forward.@0300w You attempt to resist it,@0020w but the urge is too strong!@0300w You slowly open the door and step inside.@0300w@0050d The door slams shut behind you!@1000w@0065d@0100w\n@0100w\n@0100wWhat do you do?",
 	"options": [
 		{
 			"req": [
@@ -10,7 +10,7 @@
 				"!beater_7"
 			],
 			"option_text": "Try to open the door",
-			"result_text": "You try to force the door open,@w0050 but it won't budge!@w0500",
+			"result_text": "You try to force the door open,@0050w but it won't budge!@0500w",
 			"result": [
 				"set-tried_door"
 			]
@@ -21,7 +21,7 @@
 				"!beater_7"
 			],
 			"option_text": "Try the door again",
-			"result_text": "The door stays sturdy,@w0050 not giving so much as a rattle.@w0500",
+			"result_text": "The door stays sturdy,@0050w not giving so much as a rattle.@0500w",
 			"result": [
 			]
 		},
@@ -32,7 +32,7 @@
 				"!beater_7"
 			],
 			"option_text": "Examine the room around me",
-			"result_text": "The room around you,@w0050 like the house outside,@w0050 is made of barren plywood.@w0500 The only light source is a large frosted-glass window situated in the front door.@w0500 There are two large boxes in the right and leftmost corners in front of you.@w0500 A big-brimmed hat and a long trench coat hang on a metal hook against the left wall.@w0500 There are no other doors or windows.@w0500",
+			"result_text": "The room around you,@0050w like the house outside,@0050w is made of barren plywood.@0500w The only light source is a large frosted-glass window situated in the front door.@0500w There are two large boxes in the right and leftmost corners in front of you.@0500w A big-brimmed hat and a long trench coat hang on a metal hook against the left wall.@0500w There are no other doors or windows.@0500w",
 			"result": [
 				"set-check_room_1",
 				"set-check_room_1_A",
@@ -45,7 +45,7 @@
 				"!beater_7"
 			],
 			"option_text": "Examine the room more closely",
-			"result_text": "You examine the room more closely.@w0500 To your surprise,@w0050 you find a small wooden trapdoor on the ceiling that you hadn't noticed before.@w0500",
+			"result_text": "You examine the room more closely.@0500w To your surprise,@0050w you find a small wooden trapdoor on the ceiling that you hadn't noticed before.@0500w",
 			"result": [
 				"unset-check_room_1",
 				"set-check_room_2"
@@ -57,7 +57,7 @@
 				"!beater_7"
 			],
 			"option_text": "Pull a box over to reach the trapdoor",
-			"result_text": "Area under development!@w1000",
+			"result_text": "Area under development!@1000w",
 			"result": [
 			]
 		},
@@ -73,7 +73,7 @@
 				"!beater_7"
 			],
 			"option_text": "Smash the window",
-			"result_text": "You attempt to smash the window with your fist.@w0500 Great job!@w0500 Now your hand hurts.@w0500",
+			"result_text": "You attempt to smash the window with your fist.@0500w Great job!@0500w Now your hand hurts.@0500w",
 			"result": [
 				"set-beater_1"
 			]
@@ -90,7 +90,7 @@
 				"!beater_7"
 			],
 			"option_text": "Smash the window",
-			"result_text": "You attempt to smash the window again.@w0500 The pain in your fist makes you want to cry.@w0500",
+			"result_text": "You attempt to smash the window again.@0500w The pain in your fist makes you want to cry.@0500w",
 			"result": [
 				"set-beater_2"
 			]
@@ -107,7 +107,7 @@
 				"!beater_7"
 			],
 			"option_text": "Smash the window",
-			"result_text": "The window again dismisses your hit.@w0500 Your knuckles are cracked and bleeding.@w0500",
+			"result_text": "The window again dismisses your hit.@0500w Your knuckles are cracked and bleeding.@0500w",
 			"result": [
 				"set-beater_3"
 			]
@@ -124,7 +124,7 @@
 				"!beater_7"
 			],
 			"option_text": "Smash the window",
-			"result_text": "The window has small red stains on its frosted glass.@w0500 The cracks on your hand get larger.@w0500",
+			"result_text": "The window has small red stains on its frosted glass.@0500w The cracks on your hand get larger.@0500w",
 			"result": [
 				"set-beater_4"
 			]
@@ -141,7 +141,7 @@
 				"!beater_7"
 			],
 			"option_text": "Smash the window",
-			"result_text": "The window has small red streaks on its frosted glass.@w0500 The cracks on your hand get larger.@w0500",
+			"result_text": "The window has small red streaks on its frosted glass.@0500w The cracks on your hand get larger.@0500w",
 			"result": [
 				"set-beater_5"
 			]
@@ -158,7 +158,7 @@
 				"!beater_7"
 			],
 			"option_text": "Smash the window",
-			"result_text": "The almighty window is unamused.@w0500 You only achieve further self harm.@w0500",
+			"result_text": "The almighty window is unamused.@0500w You only achieve further self harm.@0500w",
 			"result": [
 				"set-beater_6"
 			]
@@ -175,7 +175,7 @@
 				"!beater_7"
 			],
 			"option_text": "Smash the window",
-			"result_text": "Your hands seem to be moving on their own now.@w0500 The only thing you can make out is blood.@w0500 Blood everywhere.@w0500 Blood on the window.@w0500 Blood on the floor.@w0500 Blood seeping into your shoes.@w0500 Blood dripping down your clothes.@w0500 As you get further in,@w0050 it only gets more pronounced.@w0500 Blood.@w0500 Blood.@w0500 Blood.@w0500",
+			"result_text": "Your hands seem to be moving on their own now.@0500w The only thing you can make out is blood.@0500w Blood everywhere.@0500w Blood on the window.@0500w Blood on the floor.@0500w Blood seeping into your shoes.@0500w Blood dripping down your clothes.@0500w As you get further in,@0050w it only gets more pronounced.@0500w Blood.@0500w Blood.@0500w Blood.@0500w",
 			"result": [
 				"set-beater_7"
 			]
@@ -192,7 +192,7 @@
 				"beater_7"
 			],
 			"option_text": "Smash the window",
-			"result_text": "There is no going back now.@w0500 Panic builds in your body as you attempt to stop,@w0050 but the more panicked you get,@w0050 the harder you pound.@w0500 Broken bone sticks out of your knuckles and the tips of your fingers,@w0050 pulling nerves and blood vessels up along with it.@w0500 Chunks of your hands begin to fall on the floor.@w0500 Slowly but surely,@w0050 the gashes turn to missing fingers,@w0050 blown holes,@w0050 and pulverized bits of bone,@w0050 all of which fall to the floor.@w0500 You feel yourself become weaker,@w0050 your face getting cold as blood leaks out of you like a fountain.@w0500 You fall backward and land with the thud of wood.@w0500@d0080 Your ears let out a high-pitched ring as you see and feel everything@d0115 steadily fade@w0600 to black.@w0500",
+			"result_text": "There is no going back now.@0500w Panic builds in your body as you attempt to stop,@0050w but the more panicked you get,@0050w the harder you pound.@0500w Broken bone sticks out of your knuckles and the tips of your fingers,@0050w pulling nerves and blood vessels up along with it.@0500w Chunks of your hands begin to fall on the floor.@0500w Slowly but surely,@0050w the gashes turn to missing fingers,@0050w blown holes,@0050w and pulverized bits of bone,@0050w all of which fall to the floor.@0500w You feel yourself become weaker,@0050w your face getting cold as blood leaks out of you like a fountain.@0500w You fall backward and land with the thud of wood.@0500w@0080d Your ears let out a high-pitched ring as you see and feel everything@0115d steadily fade@0600w to black.@0500w",
 			"result": [
 				"reset"
 			]
@@ -203,7 +203,7 @@
 				"!beater_7"
 			],
 			"option_text": "Examine the hat and coat",
-			"result_text": "You examine the hat and coat against the left wall.@w0500 The hat is made of fine leather,@w0050 the coat of breathable black silk.@w0500 Upon closer inspection,@w0050 they both look incredibly old and tattered.@w0500 The silk especially looks very,@w0050 very dirty.@w0500 Deep slash marks cover the surface of the two objects,@w0050 as if someone cut into them repeatedly with a knife.@w0500 You take a closer inspection and-@w0050 woah.@w0500 Woah.@w0500 Woah!@w0500 Inside the hat,@w0050 cleverly covered by the angle of the hat,@w0030 is a human skull,@w0030 with lidless,@w0025 bloodshot eyes staring back out at you.@w0500 You instinctively jump back as it unhooks itself from the sharp metal hook.@w0500 The ground shakes as it hits the ground.@w0500 You hear a sharp clicking sound and see a large black hole growing around the front door.@w0500 The skeleton draws its sword and slashes!@w0500 What do you do?",
+			"result_text": "You examine the hat and coat against the left wall.@0500w The hat is made of fine leather,@0050w the coat of breathable black silk.@0500w Upon closer inspection,@0050w they both look incredibly old and tattered.@0500w The silk especially looks very,@0050w very dirty.@0500w Deep slash marks cover the surface of the two objects,@0050w as if someone cut into them repeatedly with a knife.@0500w You take a closer inspection and-@0050w woah.@0500w Woah.@0500w Woah!@0500w Inside the hat,@0050w cleverly covered by the angle of the hat,@0030w is a human skull,@0030w with lidless,@0025w bloodshot eyes staring back out at you.@0500w You instinctively jump back as it unhooks itself from the sharp metal hook.@0500w The ground shakes as it hits the ground.@0500w You hear a sharp clicking sound and see a large black hole growing around the front door.@0500w The skeleton draws its sword and slashes!@0500w What do you do?",
 			"result": [
 				"set-start_room_fight:zone_1",
 				"move-start_room_fight"
@@ -268,12 +268,12 @@
 					]
 				}
 			],
-			"hatchet": "You open the left box to find a hatchet with a wooden handle and an unpolished head.@w0500 Suddenly,@w0050 you hear a sharp clicking sound.@w0500 A large black hole is forming around the front door!@w0500 The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@w0500 You jump back instinctively as the skeleton draws a sword and slashes!@w0500 What do you do?@w0500",
-			"dagger": "You open the left box to find a small dagger with ornate engravings on the blade and hilt with a medium ruby on either side of said hilt.@w0500 Suddenly,@w0050 you hear a sharp clicking sound.@w0500 A large black hole is forming around the front door!@w0500 The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@w0500 You jump back instinctively as the skeleton draws a sword and slashes!@w0500 What do you do?@w0500",
-			"nightstick": "You open the left box to find a collapsable nightstick made of heavy metal and painted a sleek black.@w0500 Suddenly,@w0050 you hear a sharp clicking sound.@w0500 A large black hole is forming around the front door!@w0500 The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@w0500 You jump back instinctively as the skeleton draws a sword and slashes!@w0500 What do you do?@w0500",
-			"spider": "You open the left box and find a large tarantula inside that hisses and lunges!@w0500 You instinctively duck,@w0050 just barely preventing the arachnid from landing on you.@w0500 Suddenly,@w0050 you hear a sharp clicking sound.@w0500 A large black hole is forming around the front door!@w0500 The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@w0500 You jump back instinctively as the skeleton draws a sword and slashes!@w0500 What do you do?@w0500",
-			"head": "You open the left box to find a severed head staring up at you.@w0500 It moves two glazed eyes in your direction and screams!@w0500 The painful sound brings you to your knees,@w0050 hands over your ears,@w0050 as you feel something large hit the ground.@w0500 You turn to look,@w0050 and the hat and coat have sprung to life,@w0050 with a skeleton inside!@w0500 It draws a sword and slashes!@w0500 What do you do?@w0500",
-			"empty": "You open the left box to find nothing inside.@w0500 Suddenly,@w0050 you hear a sharp clicking sound.@w0500 A large black hole is forming around the front door!@w0500 The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@w0500 You jump back instinctively as the skeleton draws a sword and slashes!@w0500 What do you do?@w0500"
+			"hatchet": "You open the left box to find a hatchet with a wooden handle and an unpolished head.@0500w Suddenly,@0050w you hear a sharp clicking sound.@0500w A large black hole is forming around the front door!@0500w The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@0500w You jump back instinctively as the skeleton draws a sword and slashes!@0500w What do you do?@0500w",
+			"dagger": "You open the left box to find a small dagger with ornate engravings on the blade and hilt with a medium ruby on either side of said hilt.@0500w Suddenly,@0050w you hear a sharp clicking sound.@0500w A large black hole is forming around the front door!@0500w The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@0500w You jump back instinctively as the skeleton draws a sword and slashes!@0500w What do you do?@0500w",
+			"nightstick": "You open the left box to find a collapsable nightstick made of heavy metal and painted a sleek black.@0500w Suddenly,@0050w you hear a sharp clicking sound.@0500w A large black hole is forming around the front door!@0500w The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@0500w You jump back instinctively as the skeleton draws a sword and slashes!@0500w What do you do?@0500w",
+			"spider": "You open the left box and find a large tarantula inside that hisses and lunges!@0500w You instinctively duck,@0050w just barely preventing the arachnid from landing on you.@0500w Suddenly,@0050w you hear a sharp clicking sound.@0500w A large black hole is forming around the front door!@0500w The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@0500w You jump back instinctively as the skeleton draws a sword and slashes!@0500w What do you do?@0500w",
+			"head": "You open the left box to find a severed head staring up at you.@0500w It moves two glazed eyes in your direction and screams!@0500w The painful sound brings you to your knees,@0050w hands over your ears,@0050w as you feel something large hit the ground.@0500w You turn to look,@0050w and the hat and coat have sprung to life,@0050w with a skeleton inside!@0500w It draws a sword and slashes!@0500w What do you do?@0500w",
+			"empty": "You open the left box to find nothing inside.@0500w Suddenly,@0050w you hear a sharp clicking sound.@0500w A large black hole is forming around the front door!@0500w The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@0500w You jump back instinctively as the skeleton draws a sword and slashes!@0500w What do you do?@0500w"
 		},
 		{
 			"req": [
@@ -334,12 +334,12 @@
 					]
 				}
 			],
-			"hatchet": "You open the right box to find a hatchet with a wooden handle and an unpolished head,@w0050 which you promptly pick up.@w0500 Suddenly,@w0050 you hear a sharp clicking sound.@w0500 A large black hole is forming around the front door!@w0500 The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@w0500 You press yourself against the wall as the skeleton draws a sword and slashes!@w0500 What do you do?@w0500",
-			"dagger": "You open the right box to find a small dagger with ornate engravings on the blade and hilt with a medium ruby on either side of said hilt.@w0500 Suddenly,@w0050 you hear a sharp clicking sound.@w0500 A large black hole is forming around the front door!@w0500 The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@w0500 You press yourself against the wall as the skeleton draws a sword and slashes!@w0500 What do you do?@w0500",
-			"nightstick": "You open the right box to find a collapsable nightstick made of heavy metal and painted a sleek black.@w0500 Suddenly,@w0050 you hear a sharp clicking sound.@w0500 A large black hole is forming around the front door!@w0500 The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@w0500 You press yourself against the wall as the skeleton draws a sword and slashes!@w0500 What do you do?@w0500",
-			"spider": "You open the right box and find a large tarantula inside that hisses and lunges!@w0500 You instinctively duck,@w0050 just barely preventing the arachnid from landing on you.@w0500 Suddenly,@w0050 you hear a sharp clicking sound.@w0500 A large black hole is forming around the front door!@w0500 The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@w0500 You press yourself against the wall as the skeleton draws a sword and slashes!@w0500 What do you do?@w0500",
-			"head": "You open the right box to find a severed head staring up at you.@w0500 It moves two glazed eyes in your direction and screams!@w0500 The painful sound brings you to your knees,@w0050 hands over your ears,@w0050 as you feel something large hit the ground.@w0500 You turn to look,@w0050 and the hat and coat have sprung to life,@w0050 with a skeleton inside!@w0500 It draws a sword and slashes!@w0500 What do you do?@w0500",
-			"empty": "You open the right box to find nothing inside.@w0500 Suddenly,@w0050 you hear a sharp clicking sound.@w0500 A large black hole is forming around the front door!@w0500 The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@w0500 You press yourself against the wall as the skeleton draws a sword and slashes!@w0500 What do you do?@w0500"
+			"hatchet": "You open the right box to find a hatchet with a wooden handle and an unpolished head,@0050w which you promptly pick up.@0500w Suddenly,@0050w you hear a sharp clicking sound.@0500w A large black hole is forming around the front door!@0500w The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@0500w You press yourself against the wall as the skeleton draws a sword and slashes!@0500w What do you do?@0500w",
+			"dagger": "You open the right box to find a small dagger with ornate engravings on the blade and hilt with a medium ruby on either side of said hilt.@0500w Suddenly,@0050w you hear a sharp clicking sound.@0500w A large black hole is forming around the front door!@0500w The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@0500w You press yourself against the wall as the skeleton draws a sword and slashes!@0500w What do you do?@0500w",
+			"nightstick": "You open the right box to find a collapsable nightstick made of heavy metal and painted a sleek black.@0500w Suddenly,@0050w you hear a sharp clicking sound.@0500w A large black hole is forming around the front door!@0500w The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@0500w You press yourself against the wall as the skeleton draws a sword and slashes!@0500w What do you do?@0500w",
+			"spider": "You open the right box and find a large tarantula inside that hisses and lunges!@0500w You instinctively duck,@0050w just barely preventing the arachnid from landing on you.@0500w Suddenly,@0050w you hear a sharp clicking sound.@0500w A large black hole is forming around the front door!@0500w The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@0500w You press yourself against the wall as the skeleton draws a sword and slashes!@0500w What do you do?@0500w",
+			"head": "You open the right box to find a severed head staring up at you.@0500w It moves two glazed eyes in your direction and screams!@0500w The painful sound brings you to your knees,@0050w hands over your ears,@0050w as you feel something large hit the ground.@0500w You turn to look,@0050w and the hat and coat have sprung to life,@0050w with a skeleton inside!@0500w It draws a sword and slashes!@0500w What do you do?@0500w",
+			"empty": "You open the right box to find nothing inside.@0500w Suddenly,@0050w you hear a sharp clicking sound.@0500w A large black hole is forming around the front door!@0500w The hat and coat on the coatrack spring to life as you discover that there's a skeleton inside!@0500w You press yourself against the wall as the skeleton draws a sword and slashes!@0500w What do you do?@0500w"
 		},
 		{
 			"req": [
@@ -348,7 +348,7 @@
 				"!beater_7"
 			],
 			"option_text": "Examine the door",
-			"result_text": "Contrary to the barren plywood room,@w0050 the door itself has been painted a muted white,@w0050 with a darkened metallic handle.@w0500 Both look brand new.@w0500 In addition,@w0050 a large frosted window sits just within your reach.@w0500",
+			"result_text": "Contrary to the barren plywood room,@0050w the door itself has been painted a muted white,@0050w with a darkened metallic handle.@0500w Both look brand new.@0500w In addition,@0050w a large frosted window sits just within your reach.@0500w",
 			"result": [
 				"set-check_door_1",
 				"set-smash"
@@ -361,7 +361,7 @@
 				"!beater_7"
 			],
 			"option_text": "Examine the door again",
-			"result_text": "Yep.@w0500 It's a door.@w0500",
+			"result_text": "Yep.@0500w It's a door.@0500w",
 			"result": [
 				"unset-check_door_1",
 				"set-check_door_2"
@@ -374,14 +374,14 @@
 				"!beater_7"
 			],
 			"option_text": "Examine the door again",
-			"result_text": "Yep.@w0500 It's still a door.@w0500"
+			"result_text": "Yep.@0500w It's still a door.@0500w"
 		},
 		{
 			"req": [
 				"!beater_7"
 			],
 			"option_text": "Cry",
-			"result_text": "You sit on the floor and cry.@w0500 Feels good.@w0500"
+			"result_text": "You sit on the floor and cry.@0500w Feels good.@0500w"
 		}
 	]
 }
