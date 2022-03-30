@@ -68,7 +68,7 @@
 				"zone_3",
 				"!monster_dead",
 				"!pick_door",
-				"!pick_door_A",
+				"!IN:pick_door_A",
 				"!in_loop"
 			],
 			"option_text": "Pick a door",
@@ -79,7 +79,7 @@
 				"random-door",
 				"random-door",
 				"set-no_peeking",
-				"set-pick_door_A"
+				"set-IN:pick_door_A"
 			]
 		},
 		{
@@ -87,7 +87,7 @@
 				"zone_3",
 				"!monster_dead",
 				"!pick_door",
-				"pick_door_A",
+				"IN:pick_door_A",
 				"!in_loop"
 			],
 			"option_text": "Pick a door",
@@ -179,7 +179,7 @@
 			"result": [
 				"if-nowhere",
 				"set-show_door",
-				"set-pick_door_A",
+				"set-IN:pick_door_A",
 				"set-in_loop_2"
 			]
 		},
@@ -451,7 +451,7 @@
 				"set-in_loop_2",
 				"set-slash_door",
 				"if-nowhere",
-				"set-pick_door_A"
+				"set-IN:pick_door_A"
 			]
 		},
 		{
@@ -534,18 +534,6 @@
 			],
 			"option_text": "Slash the purple door",
 			"result_text": "The purple door" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		},
-		{
-			"req": [
-				"item:hatchet",
-				"hatchet_loop",
-				"in_loop_2"
-			],
-			"option_text": "Exit",
-			"result": [
-				"unset-in_loop_2",
-				"unset-slash_door"
-			]
 		},
 		{
 			"req": [
@@ -1136,7 +1124,7 @@
 	"constants": {
 		"nowhere": {
 			"req": [
-				"!pick_door_A"
+				"!IN:pick_door_A"
 			],
 			"commands": [
 				"random-door",
