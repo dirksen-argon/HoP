@@ -401,154 +401,6 @@
 		},
 		{
 			"req": [
-				"hatchet_loop",
-				"monster_dead",
-				"!in_loop_2"
-			],
-			"option_text": "Slash the floor",
-			"result_text": "You slash at the plywood floor, which appears to work! The hatchet sinks into the wood and it cuts as expected. You take a few more swings and the floor gives out from under you, dropping you into the same pit you had escaped from. The ground comes up on you quickly- \n\nbefore eternal blackness flashes before you.",
-			"result": [
-				"reset"
-			]
-		},
-		{
-			"req": [
-				"hatchet_loop",
-				"monster_dead",
-				"!hugh",
-				"!in_loop_2"
-			],
-			"option_text": "Slash the wall",
-			"result_text": "You attempt to slash at the walls of the hallway. Incredibly, though feeling like plywood, the wall deflects every swing you give.",
-			"result": [
-				"set-hugh"
-			]
-		},
-		{
-			"req": [
-				"hatchet_loop",
-				"monster_dead",
-				"hugh",
-				"!in_loop_2"
-			],
-			"option_text": "Slash the wall again",
-			"result_text": "You attempt to slash the wall again, but it still does not give way. On your final swing, some strange force causes the head of the hatchet to disintegrate into dust.",
-			"result": [
-				"unset-item:hatchet",
-				"unset-in_loop",
-				"unset-hatchet_loop",
-				"set-item:hatchet_handle"
-			]
-		},
-		{
-			"req": [
-				"hatchet_loop",
-				"monster_dead",
-				"!in_loop_2"
-			],
-			"option_text": "Slash a Door",
-			"result": [
-				"set-in_loop_2",
-				"set-slash_door",
-				"if-nowhere",
-				"set-IN:pick_door_A"
-			]
-		},
-		{
-			"req": [
-				"hatchet_loop",
-				"slash_door",
-				"red_door"
-			],
-			"option_text": "Slash the red door",
-			"result_text": "You slash the red door, which promptly splits and splinters. Somewhere on the other side of the door, there's a loud animalistic roar. A butcher wearing a white material, leather gloves, and a black veil over its face charges and smashes through the weakened red door. It is covered head to toe in blood and bone. The butcher raises a meat cleaver and slashes! What do you do?"
-			"result": [
-				"set-red_door_splinters",
-				"move-start_room_butcher"
-			]
-		},
-		{
-			"req": [
-				"hatchet_loop",
-				"slash_door",
-				"green_door",
-				"!green_door_splinters"
-			],
-			"option_text": "Slash the green door",
-			"result_text": "You slash the green door, which gives a heavy groan as you bury your hatchet into it. The door begins to rattle a bit, as if protesting. You cut it down until it's nothing more than a hole.",
-			"result": [
-				"set-green_door_splinters"
-			]
-		},
-		{
-			"req": [
-				"hatchet_loop",
-				"slash_door",
-				"yellow_door",
-				"!clang",
-				"!clang_2",
-				"!clang_3"
-			],
-			"option_text": "Slash the yellow door",
-			"result_text": "You slash the yellow door, or at least attempt to. The door gives a metallic clang and stands strong, though the paint is now slightly affected.",
-			"result": [
-				"set-event:yellow_door_paint_slashed",
-				"set-clang"
-			]
-		},
-		{
-			"req": [
-				"hatchet_loop",
-				"slash_door",
-				"yellow_door",
-				"clang"
-			],
-			"option_text": "Slash the yellow door again",
-			"result_text": "You slash at the yellow door again. The hatchet looks to be in bad shape, and the door stands firm.",
-			"result": [
-				"unset-clang",
-				"set-clang_2"
-			]
-		},
-		{
-			"req": [
-				"hatchet_loop",
-				"slash_door",
-				"yellow_door",
-				"clang_2"
-			],
-			"option_text": "Slash the yellow door again",
-			"result_text": "You slash at the yellow door again. Your hatchet breaks in two.",
-			"result": [
-				"unset-clang_2",
-				"set-clang_3",
-				"unset-item:hatchet",
-				"set-item:broken_hatchet"
-			]
-		},
-		{
-			"req": [
-				"hatchet_loop",
-				"slash_door",
-				"purple_door"
-			],
-			"option_text": "Slash the purple door",
-			"result_text": "The purple door" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		},
-		{
-			"req": [
-				"item:hatchet",
-				"hatchet_loop",
-				"!in_loop_2"
-			],
-			"option_text": "Exit",
-			"result": [
-				"unset-hatchet_loop",
-				"unset-in_loop"
-			]
-		},
-		{
-			"req": [
 				"show_door",
 				"red_door",
 				"!in_loop"
@@ -1096,12 +948,12 @@
 			"option_text": "Push the skeleton into the pit",
 			"result_text": "You push the skeleton into the pit. The pit continues to grow, pushing you into the hallway, having taken over the previous room, where its growing ceases. After a few seconds, you hear a distant indeterminable sound resonating from the inky depths.",
 			"result": [
-				"set-monster_dead"
+				"set-monster_dead",
+				"move-start_room_hallway"
 			]
 		},
 		{
 			"req": [
-				"!monster_dead",
 				"!pick_door",
 				"!in_loop"
 			],
@@ -1110,15 +962,6 @@
 			"result": [
 				"reset"
 			]
-		},
-		{
-			"req": [
-				"monster_dead",
-				"!in_loop",
-				"!in_loop_2"
-			],
-			"option_text": "Cry",
-			"result_text": "You sit on the floor and cry. An intense feeling of dread overcomes you."
 		}
 	],
 	"constants": {

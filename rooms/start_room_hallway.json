@@ -1,5 +1,5 @@
 {
-	options: [
+	"options": [
 		{
 			"req": [
 				"item:hatchet",
@@ -14,7 +14,6 @@
 		{
 			"req": [
 				"hatchet_loop",
-				"monster_dead",
 				"!in_loop_2"
 			],
 			"option_text": "Slash the floor",
@@ -26,7 +25,6 @@
 		{
 			"req": [
 				"hatchet_loop",
-				"monster_dead",
 				"!hugh",
 				"!in_loop_2"
 			],
@@ -39,7 +37,6 @@
 		{
 			"req": [
 				"hatchet_loop",
-				"monster_dead",
 				"hugh",
 				"!in_loop_2"
 			],
@@ -55,7 +52,6 @@
 		{
 			"req": [
 				"hatchet_loop",
-				"monster_dead",
 				"!in_loop_2"
 			],
 			"option_text": "Slash a Door",
@@ -73,7 +69,7 @@
 				"red_door"
 			],
 			"option_text": "Slash the red door",
-			"result_text": "You slash the red door, which promptly splits and splinters. Somewhere on the other side of the door, there's a loud animalistic roar. A butcher wearing a white material, leather gloves, and a black veil over its face charges and smashes through the weakened red door. It is covered head to toe in blood and bone. The butcher raises a meat cleaver and slashes! What do you do?"
+			"result_text": "You slash the red door, which promptly splits and splinters. Somewhere on the other side of the door, there's a loud animalistic roar. A butcher wearing a white material, leather gloves, and a black veil over its face charges and smashes through the weakened red door. It is covered head to toe in blood and bone. The butcher raises a meat cleaver and slashes! What do you do?",
 			"result": [
 				"set-red_door_splinters",
 				"move-start_room_butcher"
@@ -142,18 +138,61 @@
 			"req": [
 				"hatchet_loop",
 				"slash_door",
-				"purple_door"
+				"purple_door",
+				"!purple_door_splinters"
 			],
 			"option_text": "Slash the purple door",
-			"result_text": "The purple door" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			"result_text": "You cut into the purple door, with some difficulty. Whatever the sticky substance coating the violet surface is, it seems to be very tough. Your axe gets stuck more than once, though it always cuts through eventually. You swing until the purple door is nothing more than a large hole.",
+			"result": [
+				set-purple_door_splinters
+			]
+		},
+		{
+			"req": [
+				"hatchet_loop",
+				"slash_door",
+				"blue_door",
+				"!blue_door_hiss"
+			],
+			"option_text": "Slash the blue door",
+			"result_text": "You take a slash at the blue door. Your blow seems to have been deflected at first, but on closer inspection the door now has a visible crack down the middle that is now leaking a seemingly impossible stream of water. Said stream is slow, yet constant, and with a noticeable about of water pressure behind it.",
+			"result": [
+				"set-blue_door_hiss"
+			]
+		},
+		{
+			"req": [
+				"hatchet_loop",
+				"slash_door",
+				"blue_door",
+				"blue_door_hiss"
+			],
+			"option_text": "Slash the blue door again",
+			"result_text": "The door smashes open completely like heavy glass. Water begins spilling out of some fixed point where the door once stood, throwing you backwards with tremendous force. You manage to hold on for only a few seconds before being sent careening into the pit. You fall, a mile of water above you... \n\n",
+			"result": [
+				"move-blue_room_flood"
+			]
+		},
+		{
+			"req": [
+				"hatchet_loop",
+				"slash_door",
+				"brown_door",
+				"!brown_door_splinters"
+			],
+			"option_text": "Slash the brown door",
+			"result_text": "You slash away at the brown door, which gives surprisingly easily. A gaping hole now stands where it once stood."
+			"result": [
+				"set-brown_door_splinters"
+			]
 		},
 		{
 			"req": [
 				"item:hatchet",
 				"hatchet_loop",
 				"in_loop_2"
-
-{
+		},
+		{
 			"req": [
 				"show_door",
 				"red_door",
@@ -179,8 +218,530 @@
 		},
 		{
 			"req": [
+				"red_loop",
+				"!red_peeper",
+				"!ded"
+			],
+			"option_text": "Peek behind the red door",
+			"result_text": "You peek behind the red door to find a truly horrific scene. It's a small kitchen whose white tiles have been painted red with blood. Human bodies hang on meat hooks on the ceiling. In the middle of the kitchen is an island, on which a young boy is screaming for his life. His arms and legs have been individually chained to the sides of the island. A large figure dressed in a corse white material stands over him, hacking his left leg off with a meat cleaver. The figure is wearing a chef's hat made of the same white material, with leather gloves over its hands and a black veil covering its face. It snaps its neck sharply in your direction and then charges, swinging the cleaver violently and screaming incoherently.",
+			"result": [
+				"set-red_peeper",
+				"set-ded"
+			]
+		},
+		{
+			"req": [
+				"ded"
+			],
+			"option_text": "CLOSE THE DOOR",
+			"result_text": "You slam the door on the creature's face! Some heavy pounding can be heard from the other side that swiftly subsides.",
+			"result": [
+				"unset-ded"
+			]
+		},
+		{
+			"req": [
+				"ded"
+			],
+			"option_text": "Fight",
+			"result": [
+				"move-start_room_butcher"
+			]
+		},
+		{
+			"req": [
+				"ded"
+			],
+			"option_text": "Exit",
+			"result_text": "The butcher swings his cleaver into you again and again, screaming incoherent words as he does. The third blow cracks your skull, and before you even hit the floor everything fades to black.",
+			"result": [
+				"reset"
+			]
+		},
+		{
+			"req": [
+				"red_loop",
+				"!red_door_ex",
+				"!ded"
+			],
+			"option_text": "Examine the red door",
+			"result_text": "The red door is rather plain compared to the others, much more akin to a standard suburban door. There are six panels on it, and the door handle is round rather than vertical. The paint is very light, as the door's wooden texture can be seen and felt.",
+			"result":[
+				"set-red_door_ex"
+			]
+		},
+		{
+			"req": [
+				"red_door_ex",
+				"red_loop",
+				"!ded"
+			],
+			"option_text": "Examine the red door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"red_loop",
+				"!ded"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-red_loop",
+				"unset-red_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"green_door",
+				"!in_loop",
+				"green_door_splinters"
+			],
+			"option_text": "Green Door",
+			"result": [
+				"set-green_door_splinters_loop",
+				"set-in_loop"
+			]
+		},
+		{
+			"req": [
+				"green_door_splinters_loop"
+			],
+			"option_text": "Examine the hole",
+			"result_text": "Through the hole you've created is a beige-carpeted staircase leading down into absolute darkness. The wallpaper is white with red flowers and a popcorn ceiling sits above."
+		},
+		{
+			"req": [
+				"green_door_splinters_loop"
+			],
+			"option_text": "Move through the hole",
+			"result_text": "You move through the hole you've created.",
+			"result": [
+				"move-green_room"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"green_door",
+				"!in_loop",
+				"!green_door_splinters"
+			],
+			"option_text": "Green Door",
+			"result": [
+				"set-green_loop",
+				"set-green_move",
+				"set-in_loop"
+			]
+		},
+		{
+			"req": [
+				"green_move"
+			],
+			"option_text": "Go through the green door",
+			"result": [
+				"if-through",
+				"move-green_room_intro"
+			]
+		},
+		{
+			"req": [
+				"green_move"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-green_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"green_loop",
+				"!green_peeper"
+			],
+			"option_text": "Peek behind the green door",
+			"result_text": "Behind the green door is a staircase matted with old beige carpeting descending into pitch-black. The walls are wallpapered white with red flowers with a popcorn ceiling tying it together.",
+			"result": [
+				"set-green_peeper"
+			]
+		},
+		{
+			"req": [
+				"green_loop",
+				"!green_door_ex"
+			],
+			"option_text": "Examine the green door",
+			"result_text": "The green door looks like what would come of an ancient builder attempting modern architecture. The vertical handle especially is barely functional, but the paneling is ornate with carvings like plants and the paint is masterfully coated, making it sleek to the touch and eye.",
+			"result": [
+				"set-green_door_ex"
+			]
+		},
+		{
+			"req": [
+				"green_loop",
+				"green_door_ex"
+			],
+			"option_text": "Examine the green door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"green_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-green_loop",
+				"unset-green_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"yellow_door",
+				"!in_loop"
+			],
+			"option_text": "Yellow Door",
+			"result": [
+				"set-yellow_loop",
+				"set-yellow_move",
+				"set-in_loop"
+			]
+		},
+		{
+			"req": [
+				"yellow_move"
+			],
+			"option_text": "Go through the yellow door",
+			"result": [
+				"if-through",
+				"move-yellow_room_intro"
+			]
+		},
+		{
+			"req": [
+				"yellow_move"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-yellow_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"yellow_loop",
+				"!yellow_peeper"
+			],
+			"option_text": "Peek behind the yellow door",
+			"result_text": "The yellow door opens into the interior of a warehouse. A short wall sits to your right, with the long wall, and most of the interior, going off to your left. Whirring machinery lines the perimeter, as well as open shelves that house strange and fantastic gadgets.",
+			"result": [
+				"set-yellow_peeper"
+			]
+		},
+		{
+			"req": [
+				"yellow_loop",
+				"!yellow_door_ex"
+			],
+			"option_text": "Examine the yellow door",
+			"result_text": "The yellow door is cold to the touch and completely featureless save for the vertical handle used to open it. It is heavy when pushed.",
+			"result": [
+				"set-yellow_door_ex"
+			]
+		},
+		{
+			"req": [
+				"yellow_loop",
+				"yellow_door_ex"
+			],
+			"option_text": "Examine the yellow door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"yellow_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-yellow_loop",
+				"unset-yellow_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"purple_door",
+				"!in_loop"
+			],
+			"option_text": "Purple Door",
+			"result": [
+				"set-purple_loop",
+				"set-purple_move",
+				"set-in_loop"
+			]
+		},
+		{
+			"req": [
+				"purple_move"
+			],
+			"option_text": "Go through the purple door",
+			"result": [
+				"if-through",
+				"move-purple_room_intro"
+			]
+		},
+		{
+			"req": [
+				"purple_move"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-purple_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"purple_loop",
+				"!purple_peeper"
+			],
+			"option_text": "Peek behind the purple door",
+			"result_text": "The purple door gives way to a long hallway decorated with red carpet, expensive wood paneling, a clean white ceiling, and several small glass chandeliers. From where you're standing, it is impossible to see where it leads.",
+			"result": [
+				"set-purple_peeper"
+			]
+		},
+		{
+			"req": [
+				"purple_loop",
+				"!purple_door_ex"
+			],
+			"option_text": "Examine the purple door",
+			"result_text": "The purple door has paneling resembling an archway that terminates at about the midway point down the door. Below that is a simple box panel. The deep purple color used is sleek, though noticeably sticky.",
+			"result": [
+				"set-purple_door_ex"
+			]	
+		},
+		{
+			"req": [
+				"purple_loop",
+				"purple_door_ex"
+			],
+			"option_text": "Examine the purple door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"purple_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-purple_loop",
+				"unset-purple_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"blue_door",
+				"!in_loop"
+			],
+			"option_text": "Blue Door",
+			"result": [
+				"set-blue_loop",
+				"set-blue_move",
+				"set-in_loop"
+			]
+		},
+		{
+			"req": [
+				"blue_move"
+			],
+			"option_text": "Go through the blue door",
+			"result": [
+				"if-through",
+				"move-blue_room_intro"
+			]
+		},
+		{
+			"req": [
+				"blue_move"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-blue_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"blue_loop",
+				"!blue_peeper"
+			],
+			"option_text": "Peek behind the blue door",
+			"result_text": "The blue door gives way to a stone staircase decending into a dimly lit stone hallway. The rock is damp and covered with hard water and moss.",
+			"result": [
+				"set-blue_peeper"
+			]
+		},
+		{
+			"req": [
+				"blue_loop",
+				"!blue_door_ex"
+			],
+			"option_text": "Examine the blue door",
+			"result_text": "Unlike the others, the blue door seems to get its color from its material rather than a coat of paint. The deep blue is slightly reflective, as well as waxy to the touch. The handle is replaced with a circular inset with lips around its edges.",
+			"result": [
+				"set-blue_door_ex"
+			]
+		},
+		{
+			"req": [
+				"blue_loop",
+				"blue_door_ex"
+			],
+			"option_text": "Examine the blue door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"blue_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-blue_loop",
+				"unset-blue_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"brown_door",
+				"!in_loop"
+			],
+			"option_text": "Brown Door",
+			"result": [
+				"set-brown_loop",
+				"set-brown_move",
+				"set-in_loop"
+			]
+		},
+		{
+			"req": [
+				"brown_move"
+			],
+			"option_text": "Go through the brown door",
+			"result": [
+				"if-through",
+				"move-brown_room_intro"
+			]
+		},
+		{
+			"req": [
+				"brown_move"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-brown_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"brown_loop",
+				"!brown_peeper"
+			],
+			"option_text": "Peek behind the brown door",
+			"result_text": "The brown door takes you to the bottom of a ravine, with a river flowing from your left to your right. Overhead can be heard the sounds of clinking and clanking, though you can't yet quite see what causes them.",
+			"result": [
+				"set-brown_peeper"
+			]
+		},
+		{
+			"req": [
+				"brown_loop",
+				"!brown_door_ex"
+			],
+			"option_text": "Examine the brown door",
+			"result_text": "The brown door is made of a rough and heavy wood that is little helped by the manner in which it was painted. Said paint seems to have been coated on in heaps without any thought or care, giving the door a very, very rough texture.",
+			"result": [
+				"set-brown_door_ex"
+			]
+		},
+		{
+			"req": [
+				"brown_loop",
+				"brown_door_ex"
+			],
+			"option_text": "Examine the brown door again",
+			"result": [
+				"print-door_ex"
+			]
+		},
+		{
+			"req": [
+				"brown_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-brown_loop",
+				"unset-brown_move",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"!in_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-show_door",
+				"unset-in_loop_2"
+			]
+		},
+		{
+			"req": [
+				"show_door",
+				"red_door",
+				"!in_loop"
+			],
+			"option_text": "Red Door",
+			"result": [
+				"set-red_loop",
+				"set-red_move",
+				"set-in_loop"
+			]
+		},
+		{
+			"req": [
 				"red_move",
-				"!monster_dead"
+				"ded"
+			],
+			"option_text": "Go through the red door",
+			"result": [
+				"if-through",
+				"move-red_room_intro"
+			]
+		},
+		{
+			"req": [
+				"red_move"
 			],
 			"option_text": "Exit",
 			"result": [
@@ -321,8 +882,7 @@
 		},
 		{
 			"req": [
-				"green_move",
-				"!monster_dead"
+				"green_move"
 			],
 			"option_text": "Exit",
 			"result": [
@@ -398,8 +958,7 @@
 		},
 		{
 			"req": [
-				"yellow_move",
-				"!monster_dead"
+				"yellow_move"
 			],
 			"option_text": "Exit",
 			"result": [
@@ -475,8 +1034,7 @@
 		},
 		{
 			"req": [
-				"purple_move",
-				"!monster_dead"
+				"purple_move"
 			],
 			"option_text": "Exit",
 			"result": [
@@ -552,8 +1110,7 @@
 		},
 		{
 			"req": [
-				"blue_move",
-				"!monster_dead"
+				"blue_move"
 			],
 			"option_text": "Exit",
 			"result": [
@@ -629,8 +1186,7 @@
 		},
 		{
 			"req": [
-				"brown_move",
-				"!monster_dead"
+				"brown_move"
 			],
 			"option_text": "Exit",
 			"result": [
@@ -694,32 +1250,6 @@
 		},
 		{
 			"req": [
-				"!monster_dead",
-				"zone_3",
-				"!pick_door",
-				"!in_loop"
-			],
-			"option_text": "Push the skeleton into the pit",
-			"result_text": "You push the skeleton into the pit. The pit continues to grow, pushing you into the hallway, having taken over the previous room, where its growing ceases. After a few seconds, you hear a distant indeterminable sound resonating from the inky depths.",
-			"result": [
-				"set-monster_dead"
-			]
-		},
-		{
-			"req": [
-				"!monster_dead",
-				"!pick_door",
-				"!in_loop"
-			],
-			"option_text": "Cry",
-			"result_text": "You sit on the floor and cry. The skeleton impales you though the heart. You feel the driving black sever your arteries like tension strings as everything slowly fades to black.",
-			"result": [
-				"reset"
-			]
-		},
-		{
-			"req": [
-				"monster_dead",
 				"!in_loop",
 				"!in_loop_2"
 			],
@@ -728,7 +1258,7 @@
 		}
 	],
 	"constants": {
-		"nowhere": [
+		"nowhere": {
 			"req": [
 				"!pick_door_A"
 			],
@@ -737,7 +1267,7 @@
 				"random-door",
 				"random-door"
 			]
-		],
+		},
 		"door": [
 			{
 				"req": [
