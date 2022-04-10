@@ -1,4 +1,7 @@
 {
+	"commands": [
+		"set-item:hatchet"
+	],
 	"options": [
 		{
 			"req": [
@@ -66,12 +69,13 @@
 			"req": [
 				"hatchet_loop",
 				"slash_door",
-				"red_door"
+				"red_door",
+				"!event:red_door_splinters"
 			],
 			"option_text": "Slash the red door",
 			"result_text": "You slash the red door, which promptly splits and splinters. Somewhere on the other side of the door, there's a loud animalistic roar. A butcher wearing a white material, leather gloves, and a black veil over its face charges and smashes through the weakened red door. It is covered head to toe in blood and bone. The butcher raises a meat cleaver and slashes! What do you do?",
 			"result": [
-				"set-red_door_splinters",
+				"set-event:red_door_splinters",
 				"move-start_room_butcher"
 			]
 		},
@@ -80,12 +84,12 @@
 				"hatchet_loop",
 				"slash_door",
 				"green_door",
-				"!green_door_splinters"
+				"!event:green_door_splinters"
 			],
 			"option_text": "Slash the green door",
 			"result_text": "You slash the green door, which gives a heavy groan as you bury your hatchet into it. The door begins to rattle a bit, as if protesting. You cut it down until it's nothing more than a hole.",
 			"result": [
-				"set-green_door_splinters"
+				"set-event:green_door_splinters"
 			]
 		},
 		{
@@ -144,7 +148,7 @@
 			"option_text": "Slash the purple door",
 			"result_text": "You cut into the purple door, with some difficulty. Whatever the sticky substance coating the violet surface is, it seems to be very tough. Your axe gets stuck more than once, though it always cuts through eventually. You swing until the purple door is nothing more than a large hole.",
 			"result": [
-				set-purple_door_splinters
+				"set-event:purple_door_splinters"
 			]
 		},
 		{
@@ -157,7 +161,7 @@
 			"option_text": "Slash the blue door",
 			"result_text": "You take a slash at the blue door. Your blow seems to have been deflected at first, but on closer inspection the door now has a visible crack down the middle that is now leaking a seemingly impossible stream of water. Said stream is slow, yet constant, and with a noticeable about of water pressure behind it.",
 			"result": [
-				"set-blue_door_hiss"
+				"set-event:blue_door_hiss"
 			]
 		},
 		{
@@ -170,6 +174,7 @@
 			"option_text": "Slash the blue door again",
 			"result_text": "The door smashes open completely like heavy glass. Water begins spilling out of some fixed point where the door once stood, throwing you backwards with tremendous force. You manage to hold on for only a few seconds before being sent careening into the pit. You fall, a mile of water above you... \n\n",
 			"result": [
+				"unset-event:blue_door_hiss",
 				"move-blue_room_flood"
 			]
 		},
@@ -181,16 +186,10 @@
 				"!brown_door_splinters"
 			],
 			"option_text": "Slash the brown door",
-			"result_text": "You slash away at the brown door, which gives surprisingly easily. A gaping hole now stands where it once stood."
+			"result_text": "You slash away at the brown door, which gives surprisingly easily. A gaping hole now stands where it once stood.",
 			"result": [
 				"set-brown_door_splinters"
 			]
-		},
-		{
-			"req": [
-				"item:hatchet",
-				"hatchet_loop",
-				"in_loop_2"
 		},
 		{
 			"req": [
@@ -298,7 +297,7 @@
 				"show_door",
 				"green_door",
 				"!in_loop",
-				"green_door_splinters"
+				"event:green_door_splinters"
 			],
 			"option_text": "Green Door",
 			"result": [
@@ -325,10 +324,20 @@
 		},
 		{
 			"req": [
+				"green_door_splinters_loop"
+			],
+			"option_text": "Exit",
+			"result": [
+				"unset-green_door_splinters_loop",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
 				"show_door",
 				"green_door",
 				"!in_loop",
-				"!green_door_splinters"
+				"!event:green_door_splinters"
 			],
 			"option_text": "Green Door",
 			"result": [
@@ -1316,6 +1325,7 @@
 				"commands": [
 					"set-brown_door"
 				]
+			}
 		]
 	}
 }
