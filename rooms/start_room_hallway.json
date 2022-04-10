@@ -62,7 +62,7 @@
 				"set-in_loop_2",
 				"set-slash_door",
 				"if-nowhere",
-				"set-pick_door_A"
+				"set-in:pick_door_A"
 			]
 		},
 		{
@@ -193,6 +193,28 @@
 		},
 		{
 			"req": [
+				"hatchet_loop"
+			],
+			"option_text": "Exit 1",
+			"result": [
+				"unset-hatchet_loop",
+				"unset-in_loop"
+			]
+		},
+		{
+			"req": [
+				"!in_loop",
+				"!in_loop_2"
+			],
+			"option_text": "Pick a door",
+			"result": [
+				"if-nowhere",
+				"set-show_door",
+				"set-in_loop_2"
+			]
+		},
+		{
+			"req": [
 				"show_door",
 				"red_door",
 				"!in_loop"
@@ -251,7 +273,7 @@
 			"req": [
 				"ded"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 2",
 			"result_text": "The butcher swings his cleaver into you again and again, screaming incoherent words as he does. The third blow cracks your skull, and before you even hit the floor everything fades to black.",
 			"result": [
 				"reset"
@@ -285,7 +307,7 @@
 				"red_loop",
 				"!ded"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 3",
 			"result": [
 				"unset-red_loop",
 				"unset-red_move",
@@ -326,7 +348,7 @@
 			"req": [
 				"green_door_splinters_loop"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 4",
 			"result": [
 				"unset-green_door_splinters_loop",
 				"unset-in_loop"
@@ -360,7 +382,7 @@
 			"req": [
 				"green_move"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 5",
 			"result": [
 				"unset-green_move",
 				"unset-in_loop"
@@ -402,7 +424,7 @@
 			"req": [
 				"green_loop"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 6",
 			"result": [
 				"unset-green_loop",
 				"unset-green_move",
@@ -436,7 +458,7 @@
 			"req": [
 				"yellow_move"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 7",
 			"result": [
 				"unset-yellow_move",
 				"unset-in_loop"
@@ -478,7 +500,7 @@
 			"req": [
 				"yellow_loop"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 8",
 			"result": [
 				"unset-yellow_loop",
 				"unset-yellow_move",
@@ -512,7 +534,7 @@
 			"req": [
 				"purple_move"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 9",
 			"result": [
 				"unset-purple_move",
 				"unset-in_loop"
@@ -554,7 +576,7 @@
 			"req": [
 				"purple_loop"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 10",
 			"result": [
 				"unset-purple_loop",
 				"unset-purple_move",
@@ -588,7 +610,7 @@
 			"req": [
 				"blue_move"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 11",
 			"result": [
 				"unset-blue_move",
 				"unset-in_loop"
@@ -630,7 +652,7 @@
 			"req": [
 				"blue_loop"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 12",
 			"result": [
 				"unset-blue_loop",
 				"unset-blue_move",
@@ -664,7 +686,7 @@
 			"req": [
 				"brown_move"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 13",
 			"result": [
 				"unset-brown_move",
 				"unset-in_loop"
@@ -706,7 +728,7 @@
 			"req": [
 				"brown_loop"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 14",
 			"result": [
 				"unset-brown_loop",
 				"unset-brown_move",
@@ -718,7 +740,7 @@
 				"show_door",
 				"!in_loop"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 15",
 			"result": [
 				"unset-show_door",
 				"unset-in_loop_2"
@@ -752,7 +774,7 @@
 			"req": [
 				"red_move"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 16",
 			"result": [
 				"unset-red_move",
 				"unset-in_loop"
@@ -794,7 +816,7 @@
 			"req": [
 				"ded"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 17",
 			"result_text": "The butcher swings his cleaver into you again and again, screaming incoherent words as he does. The third blow cracks your skull, and before you even hit the floor everything fades to black.",
 			"result": [
 				"reset"
@@ -828,7 +850,7 @@
 				"red_loop",
 				"!ded"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 18",
 			"result": [
 				"unset-red_loop",
 				"unset-red_move",
@@ -893,7 +915,7 @@
 			"req": [
 				"green_move"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 19",
 			"result": [
 				"unset-green_move",
 				"unset-in_loop"
@@ -935,7 +957,7 @@
 			"req": [
 				"green_loop"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 20",
 			"result": [
 				"unset-green_loop",
 				"unset-green_move",
@@ -969,7 +991,7 @@
 			"req": [
 				"yellow_move"
 			],
-			"option_text": "Exit",
+			"option_text": "Exit 21",
 			"result": [
 				"unset-yellow_move",
 				"unset-in_loop"
@@ -1269,7 +1291,7 @@
 	"constants": {
 		"nowhere": {
 			"req": [
-				"!pick_door_A"
+				"!in:pick_door_A"
 			],
 			"commands": [
 				"random-door",
