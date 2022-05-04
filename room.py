@@ -1,36 +1,36 @@
+
+
 if __name__ != "__main__":
 
+    from editor import Editor
     from json import loads, dumps       # for converting json to dict and vice versa
     from os.path import dirname, exists # for finding files
-    import sys                          # for sys.exit() for ending the program
     from random import choice           # for running the random command
-    from functions import slow_type     # for printing text in specific ways
-
-
-
+    import pygame
+    from pygame.locals import *
 
     class Room:
-        '''
-        Represents a text adventure scenario with multiple options for the user to pick from.
 
-        Attributes:
-            __name (string): The name of the room and its corresponding .json file.
-            __text (string): The text displayed when the room is first entered.
-            __options (list[dict]): The options the user will choose from.
-            __constants (list[?]): List of constants to be utilize by commands.
-            __flags (dict[string:list]): The flags keeping track of user choices organized into namespaces based on the room names
-        '''
+        __editor = None
+        __flags = {}
 
-        __flags = {}                        # initialize dict of flags
-        
+        PALAI_EXIT = USEREVENT + 1
+        quit_event = pygame.event.Event(PALAI_EXIT)
+
+        GAME_RESET = USEREVENT + 2
+        game_reset_event = pygame.event.Event(GAME_RESET)
+
+        ROOM_RESET = USEREVENT + 3
+        room_reset_event = pygame.event.Event(ROOM_RESET)
+
+        ROOM_CHANGE = USEREVENT + 4
+        room_change_event = pygame.event.Event(ROOM_CHANGE)
+
+        next_room = ""
 
         def __init__(self, name):
-            '''
-            The constructor for Room class.
 
-            Paramaters:
-                name (string): The name of the room and its corresponding .json file
-            '''
+            assert Room.__editor != None, "the editor must be set with Room.set_editor() before a Room can be created"
 
             # -------------------
             # get json from files
@@ -96,87 +96,46 @@ if __name__ != "__main__":
 
             # TEXT SETTINGS
             self.__text_settings = room_dict["text_settings"] if "text_settings" in room_dict else ""   # get text settings if they are set in the JSON
-            self.__delay_modifier = 0                                                                   # initialize global modifier for text delay
+
+            self.__result = ""
+
+            self.__resetting = False
             
             
             # --------------------
             # run startup commands
             # --------------------
-
-            # if there are commands to run on startup, run them
-            if "commands" in room_dict.keys():
-                assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"                   # error if "commands" is not a list
-                command_result = self.__run_results(room_dict["commands"][:])                                   # run the startup commands
-                assert command_result == True, "commands such as reset are not allowed at startup of a room"    # error if disallowed command is run
-
-            # ---------------------
-            # display the room text
-            # ---------------------
-
+##
+##            # if there are commands to run on startup, run them
+##            if "commands" in room_dict.keys():
+##                assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"                   # error if "commands" is not a list
+##                command_result = self.__run_results(room_dict["commands"][:])                                   # run the startup commands
+##                assert command_result == True, "commands such as reset are not allowed at startup of a room"    # error if disallowed command is run
+##
+##            # ---------------------
+##            # display the room text
+##            # ---------------------
+##
+##            self.option_count = 0
+##
             # print out the room's introduction text
             if self.__text:
-                slow_type(self.__text + "\n\n", self.__delay_modifier)
+                Room.__editor.type(self.__text + "\n\n")
 
+            self.shown_options = self.__display_options()
 
-
-
-        def run(self):
-            '''
-            Describe the room to the user and allow them to interact using set options
-            '''
-
-            # ---------------------------
-            # run game loop for this room
-            # ---------------------------
-
-            running = True  # flag for loop
-            # show options and get user input, loop until done with room
-            while (running):
-
-                # -------------------------
-                # show the user the options
-                # -------------------------
-                
-                #display options to the user
-                shown_options = self.__display_options()
-
-
-                # --------------
-                # get user input
-                # --------------
-
-                # get input from the user
-                chosen_option = self.__get_input(shown_options)
-
-                # ------------------------------------------
-                # carry out the results of the chosen option
-                # print the text, run the commands
-                # ------------------------------------------
-
-                # PRINT THE TEXT
-                # if there is "result_text" in our option, print it
-                if "result_text" in chosen_option:                
-                    slow_type(chosen_option["result_text"] + "\n\n")    # print the result_text
-
-                # RUN THE COMMANDS
-                # if there is a result list in our option, run each command in the list
-                if "result" in chosen_option:
-                    results = chosen_option["result"][:]                            # get the list of commands
-                    assert isinstance(results, list), "\"result\" must be a list"   # error if results isn't a list              
-                    running = self.__run_results(results, chosen_option)            # run the results of the choice
-                
-
-
-      
-        def __display_options(self):
-            '''
-            display the user's options
-
-            Returns:
-                shown_options (list[dict]): list of options that have been shown to the player
-            '''
-
+##
+##        
+##            shown_options = self.__display_options()
             
+        
+        # choose option text
+        # room text
+        # options
+
+        # flags
+
+        def __display_options(self):
             # -------------------------------------
             # check the requirements of the options
             # -------------------------------------
@@ -214,174 +173,16 @@ if __name__ != "__main__":
                 # if the corresponding letter to the option would be past "Z", stop showing options
                 if letter_ascii > ord("Z"):
                     break   # stop showing options
-
-                slow_type(self.__text_settings + chr(letter_ascii) + ": ", self.__delay_modifier)   # print the corresponding letter of the option to its left
+                
+                Room.__editor.type(self.__text_settings + chr(letter_ascii) + ": " + option["option_text"] + "\n", "no newline")   # print the corresponding letter of the option to its left
                 letter_ascii += 1                                               # increment the letter by 1 up the alphabet
-                slow_type(option["option_text"] + "\n", self.__delay_modifier)  # print the option's text
+                #self.option_count += 1
 
             # RETURN OPTIONS
             return shown_options    # return the list of options shown to the user
         
 
-
-
-        def __get_input(self, shown_options):
-            '''
-            get input from the user
-
-            Parameters:
-                shown_options (list[dict]): list of options in JSON that the user can pick from
-
-            Returns:
-                option (dict): option chosen by the user
-            '''
-
-
-            # ------------------------------
-            # loop until we have valid input
-            # loop, return input
-            # ------------------------------
-            
-            # LOOP
-            valid_input = False # flag for running loop
-
-            # loop until valid input is obtained from the user
-            while not(valid_input):
-
-
-                # --------------
-                # get user input
-                # --------------
-                
-                user_input = input("\n").upper()            # get input from user and convert to uppercase
-                user_input = user_input.replace(" ", "")    # remove spaces
-                print()                                     # print a newline
-
-
-                # -------------------
-                # validate user input
-                # -------------------
-
-                # if user input is not a single character
-                if len(user_input) != 1:
-                    continue # reprint options and get user input again
-                
-                # if user input is not in the range A-? where ? is the letter corresponding to the last printed option
-                elif ord(user_input) < ord("A") or ord(user_input) > ord("A") + len(shown_options) - 1:
-                    continue # reprint options and get user input again
-
-                option = shown_options[ord(user_input) - ord("A")]  # convert user input to an index and get the corresponding option
-                valid_input = True                                  # valid input is obtained so we can stop looping
-
-            # RETURN INPUT
-            return option   # return the option the user picked
-
-
-        
-
-        def __run_results(self, results, option={}, mode=""):
-            '''
-            Evaluate and run the results set to happen for the chosen option
-
-            Parameters:
-                results (list[str]): List of commands to run
-                option (dict[???]): Dictionary that may contain values affecting certain commands
-
-            Returns:
-                game_running (bool): Boolean value dictating whether to stop running the game
-            '''
-
-            # ----------------
-            # run each command
-            # ----------------
-            
-            game_running = True # keep track of whether a result would end the game
-                
-            # iterate through each command in the list
-            for result in results:
-
-
-                # ------------------------------
-                # get the namespace and argument
-                # ------------------------------
-                
-                assert isinstance(result, str), "commands in the result list must be strings, not " + str(type(result)) # error if command isn't a string
-                result = result.replace(" ", "")                                                                        # remove spaces from the command
-                command, argument = result.split("-", 2) if "-" in result else (result, "")                             # split the result into a command and an argument
-
-                # if the argument has a ":" in it, split it into its namespace and argument
-                if ":" in argument:
-                    namespace, argument = argument.split(":", 2)                    # get the namespace (left of the ":") and the argument (right of the ":")
-                    assert ":" not in argument, "too many \":\" in flag " + flag    # verify that there are no more colons
-                    
-                # if there is no ":" in the argument, then the namespace is the same as the room name
-                else:
-                    namespace = self.__name # the namespace is the same as the room's name
-
-
-                # --------------------------------
-                # determine the command and run it
-                # --------------------------------
-                
-                # if the command is "set", add the argument to the flags list as a flag to keep track of it
-                if command == "set":
-                    self.__set(namespace, argument, mode=mode)  # set the flag/namespace
-                    continue                                    # continue to the next command
-                
-                # if the command is "unset", remove a flag from the flags list if it exists
-                elif command == "unset":
-                    self.__unset(namespace, argument, mode=mode)    # unset the flag/namespace
-                    continue                                        # continue to the next command
-                
-                # if the command is "reset", end the game
-                elif command == "reset":
-                    game_running = self.__reset(argument)   # end the game in some way determined by the argument
-                    continue
-
-                # if the command is "move", stop running the current room and run a new room
-                elif command == "move":
-                    assert argument != "", "argument for \"move\" cannot be empty"  # error if argument is empty
-                    next_room = Room(argument)                                      # create a new room with argument being the room's name
-                    next_room.run()                                                 # run the new room
-                    game_running = False                                            # stop running the current room
-
-                # if the command is "print", print out a string with the argument as its name
-                elif command == "print":
-                    self.__print(argument, option)  # print out a string with the label matching the argument
-                    continue                # continue to the next command
-
-                # if the command is "random", choose a random set of commands and run them
-                elif command == "random":
-                    self.__run_results(self.__random(argument, option), option) # get a random list of commands and run them
-                    continue                                                    # continue to the next command
-
-                # if the command is "if", run a list of commands if requirements are met
-                elif command == "if":
-                    self.__if(argument, option) # run commands if requirements are met
-                    continue                    # continue to the next command
-
-                # if the command is "delay", change the type speed globally for text
-                elif command == "delay":
-                    self.__delay(argument)  # change the global delay for slow typing
-                    continue                # continue to the next command
-
-                # if the command is not a valid command raise an error
-                else:
-                    raise AssertionError(command + " is not a valid command")   # raise an error due to an invalid command
-
-            return game_running     # return whether the game would end
-
-
-        
-
         def __check_requirements(self, requirements):
-            '''
-            Return whether or not a list of requirements are met.
-
-            Parameters:
-                requirements (list[str]): a list of requirements usually in the form of flags that must be checked
-            '''
-
             # check each requirement
             for req in requirements:
 
@@ -441,6 +242,123 @@ if __name__ != "__main__":
 
             return False    # return False as at least one requirment is not met
 
+
+        def choose_option(self, key):
+            key = ord(chr(key).upper())
+
+            option = self.shown_options[key - ord('A')]
+            
+            result = ""
+
+            if self.__result != "":
+                result = self.result
+                self.__result = ""
+                
+            elif "result_text" in option:
+                result = option["result_text"]
+
+            Room.__editor.clear()
+
+            self.__run_commands(option["result"][:])
+
+            if (Room.next_room != ""):
+                Room.__editor.clear()
+                Room.__editor.type(result, "no newline")
+                return
+            
+            Room.__editor.type(result + "\n\n")
+
+            if self.__resetting == False:
+                self.shown_options = self.__display_options()
+
+            self.__resetting = False
+
+
+        def __run_commands(self, commands, option={}, mode=""):
+            
+            # ----------------
+            # run each command
+            # ----------------
+            
+            game_running = True # keep track of whether a result would end the game
+                
+            # iterate through each command in the list
+            for result in commands:
+
+
+                # ------------------------------
+                # get the namespace and argument
+                # ------------------------------
+                
+                assert isinstance(result, str), "commands in the result list must be strings, not " + str(type(result)) # error if command isn't a string
+                result = result.replace(" ", "")                                                                        # remove spaces from the command
+                command, argument = result.split("-", 2) if "-" in result else (result, "")                             # split the result into a command and an argument
+
+                # if the argument has a ":" in it, split it into its namespace and argument
+                if ":" in argument:
+                    namespace, argument = argument.split(":", 2)                    # get the namespace (left of the ":") and the argument (right of the ":")
+                    assert ":" not in argument, "too many \":\" in flag " + flag    # verify that there are no more colons
+                    
+                # if there is no ":" in the argument, then the namespace is the same as the room name
+                else:
+                    namespace = self.__name # the namespace is the same as the room's name
+
+
+                # --------------------------------
+                # determine the command and run it
+                # --------------------------------
+                
+                # if the command is "set", add the argument to the flags list as a flag to keep track of it
+                if command == "set":
+                    self.__set(namespace, argument, mode=mode)  # set the flag/namespace
+                    continue                                    # continue to the next command
+                
+                # if the command is "unset", remove a flag from the flags list if it exists
+                elif command == "unset":
+                    self.__unset(namespace, argument, mode=mode)    # unset the flag/namespace
+                    continue                                        # continue to the next command
+                
+                # if the command is "reset", end the game
+                elif command == "reset":
+                    game_running = self.__reset(argument)   # end the game in some way determined by the argument
+                    continue
+
+                # if the command is "move", stop running the current room and run a new room
+                elif command == "move":
+                    assert argument != "", "argument for \"move\" cannot be empty"  # error if argument is empty
+                    pygame.event.post(Room.room_change_event)
+                    Room.next_room = argument
+                    #next_room = Room(argument)                                      # create a new room with argument being the room's name
+                    #next_room.run()                                                 # run the new room
+                    #game_running = False                                            # stop running the current room
+
+                # if the command is "print", print out a string with the argument as its name
+                elif command == "print":
+                    self.__print(argument, option)  # print out a string with the label matching the argument
+                    continue                # continue to the next command
+
+                # if the command is "random", choose a random set of commands and run them
+                elif command == "random":
+                    self.__run_commands(self.__random(argument, option), option) # get a random list of commands and run them
+                    continue                                                    # continue to the next command
+
+                # if the command is "if", run a list of commands if requirements are met
+                elif command == "if":
+                    self.__if(argument, option) # run commands if requirements are met
+                    continue                    # continue to the next command
+
+                # if the command is "delay", change the type speed globally for text
+##                    elif command == "delay":
+##                        self.__delay(argument)  # change the global delay for slow typing
+##                        continue                # continue to the next command
+
+                # if the command is not a valid command raise an error
+                else:
+                    raise AssertionError(command + " is not a valid command")   # raise an error due to an invalid command
+
+            if game_running == False:
+                
+                pygame.event.post(Room.quit_event)
 
         def __set(self, namespace=None, argument="", mode=""):
             '''
@@ -587,56 +505,52 @@ if __name__ != "__main__":
                 # ASK USER
                 getting_input = True    # True while user hasn't yet inputted valid input
 
-                # get input from the user regarding whether to replay or quit
-                while getting_input:
-                    slow_type(self.__text_settings + "Continue? (Y/N): ", self.__delay_modifier)                                # get input from user
-                    user_input = input().upper()                                                                                # convert to uppercase
-                    getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True # make sure input is "Y" or "N"
-                    game_running = False                                                                                        # end all running rooms but keeps program running
-                    json_text = dumps(Room.__flags)                                                                             # convert the flags to a json string
-                    data_handle = open("data.json", "w")                                                                        # open "data.json" for writing
-                    data_handle.write(json_text)                                                                                # write the flags' json string into data.json
-                    data_handle.close()                                                                                         # close data.json
+                pygame.event.post(Room.game_reset_event)
+                self.__resetting = True
+
+                json_text = dumps(Room.__flags)                                                                             # convert the flags to a json string
+                data_handle = open("data.json", "w")                                                                        # open "data.json" for writing
+                data_handle.write(json_text)                                                                                # write the flags' json string into data.json
+                data_handle.close()                                                                                         # close data.json
 
 
-                # RESET GAME
-                # if the user inputted "Y", restart the game by ending all running rooms but keeping the program running
-                if user_input == "Y":
-                    print() # print newline
-
-                # if the user inputted "N", end the program
-                else:
-                    sys.exit()  # end the program
-
-                return False
+##                # RESET GAME
+##                # if the user inputted "Y", restart the game by ending all running rooms but keeping the program running
+##                if user_input == "Y":
+##                    print() # print newline
+##
+##                # if the user inputted "N", end the program
+##                else:
+##                    sys.exit()  # end the program
+##
+##                return False
 
             # if "quit" is the argument, end the program
             elif argument == "quit":
+                self.__resetting = True
+                json_text = dumps(Room.__flags)                                                                             # convert the flags to a json string
+                data_handle = open("data.json", "w")                                                                        # open "data.json" for writing
+                data_handle.write(json_text)                                                                                # write the flags' json string into data.json
+                data_handle.close()                                                                                         # close data.json
+                pygame.quit()
                 sys.exit()  # end the program
 
             # if "room" is the argument, restart the room
             elif argument == "room":
+                self.__resetting = True
                 self.__changes.reverse()                            # reverse the list of changes so we can undo them in the correct order
                 self.__run_results(self.__changes, mode="reset")    # undo every change made
                 self.__changes = []                                 # reset changes list
                 
                 # get input from the user regarding whether to replay or quit
-                while getting_input:
-                    slow_type(self.__text_settings + "Continue? (Y/N): ", self.__delay_modifier)                                # get input from user
-                    user_input = input().upper()                                                                                # convert to uppercase
-                    getting_input = False if isinstance(user_input, str) and (user_input == "Y" or user_input == "N") else True # make sure input is "Y" or "N"
-                    json_text = dumps(Room.__flags)                                                                             # convert the flags to a json string
-                    data_handle = open("data.json", "w")                                                                        # open "data.json" for writing
-                    data_handle.write(json_text)                                                                                # write the flags' json string into data.json
-                    data_handle.close()
 
-                # if the user inputted "Y", allow them to continue playing
-                if user_input == "Y":
-                    return True # continue playing
+                json_text = dumps(Room.__flags)                                                                             # convert the flags to a json string
+                data_handle = open("data.json", "w")                                                                        # open "data.json" for writing
+                data_handle.write(json_text)                                                                                # write the flags' json string into data.json
+                data_handle.close()
 
-                # if the user inputted "N", end the program
-                else:
-                    sys.exit()  # end the program
+
+                pygame.event.post(Room.room_reset_event)
                 
             # if the argument is invalid raise an error
             else:
@@ -668,7 +582,8 @@ if __name__ != "__main__":
 
             # check if the target text is in the constants dictionary
             elif argument in self.__constants.keys():
-                text = self.__constants[argument]   # store the found text
+                text = self.__constants[argument]   # store the found text0
+
 
             # error if argument doesn't match any element in the option object or constants dict
             else:
@@ -681,7 +596,7 @@ if __name__ != "__main__":
             # print the string
             # ----------------
             
-            slow_type(text + "\n\n", self.__delay_modifier)    # print out the target string to the user
+            Room.__editor.type(text, "no newline")    # print out the target string to the user
             
 
 
@@ -819,7 +734,7 @@ if __name__ != "__main__":
 
             # if requirements are met, run the commands
             if self.__check_requirements(if_commands["req"]):
-                self.__run_results(commands, option)    # run the commands
+                self.__run_commands(commands, option)    # run the commands
                 return True                             # return True as requirements were met
 
             return False    # return False as requirements weren't met
@@ -851,9 +766,11 @@ if __name__ != "__main__":
 
             self.__delay_modifier = delay_modifier
 
-            
+
+        @classmethod
+        def set_editor(self, editor):
+            Room.__editor = editor
             
 
-
-
-            
+        def get_name(self):
+            return self.__name

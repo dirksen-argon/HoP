@@ -1,7 +1,6 @@
 import json
 from time import sleep
 from random import choice, sample
-
 import sys
 import os
 sys.path.insert(1, "/Users/fischerrecordingstudio/Documents/Test HoP/Test Folder")
@@ -13,7 +12,9 @@ from room import Room
 backpack = []
 
 running = True
-while running:
-    start_room = Room("start_room_intro")
 
-    start_room.run()
+start_room = Room("test_folder/test")
+
+
+while running:
+    mode = start_room.run()
