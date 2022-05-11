@@ -5,10 +5,10 @@ if __name__ != "__main__":
 
     class Interface:
 
-        
-
         def __init__(self):
             pygame.init()
+
+            self.start = "hoptest"
 
             self.__size = self.__width, self.__height = 640, 480
 
@@ -18,7 +18,7 @@ if __name__ != "__main__":
 
             Room.set_editor(self.__editor)
 
-            self.__current_room = Room("start_room_intro")
+            self.__current_room = Room(self.start)
 
             self.__reset_game = False
             self.__reset_room = False
@@ -28,7 +28,6 @@ if __name__ != "__main__":
             self.__screen.fill((0, 0, 0))
             self.__editor.type()
             #self.__current_room.run()
-
             
 
             for event in pygame.event.get():
@@ -46,7 +45,7 @@ if __name__ != "__main__":
                             if chr(event.key).upper() == "Y" and self.__reset_game:
                                 self.__editor.clear()
                                 self.__reset_game = False
-                                self.__current_room = Room("start_room_intro")
+                                self.__current_room = Room(self.start)
                             elif chr(event.key).upper() == "Y" and self.__reset_room:
                                 self.__editor.clear()
                                 self.__reset_room = False
@@ -66,19 +65,18 @@ if __name__ != "__main__":
                 elif event.type == Room.GAME_RESET:
                     self.__editor.type("GAME OVER\nRESTART? (Y/N)")
                     self.__reset_game = True
+                    Editor.delay = 65
                     
                 elif event.type == Room.ROOM_RESET:
                     self.__editor.type("GAME OVER\nCONTINUE? (Y/N)")
                     self.__reset_room = True
+                    Editor.delay = 65
 
                 elif event.type == Room.ROOM_CHANGE:
                     #self.__editor.clear()
                     self.__current_room = Room(Room.next_room)
                     Room.next_room = ""
                     
-                    
-                    
-
             pygame.display.flip()
 
         def type(self, text):

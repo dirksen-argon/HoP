@@ -5,6 +5,7 @@ if __name__ != "__main__":
     class Editor:
 
         command_list = ["w", "d", "m", "@"]
+        delay = 65
 
         def __init__(self, box):
             pygame.init()
@@ -25,11 +26,17 @@ if __name__ != "__main__":
             self.__d_timer = time.time()
             self.__d_index = 0
 
-            self.__delay = 65
+            self.wait = 1
 
             self.__mode = 0
 
             self.scroll = 0
+
+            self.once = True
+
+            self.speed_up = False
+
+            self.storage = None
 
             self.__wait_time = time.time()  # time when wait command is over and typing can resume
 
@@ -39,8 +46,27 @@ if __name__ != "__main__":
                     self.__max_width = surface.get_rect().width
                 if surface.get_rect().height > self.__dy:
                     self.__dy = surface.get_rect().height
-
+                    
         def type(self, new_text=None, *args):
+
+            if self.once == True:
+                self.storage = Editor.delay
+            
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                Editor.delay = 2
+                self.wait = 2
+                self.speed_up = True
+                self.once = False
+            elif not keys[pygame.K_SPACE] and self.speed_up == True:
+                Editor.delay = self.storage
+                self.wait = 1
+                self.speed_up = False
+                self.once = True
+            elif not keys[pygame.K_SPACE] and self.speed_up == False:
+                pass
+            else:
+                AssertionError("Editor variable related to spacebar control does not match what occured")
 
             # if new text is given
             if new_text != None:
@@ -61,7 +87,7 @@ if __name__ != "__main__":
             # if we are in slow_type mode and the buffer isn't empty add in characters with a delay
             if self.__mode == 0 and len(self.__text_buffer) != 0:
                 # if delay timer over and not waiting, display character
-                if time.time() - self.__d_timer >= self.__delay / 1000 and time.time() - self.__wait_time >= 0:
+                if time.time() - self.__d_timer >= Editor.delay / 1000 and time.time() - self.__wait_time >= 0:
                     next_char = self.__text_buffer.pop(0)   # get next character to be displayed
 
                     # if character is command, run command
@@ -117,6 +143,7 @@ if __name__ != "__main__":
                 
 
         def display(self, new_text=None):
+
             self.__d_timer = time.time() if self.__d_timer == None else self.__d_timer
             new_text = "" if new_text == None else new_text
             self.__text += new_text
@@ -152,6 +179,7 @@ if __name__ != "__main__":
 
 
         def run_command(self):
+            
             arg = ""    # used to store argument of command
 
             reading_command = True  # true when reading command from text buffer
@@ -164,14 +192,17 @@ if __name__ != "__main__":
                 if char == "w":
                     assert arg != "" and arg.isnumeric(), "Usage: @XXXXw where X is integer and there are at least 1 X" # error if invalid argument
                     arg = int(arg)                                          # get integer
-                    self.__wait_time = time.time() + arg / 1000             # get time to continue displaying
+                    self.__wait_time = time.time() + arg / self.wait / 1000             # get time to continue displaying
                     reading_command = False                                 # stop reading the command
 
                 # if d, change delay time
                 elif char == "d":
                     assert arg != "" and arg.isnumeric(), "Usage: @XXXXd where X is integer and there are at least 1 X" # error if invalid argument 
-                    arg = int(arg)          # get command argument as int
-                    self.__delay = arg      # set delay
+                    arg = int(arg) # get command argument as int
+                    if self.speed_up == False:
+                        Editor.delay = arg      # set delay
+                    else:
+                        self.storage = arg
                     reading_command = False # stop reading the command
 
                 # if m, change slow type mode
@@ -187,7 +218,6 @@ if __name__ != "__main__":
 
                     # invalid argument, raise error
                     else:
-                        print(arg)
                         raise AssertionError("Usage: @Xm where X is 0 for enable slow type or 1 for disable slow type") # error if invalid argument
 
                     reading_command = False # stop reading the command

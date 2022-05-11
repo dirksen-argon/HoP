@@ -259,7 +259,11 @@ if __name__ != "__main__":
 
             Room.__editor.clear()
 
-            self.__run_commands(option["result"][:])
+            try:            
+                self.__run_commands(option["result"][:])
+                
+            except KeyError:
+                pass
 
             if (Room.next_room != ""):
                 Room.__editor.clear()

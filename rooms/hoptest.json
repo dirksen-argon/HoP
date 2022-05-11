@@ -1,0 +1,11 @@
+{
+	"room_text": "Hello!@0200w How are you doing today?@0200w I'm here to reach you about your car's extended warranty. Did you know that if you or a family member have been in a major accident in the past five years,@0200w if you act fast, and don't delay, that you might be entitled to extensive financial compensation! @0200dIt's that easy! Just call (202) 456-1111! That's (202) 456-1111! Don't delay! Don't miss out on this huge financial opportunity!",
+	"options": [
+		{
+			"option_text": "Return",
+			"result": [
+				"reset"
+			]
+		}
+	]
+}

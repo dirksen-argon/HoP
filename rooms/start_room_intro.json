@@ -1,8 +1,5 @@
 {
-	"commands": [
-		"delay-~999"
-	],
-	"room_text": "@0065dHouse of Palai.@w0600 Test.@0350w\n@w0350\n@w0350You are a young child caught out in the middle of suburbia,@0050w at night,@0050w alone.@0500w You come upon a large house.@0500w A REALLY large house,@0050w bigger than anything on either side of it,@0050w and certainly larger than anything you've ever seen before.@0500w It's made primarily out of bare plywood,@0050w some of it looking brand-new,@0030w but most looking molded and rotten.@0500w Suddenly,@0050w a strange force compels you to step forward.@0300w You attempt to resist it,@0020w but the urge is too strong!@0300w You slowly open the door and step inside.@0300w@0050d The door slams shut behind you!@1000w@0065d@0100w\n@0100w\n@0100wWhat do you do?",
+	"room_text": "@0065dHouse of Palai.@0600w Test.@0350w\n@0350w\n@0350wYou are a young child caught out in the middle of suburbia,@0050w at night,@0050w alone.@0500w You come upon a large house.@0500w A REALLY large house,@0050w bigger than anything on either side of it,@0050w and certainly larger than anything you've ever seen before.@0500w It's made primarily out of bare plywood,@0050w some of it looking brand-new,@0030w but most looking molded and rotten.@0500w Suddenly,@0050w a strange force compels you to step forward.@0300w You attempt to resist it,@0020w but the urge is too strong!@0300w You slowly open the door and step inside.@0300w@0050d The door slams shut behind you!@1000w@0065d@0100w\n@0100w\n@0100wWhat do you do?",
 	"options": [
 		{
 			"req": [
