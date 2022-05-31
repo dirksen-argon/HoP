@@ -105,12 +105,12 @@ if __name__ != "__main__":
             # --------------------
             # run startup commands
             # --------------------
-##
-##            # if there are commands to run on startup, run them
-##            if "commands" in room_dict.keys():
-##                assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"                   # error if "commands" is not a list
-##                command_result = self.__run_results(room_dict["commands"][:])                                   # run the startup commands
-##                assert command_result == True, "commands such as reset are not allowed at startup of a room"    # error if disallowed command is run
+
+            # if there are commands to run on startup, run them
+            if "commands" in room_dict.keys():
+                assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"                   # error if "commands" is not a list
+                command_result = self.__run_commands(room_dict["commands"][:])                                   # run the startup commands
+                assert command_result == True, "commands such as reset are not allowed at startup of a room"    # error if disallowed command is run
 ##
 ##            # ---------------------
 ##            # display the room text
@@ -543,7 +543,7 @@ if __name__ != "__main__":
             elif argument == "room":
                 self.__resetting = True
                 self.__changes.reverse()                            # reverse the list of changes so we can undo them in the correct order
-                self.__run_results(self.__changes, mode="reset")    # undo every change made
+                self.__run_commands(self.__changes, mode="reset")    # undo every change made
                 self.__changes = []                                 # reset changes list
                 
                 # get input from the user regarding whether to replay or quit
