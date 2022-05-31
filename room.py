@@ -110,8 +110,7 @@ if __name__ != "__main__":
             if "commands" in room_dict.keys():
                 assert isinstance(room_dict["commands"], list), "\"commands\" must be a list"                   # error if "commands" is not a list
                 command_result = self.__run_commands(room_dict["commands"][:])                                   # run the startup commands
-                assert command_result == True, "commands such as reset are not allowed at startup of a room"    # error if disallowed command is run
-##
+
 ##            # ---------------------
 ##            # display the room text
 ##            # ---------------------
