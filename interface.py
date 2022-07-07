@@ -8,7 +8,7 @@ if __name__ != "__main__":
         def __init__(self):
             pygame.init()
 
-            self.start = "hoptest"
+            self.start = "start_room_fight"
 
             self.__size = self.__width, self.__height = 640, 480
 

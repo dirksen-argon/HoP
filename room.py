@@ -123,6 +123,8 @@ if __name__ != "__main__":
 
             self.shown_options = self.__display_options()
 
+            self.__backup = Room.__flags
+
 ##
 ##        
 ##            shown_options = self.__display_options()
@@ -540,10 +542,11 @@ if __name__ != "__main__":
 
             # if "room" is the argument, restart the room
             elif argument == "room":
-                self.__resetting = True
-                self.__changes.reverse()                            # reverse the list of changes so we can undo them in the correct order
-                self.__run_commands(self.__changes, mode="reset")    # undo every change made
-                self.__changes = []                                 # reset changes list
+##                self.__resetting = True
+##                self.__changes.reverse()                            # reverse the list of changes so we can undo them in the correct order
+##                self.__run_commands(self.__changes, mode="reset")    # undo every change made
+##                self.__changes = []                                 # reset changes list
+                Room.__flags = self.__backup
                 
                 # get input from the user regarding whether to replay or quit
 
