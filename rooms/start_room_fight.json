@@ -736,7 +736,8 @@
 		},
 		{
 			"req": [
-				"dagger_loop"
+				"dagger_loop",
+				"!in_loop_B"
 			],
 			"option_text": "Exit",
 			"result": [
@@ -829,7 +830,7 @@
 			"option_text": "Cry",
 			"result_text": "You sit on the floor and cry. The skeleton implies you through the heart. You feel the driving blade sever your arteries like tension strings as everything slowly fades to black.",
 			"result": [
-				"room-reset"
+				"reset-room"
 			]
 		}
 	],
