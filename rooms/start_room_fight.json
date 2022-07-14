@@ -767,7 +767,7 @@
 			"option_text": "Defensive",
 			"result_text": "You opt to parry the skeleton's attacks. It almost instantly has you up against a wall, swinging for your life. The defensive approach has not helped much.",
 			"result": [
-				"defensive_nightstick",
+				"set-defensive_nightstick",
 				"set-nightstick:dinged"
 			]
 		},
