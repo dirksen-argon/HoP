@@ -767,7 +767,20 @@
 			"option_text": "Defensive",
 			"result_text": "You opt to parry the skeleton's attacks. It almost instantly has you up against a wall, swinging for your life. The defensive approach has not helped much.",
 			"result": [
-				"defensive_nightstick"
+				"defensive_nightstick",
+				"set-nightstick:dinged"
+			]
+		},
+		{
+			"req": [
+				"nightstick_loop",
+				"defensive_nightstick",
+				"!in_loop_B"
+			],
+			"option_text": "Defensive",
+			"result_text": "The skeleton swipes across the nightstick, managing to get under it and drive the blade into your gut. You retch and cough as everything slowly fades to black.",
+			"result": [
+				"reset-room"
 			]
 		},
 		{
@@ -776,8 +789,9 @@
 				"!in_loop_B"
 			],
 			"option_text": "Offensive",
-			"result_text": "You opt to get in the skeleton swinging. The stick bludgeons the body, helping you to find a weak spot. The skull cracks, revealing a cavity filled with green goo. Bingo.",
 			"result": [
+				"if-head_bashed",
+				"set-head_bashed",
 				"set-head_nightstick_loop",
 				"set-in_loop_B"
 			]
@@ -789,6 +803,7 @@
 			"option_text": "Bash the head",
 			"result_text": "You bash the skeleton's brains in. It lets out little whimpers as it crumbles to the floor. What's left of the body is swallowed by the growing pit, along with the two boxes. Said pit pushes you back into the newly formed hallway, though fortunately stopping at the mouth of it. What do you do?",
 			"result": [
+				"set-nightstick-slimy",
 				"move-start_room_hallway"
 			]
 		},
@@ -804,7 +819,8 @@
 		},
 		{
 			"req": [
-				"nightstick_loop"
+				"nightstick_loop",
+				"!in_loop_B"
 			],
 			"option_text": "Exit",
 			"result": [
@@ -828,7 +844,7 @@
 				"!in_loop"
 			],
 			"option_text": "Cry",
-			"result_text": "You sit on the floor and cry. The skeleton implies you through the heart. You feel the driving blade sever your arteries like tension strings as everything slowly fades to black.",
+			"result_text": "You sit on the floor and cry. The skeleton impales you through the heart. You feel the driving blade sever your arteries like tension strings as everything slowly fades to black.",
 			"result": [
 				"reset-room"
 			]
@@ -941,11 +957,20 @@
 				]
 			}
 		],
+		"head_bashed": {
+			"req": [
+				"!head_bashed"
+			],
+			"commands": [
+				"print-basher"
+			]
+		},
 		"hatchet": "It's an old hatchet.",
 		"dagger": "It's a ceremonial dagger with a ruby in its hilt.",
 		"nightstick": "It's a police nightstick.",
 		"spider": "It's a giant spider! The creature lunges at you, even as the skeleton grows ever closer!",
 		"head": "It's a severed head! The undead atrocity screams a shrill scream, bringing you to your knees. The skeleton looms ever closer.",
-		"empty": "It's empty!"
+		"empty": "It's empty!",
+		"basher": "You opt to get in the skeleton swinging. The stick bludgeons the body, helping you to find a weak spot. The skull cracks, revealing a cavity filled with green goo. Bingo."
 	}
 }
